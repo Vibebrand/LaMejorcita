@@ -8,24 +8,33 @@
 
 @import <Foundation/CPObject.j>
 @import "Classes/Controllers/MainViewController.j"
+@import "Classes/Controllers/MenuViewController.j"
+@import "Classes/Controllers/HeaderViewController.j"
+@import "Classes/Controllers/MasterControl.j"
 
 
-@implementation AppController : CPObject
-{
+@implementation AppController : CPObject{
+    MasterControl _masterControl;
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
 {
+    var theWindow           = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
+    var contentView         = [theWindow contentView];
+    var bounds              = [contentView bounds];
+    var mainViewController  = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
+    var headervewController = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, 100.0)];
+    var menuViewController  = [[MenuViewController alloc] initWithSize: CGRectMake(0, 100.0, 200.0, bounds.size.height)];
+    var masterControl       = [[MasterControl alloc] init];
 
-    var theWindow   = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
-    var contentView = [theWindow contentView];
-    var bounds      = [contentView bounds];
-    var controller  = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
+    [mainViewController setHeaderViewController: headervewController];
+    [mainViewController setMenuViewController: menuViewController];
+    [masterControl setMainViewController: mainViewController];
 
     [theWindow orderFront:self];
+    [theWindow setContentView: [mainViewController view]];
 
-    [contentView addSubview: controller.view];
-    [theWindow setDelegate: controller];
+     _masterControl = masterControl;
 
     /*var mainViewController = [[MainViewController alloc] initWithFrame: ];
     console.log(mainViewController);

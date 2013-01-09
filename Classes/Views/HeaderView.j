@@ -1,5 +1,5 @@
 /*
- * AppController.j
+ * Header.j
  * La Mejorcita
  *
  * Created by You on January 8, 2013.
@@ -7,14 +7,14 @@
  */
 @import <AppKit/CPBox.j>
 
-@implementation MainView : CPBox
+@implementation HeaderView : CPBox
 {
 }
 - (id)initWithFrame: (CGRect)aFrame{
     self = [super initWithFrame: aFrame];
     if (self){
     	[self setBorderColor:[CPColor colorWithCalibratedRed: 0.23 green:0.23 blue: 0.23 alpha: 1]];
-    	[self setAutoresizingMask: CPViewHeightSizable | CPViewWidthSizable];
+    	[self setAutoresizingMask:  CPViewWidthSizable];
     }
     return self;
 }

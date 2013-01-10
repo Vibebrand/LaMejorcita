@@ -13,10 +13,10 @@
 @import "../Controllers/HeaderViewController.j"
 
 @implementation MainViewController : CPViewController{
-	HeaderViewController _headerViewController;
-	MenuViewController  _menuViewController;
-	CPScrollView containerView;
-    id _delegate;
+	HeaderViewController headerViewController @accessors;
+	MenuViewController  menuViewController @accessors;
+	CPScrollView containerView @accessors;
+    id delegate @accessors;
 }
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
@@ -36,30 +36,5 @@
 }
 -(void) changeHash: (CPArray) arguments{
 	[[self delegate] changeHash: arguments];
-}
-//Get && Set
--(void) setHeaderViewController: (HeaderViewController) aViewController{
-	 if (_headerViewController)
-	      [[_headerViewController view] removeFromSuperview];
-	_headerViewController = aViewController;
-	[[self view] addSubview: [_headerViewController view]];
-}
--(HeaderViewController) headerViewController{
-	return _headerViewController;
-}
--(void) setMenuViewController: (MenuViewController) aViewController{
-	if (_menuViewController)
-	      [[_menuViewController view] removeFromSuperview];
-	_menuViewController = aViewController;
-	[[self view] addSubview: [_menuViewController view]];
-}
--(MenuViewController) menuViewController{
-	return _menuViewController;
-}
--(void)setDelegate:(id)delegate{
-    _delegate = delegate;
-}
--(id) delegate{
-    return _delegate;
 }
 @end

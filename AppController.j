@@ -15,7 +15,7 @@
 
 
 @implementation AppController : CPObject{
-    MasterControl _masterControl;
+    MasterControl  masterControl @accessors;
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
@@ -27,7 +27,7 @@
     var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, 100.0)];
     var menuViewController   = [[MenuViewController alloc] initWithSize: CGRectMake(0, 100.0, 200.0, bounds.size.height)];
     var navigationController = [[NavigationController alloc] init];
-    var masterControl        = [[MasterControl alloc] init];
+    masterControl            = [[MasterControl alloc] init];
 
     [headervewController setDelegate: mainViewController];
     [menuViewController setDelegate: mainViewController];
@@ -39,10 +39,11 @@
     [masterControl setMainViewController: mainViewController];
     [masterControl setNavigationController: navigationController];
 
+    [[mainViewController view] addSubview: [headervewController view]];
+    [[mainViewController view] addSubview: [menuViewController view]];
+
     [theWindow orderFront:self];
     [theWindow setContentView: [mainViewController view]];
-
     [masterControl validateHash];
-     _masterControl = masterControl;
 }
 @end

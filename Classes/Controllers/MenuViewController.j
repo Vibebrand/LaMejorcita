@@ -10,8 +10,7 @@
 
 @implementation MenuViewController : CPViewController{
 	CPCollectionView optionsList;
-    id _delegate;
-
+    id delegate @accessors;
 }
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
@@ -49,12 +48,5 @@
             [[self delegate] changeHash: [[CPArray alloc] initWithObjects: @"!",@"Stocks"]];
         break;
     }
-
-}
--(void)setDelegate:(id)delegate{
-    _delegate = delegate;
-}
--(id) delegate{
-    return _delegate;
 }
 @end

@@ -11,7 +11,7 @@
 
 @implementation MasterControl : CPObject{
 	CPView mainViewController @accessors;
-	NavigationController navigationControler @accessors;
+	NavigationController navigationController @accessors;
 }
 -(BOOL)validationRule{
 	return true;

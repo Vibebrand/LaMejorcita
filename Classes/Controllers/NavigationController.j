@@ -49,48 +49,6 @@
 			pattern+='/[a-zA-Z0-9_]*';
 		pattern+="/?$";
 		pattern = new RegExp(pattern);*/
-	return '';
+	return @"";
 }
-
-	/*
-	function prepareUrlPattern(url){
-		var mapparts = url.split('/:');
-		var pattern  = '^'+mapparts[0];
-		for (var i = 1; i < mapparts.length; i++)
-			pattern+='/[a-zA-Z0-9_]*';
-		pattern+="/?$";
-		pattern = new RegExp(pattern);
-		return pattern;
-	};
-	/**
-		@function
-		@description Obtiene los parametros de la url.
-		@param {String} hash Url actualmente en la aplicación.
-		@param {String} url Url a comparar.
-		@param {String} extraParam Parametros extra.
-		@returns {Object} Parámetros obtenidos.
-
-	function getParameters(hash , url, extraParam){
-		var param = {};
-		hash = hash.split('/').clean('');
-		url = url.split('/').clean('');
-
-		for (var i =0; i < url.length ; i++) {
-			if(url[i].indexOf(":") != -1){
-				var ident = url[i].split(":")[1];
-				param[ident] = hash[i];
-			};
-		};
-		if(extraParam)
-			param.extra = extraParam;
-
-		if(Object.keys(param).length == 1){
-			for (var i in param)
-				param = param[i];
-			return param;
-		}
-		if(Object.keys(param).length < 1)
-			return undefined;
-		return param;
-	};*/
 @end

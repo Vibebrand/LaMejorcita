@@ -10,6 +10,7 @@
 @implementation OptionCell : CPBox
 {
 	CPTextField     label;
+	CPBox highlightView;
 }
 - (void)setRepresentedObject:(CPString)anString
 {
@@ -23,5 +24,26 @@
 	[label setStringValue:anString];
 	[label sizeToFit];
 	[label setFrameOrigin:CGPointMake(10,CGRectGetHeight([label bounds]) / 2.0)];
+}
+- (void)setSelected:(BOOL)flag
+{
+    if(!highlightView)
+    {
+        highlightView = [[CPView alloc] initWithFrame:CGRectCreateCopy([self bounds])];
+        [highlightView setBackgroundColor:[CPColor blueColor]];
+    }
+
+    if(flag)
+    {
+        [self addSubview:highlightView positioned:CPWindowBelow relativeTo:label];
+        [label setTextColor:[CPColor whiteColor]];
+        [label setTextShadowColor:[CPColor blackColor]];
+    }
+    else
+    {
+        [highlightView removeFromSuperview];
+        [label setTextColor:[CPColor blackColor]];
+        [label setTextShadowColor:[CPColor whiteColor]];
+    }
 }
 @end

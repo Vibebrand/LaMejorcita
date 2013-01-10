@@ -1,8 +1,17 @@
+/*
+ * MenuViewController.j
+ * La Mejorcita
+ *
+ * Created by You on January 8, 2013.
+ * Copyright 2013,  Vibebrand All rights reserved.
+ */
 @import <AppKit/CPViewController.j>
 @import "../Views/OptionCell.j"
 
 @implementation MenuViewController : CPViewController{
 	CPCollectionView optionsList;
+    id _delegate;
+
 }
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
@@ -34,6 +43,18 @@
     return self;
 }
 - (void)collectionViewDidChangeSelection:(CPCollectionView)aCollectionView{
-    console.log(aCollectionView);
+    var selectedId = [[aCollectionView selectionIndexes] firstIndex];
+    switch(selectedId){
+        case 0:
+            [[self delegate] changeHash: [[CPArray alloc] initWithObjects: @"!",@"Stocks"]];
+        break;
+    }
+
+}
+-(void)setDelegate:(id)delegate{
+    _delegate = delegate;
+}
+-(id) delegate{
+    return _delegate;
 }
 @end

@@ -29,6 +29,10 @@
     var navigationController = [[NavigationController alloc] init];
     var masterControl        = [[MasterControl alloc] init];
 
+    [headervewController setDelegate: mainViewController];
+    [menuViewController setDelegate: mainViewController];
+    [mainViewController setDelegate: masterControl];
+    [navigationController setDelegate: masterControl];
 
     [mainViewController setHeaderViewController: headervewController];
     [mainViewController setMenuViewController: menuViewController];
@@ -38,29 +42,7 @@
     [theWindow orderFront:self];
     [theWindow setContentView: [mainViewController view]];
 
+    [masterControl validateHash];
      _masterControl = masterControl;
-
-    /*var mainViewController = [[MainViewController alloc] initWithFrame: ];
-    console.log(mainViewController);
-    var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask],
-        contentView = [theWindow contentView];
-
-    var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-
-    [label setStringValue:@"Hello World!"];
-    [label setFont:[CPFont boldSystemFontOfSize:24.0]];
-
-    [label sizeToFit];
-
-    [label setAutoresizingMask:CPViewMinXMargin | CPViewMaxXMargin | CPViewMinYMargin | CPViewMaxYMargin];
-    [label setCenter:[contentView center]];
-
-    [contentView addSubview:label];
-
-    [theWindow orderFront:self];*/
-
-    // Uncomment the following line to turn on the standard menu bar.
-    //[CPMenu setMenuBarVisible:YES];
 }
-
 @end

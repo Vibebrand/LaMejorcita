@@ -26,8 +26,11 @@
     var mainViewController   = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
     var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, 100.0)];
     var menuViewController   = [[MenuViewController alloc] initWithSize: CGRectMake(0, 100.0, 200.0, bounds.size.height)];
-    var navigationController = [[NavigationController alloc] init];
+    var navigationController = [[NavigationController alloc] initWithCookiePrefix: @"lamejorcita"];
     masterControl            = [[MasterControl alloc] init];
+
+    [navigationController addStandardRoute: @"" withCallback:@selector(loadLoginPage)];
+    [navigationController addLoggedRoute: @"/Stocks" withCallback:@selector(loadStocksPage)];
 
     [headervewController setDelegate: mainViewController];
     [menuViewController setDelegate: mainViewController];

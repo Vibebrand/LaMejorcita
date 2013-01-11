@@ -62,9 +62,10 @@
 	for (var i = 0; i < [routes count]; i++) {
 		var route         = [routes objectAtIndex: i];
 		var pattern       = new RegExp([self prepareUrlPattern: [route urlPatern]]);
-		if(pattern.test(page)){
+		if(pattern.test(page) == true){
 			var parameters = [self getParameters: page withPattern: [route urlPatern] withExtraParameters: [route params]];
 			[[self delegate] performSelector:[route callback] withObject:parameters];
+			[cookie setValue:page expires: nil domain: nil];
 			return nil;
 		}
 	}

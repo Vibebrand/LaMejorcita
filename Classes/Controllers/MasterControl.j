@@ -8,10 +8,13 @@
 @import <Foundation/CPObject.j>
 @import <AppKit/CPViewController.j>
 @import "../Controllers/NavigationController.j"
+@import "../Services/StockService.j"
 
-@implementation MasterControl : CPObject{
+@implementation MasterControl : CPObject
+{
 	CPView mainViewController @accessors;
 	NavigationController navigationController @accessors;
+	StockService stockService @accessors;
 }
 -(BOOL)validationRule{
 	return true;
@@ -38,5 +41,8 @@
 }
 -(void) loadSalesPage{
 	[mainViewController loadSalesPage];
+}
+-(void)getStocksData{
+	[stockService getStocksData];
 }
 @end

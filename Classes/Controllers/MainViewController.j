@@ -14,7 +14,8 @@
 @import "../Controllers/HeaderViewController.j"
 @import "../Controllers/StocksViewController.j"
 
-@implementation MainViewController : CPViewController{
+@implementation MainViewController : CPViewController
+{
     id delegate @accessors;
     CPScrollView containerView @accessors;
 	HeaderViewController headerViewController @accessors;
@@ -40,6 +41,7 @@
         var stockViewController = [[StocksViewController alloc] init];
         [containerView setDocumentView: [stockViewController view]];
         currentController = stockViewController;
+        [delegate getStocksData];
     };
 }
 -(void) loadPointsPage{

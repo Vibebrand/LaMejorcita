@@ -8,7 +8,8 @@
 @import <AppKit/CPViewController.j>
 @import "../Views/OptionCell.j"
 
-@implementation MenuViewController : CPViewController{
+@implementation MenuViewController : CPViewController
+{
     id delegate @accessors;
 	CPCollectionView optionsList;
     CPCookie currentOption;

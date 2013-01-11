@@ -1,7 +1,8 @@
 
 @import <AppKit/CPTableView.j>
 @import <AppKit/CPViewController.j>
-@implementation StocksViewController : CPViewController{
+@implementation StocksViewController : CPViewController
+{
 	CPArray data;
 }
 -(void) init{

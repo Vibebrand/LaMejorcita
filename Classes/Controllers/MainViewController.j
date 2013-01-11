@@ -8,6 +8,7 @@
  */
 @import <AppKit/CPViewController.j>
 @import <AppKit/CPScrollView.j>
+@import <AppKit/CPView.j>
 @import "../Views/MainView.j"
 @import "../Controllers/MenuViewController.j"
 @import "../Controllers/HeaderViewController.j"
@@ -37,11 +38,23 @@
 -(void) createStocksPage{
     if(![currentController isKindOfClass: StocksViewController]){
         var stockViewController = [[StocksViewController alloc] init];
-        [[currentController view] removeFromSuperview];
         [containerView setDocumentView: [stockViewController view]];
         currentController = stockViewController;
     };
 }
+-(void) loadPointsPage{
+    [containerView setDocumentView: [[CPView alloc] init]];
+    currentController = [[CPViewController alloc] init];
+}
+-(void) loadSellersPage{
+    [containerView setDocumentView: [[CPView alloc] init]];
+    currentController = [[CPViewController alloc] init];
+}
+-(void) loadSalesPage{
+    [containerView setDocumentView: [[CPView alloc] init]];
+    currentController = [[CPViewController alloc] init];
+}
+
 -(void) changeHash: (CPArray) arguments{
 	[[self delegate] changeHash: arguments];
 }

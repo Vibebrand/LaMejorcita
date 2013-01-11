@@ -31,12 +31,12 @@
 	[mainViewController createStocksPage];
 }
 -(void) loadPointsPage{
-	console.log('loadPointsPage');
+	[mainViewController loadPointsPage];
 }
 -(void) loadSellersPage{
-	console.log('loadSellersPage');
+	[mainViewController loadSellersPage];
 }
 -(void) loadSalesPage{
-	console.log('loadSalesPage');
+	[mainViewController loadSalesPage];
 }
 @end

@@ -25,7 +25,7 @@
 			prefix = [prefix stringByAppendingString: @"."];
 		standardRoutes = [[CPMutableArray alloc] init];
 		loggedRoutes   = [[CPMutableArray alloc] init];
-		cookie = [[CPCookie alloc] initWithName: [prefix stringByAppendingString: @"page"]];
+		cookie         = [[CPCookie alloc] initWithName: [prefix stringByAppendingString: @"page"]];
 	};
 	return self;
 }

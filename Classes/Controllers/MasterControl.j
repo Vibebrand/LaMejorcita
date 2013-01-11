@@ -22,11 +22,21 @@
 -(void) changeHash: (CPArray) arguments{
 	[[self navigationController] changeHash: arguments];
 }
-
+//Standard
 -(void) loadLoginPage{
 	console.log('loadLoginPage');
 }
+//Logged
 -(void) loadStocksPage{
 	console.log('loadStocksPage');
+}
+-(void) loadPointsPage{
+	console.log('loadPointsPage');
+}
+-(void) loadSellersPage{
+	console.log('loadSellersPage');
+}
+-(void) loadSalesPage{
+	console.log('loadSalesPage');
 }
 @end

@@ -32,6 +32,9 @@
     [navigationController addStandardRoute: @"" withCallback:@selector(loadLoginPage) withParams: nil];
     [navigationController addLoggedRoute: @"" withCallback:@selector(changeHash:) withParams: [[CPArray alloc] initWithObjects: @"",@"Stocks"]];
     [navigationController addLoggedRoute: @"/Stocks" withCallback:@selector(loadStocksPage) withParams: nil];
+    [navigationController addLoggedRoute: @"/Sellers" withCallback:@selector(loadSellersPage) withParams: nil];
+    [navigationController addLoggedRoute: @"/Points" withCallback:@selector(loadPointsPage) withParams: nil];
+    [navigationController addLoggedRoute: @"/Sales" withCallback:@selector(loadSalesPage) withParams: nil];
 
     [headervewController setDelegate: mainViewController];
     [menuViewController setDelegate: mainViewController];

@@ -9,8 +9,10 @@
 @import "../Views/OptionCell.j"
 
 @implementation MenuViewController : CPViewController{
-	CPCollectionView optionsList;
     id delegate @accessors;
+	CPCollectionView optionsList;
+    CPCookie currentOption;
+    CPArray hashurls;
 }
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
@@ -19,7 +21,14 @@
         var options    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var content    = [[CPArray alloc] initWithObjects:@"Bodegas", @"Vendedores", @"Puntos de Venta", @"Venta"];
         var optionItem = [[CPCollectionViewItem alloc] init];
-
+        currentOption  = [[CPCookie alloc] initWithName: @"lamejorcita.menuoption"];
+        var initial = Number([currentOption value]);
+        hashurls = [[CPArray alloc] initWithObjects:
+            [[CPArray alloc] initWithObjects: @"",@"Stocks"],
+            [[CPArray alloc] initWithObjects: @"",@"Sellers"],
+            [[CPArray alloc] initWithObjects: @"",@"Points"],
+            [[CPArray alloc] initWithObjects: @"",@"Sales"]
+        ];
     	[scrollView setAutohidesScrollers:YES];
     	[scrollView setAutoresizingMask:CPViewHeightSizable];
     	[optionItem setView:[[OptionCell alloc] init]];
@@ -33,7 +42,8 @@
     	[options setDelegate: self];
     	[options setContent: content];
     	[options setItemPrototype:optionItem];
-        [options setSelectionIndexes:[CPIndexSet indexSetWithIndex: 0]];
+
+        [options setSelectionIndexes:[CPIndexSet indexSetWithIndex: initial]];
 
     	[scrollView addSubview: options];
     	[self setView: scrollView];
@@ -43,10 +53,7 @@
 }
 - (void)collectionViewDidChangeSelection:(CPCollectionView)aCollectionView{
     var selectedId = [[aCollectionView selectionIndexes] firstIndex];
-    switch(selectedId){
-        case 0:
-            [[self delegate] changeHash: [[CPArray alloc] initWithObjects: @"",@"Stocks"]];
-        break;
-    }
+    [currentOption setValue:selectedId expires:nil domain: nil];
+    [[self delegate] changeHash: [hashurls objectAtIndex: selectedId]];
 }
 @end

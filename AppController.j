@@ -15,7 +15,7 @@
 
 
 @implementation AppController : CPObject{
-    MasterControl _masterControl;
+    MasterControl  masterControl @accessors;
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
@@ -26,41 +26,28 @@
     var mainViewController   = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
     var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, 100.0)];
     var menuViewController   = [[MenuViewController alloc] initWithSize: CGRectMake(0, 100.0, 200.0, bounds.size.height)];
-    var navigationController = [[NavigationController alloc] init];
-    var masterControl        = [[MasterControl alloc] init];
+    var navigationController = [[NavigationController alloc] initWithCookiePrefix: @"lamejorcita"];
+    masterControl            = [[MasterControl alloc] init];
 
+    [navigationController addStandardRoute: @"" withCallback:@selector(loadLoginPage) withParams: nil];
+    [navigationController addLoggedRoute: @"" withCallback:@selector(changeHash:) withParams: [[CPArray alloc] initWithObjects: @"",@"Stocks"]];
+    [navigationController addLoggedRoute: @"/Stocks" withCallback:@selector(loadStocksPage) withParams: nil];
+
+    [headervewController setDelegate: mainViewController];
+    [menuViewController setDelegate: mainViewController];
+    [mainViewController setDelegate: masterControl];
+    [navigationController setDelegate: masterControl];
 
     [mainViewController setHeaderViewController: headervewController];
     [mainViewController setMenuViewController: menuViewController];
     [masterControl setMainViewController: mainViewController];
     [masterControl setNavigationController: navigationController];
 
+    [[mainViewController view] addSubview: [headervewController view]];
+    [[mainViewController view] addSubview: [menuViewController view]];
+
     [theWindow orderFront:self];
     [theWindow setContentView: [mainViewController view]];
-
-     _masterControl = masterControl;
-
-    /*var mainViewController = [[MainViewController alloc] initWithFrame: ];
-    console.log(mainViewController);
-    var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask],
-        contentView = [theWindow contentView];
-
-    var label = [[CPTextField alloc] initWithFrame:CGRectMakeZero()];
-
-    [label setStringValue:@"Hello World!"];
-    [label setFont:[CPFont boldSystemFontOfSize:24.0]];
-
-    [label sizeToFit];
-
-    [label setAutoresizingMask:CPViewMinXMargin | CPViewMaxXMargin | CPViewMinYMargin | CPViewMaxYMargin];
-    [label setCenter:[contentView center]];
-
-    [contentView addSubview:label];
-
-    [theWindow orderFront:self];*/
-
-    // Uncomment the following line to turn on the standard menu bar.
-    //[CPMenu setMenuBarVisible:YES];
+    [masterControl validateHash];
 }
-
 @end

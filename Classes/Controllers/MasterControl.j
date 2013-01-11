@@ -1,23 +1,32 @@
-
+/*
+ * MasterControl.j
+ * La Mejorcita
+ *
+ * Created by You on January 8, 2013.
+ * Copyright 2013,  Vibebrand All rights reserved.
+ */
 @import <Foundation/CPObject.j>
 @import <AppKit/CPViewController.j>
 @import "../Controllers/NavigationController.j"
 
 @implementation MasterControl : CPObject{
-	CPView _mainViewController;
-	NavigationController _navigationControler;
+	CPView mainViewController @accessors;
+	NavigationController navigationController @accessors;
 }
--(void) setMainViewController: (CPViewController)aViewController{
-	_mainViewController = aViewController;
+-(BOOL)validationRule{
+	return true;
 }
--(void) mainViewController{
-	return _mainViewController;
+-(void) validateHash{
+	[[self navigationController] validateHash];
+}
+-(void) changeHash: (CPArray) arguments{
+	[[self navigationController] changeHash: arguments];
 }
 
--(void)setNavigationController: (NavigationController) aController{
-	_navigationControler = aController;
+-(void) loadLoginPage{
+	console.log('loadLoginPage');
 }
--(void)navigationController{
-	return _navigationControler;
+-(void) loadStocksPage{
+	console.log('loadStocksPage');
 }
 @end

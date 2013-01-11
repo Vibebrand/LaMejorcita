@@ -32,15 +32,12 @@
         highlightView = [[CPView alloc] initWithFrame:CGRectCreateCopy([self bounds])];
         [highlightView setBackgroundColor:[CPColor blueColor]];
     }
-
-    if(flag)
-    {
+    if(flag){
         [self addSubview:highlightView positioned:CPWindowBelow relativeTo:label];
         [label setTextColor:[CPColor whiteColor]];
         [label setTextShadowColor:[CPColor blackColor]];
     }
-    else
-    {
+    else{
         [highlightView removeFromSuperview];
         [label setTextColor:[CPColor blackColor]];
         [label setTextShadowColor:[CPColor whiteColor]];

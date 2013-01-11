@@ -11,19 +11,22 @@
 @import "../Views/MainView.j"
 @import "../Controllers/MenuViewController.j"
 @import "../Controllers/HeaderViewController.j"
+@import "../Controllers/StocksViewController.j"
 
 @implementation MainViewController : CPViewController{
+    id delegate @accessors;
+    CPScrollView containerView @accessors;
 	HeaderViewController headerViewController @accessors;
 	MenuViewController  menuViewController @accessors;
-	CPScrollView containerView @accessors;
-    id delegate @accessors;
+    CPViewController currentController;
 }
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
     if (self){
-    	var width = aFrame.size.width - 200;
-    	var height = aFrame.size.height - 100;
-    	containerView = [[CPScrollView alloc] initWithFrame: CGRectMake(200, 100, width, height)];
+        var width         = aFrame.size.width - 200;
+        var height        = aFrame.size.height - 100;
+        currentController = [[CPViewController alloc] init];
+        containerView     = [[CPScrollView alloc] initWithFrame: CGRectMake(200, 100, width, height)];
     	[containerView setAutoresizingMask:  CPViewWidthSizable | CPViewHeightSizable];
     	[containerView setAutohidesScrollers:YES];
     	[self setView: [[MainView alloc] initWithFrame: aFrame]];
@@ -32,9 +35,17 @@
     return self;
 }
 -(void) createStocksPage{
-	console.log('createStocksPage');
+    if(![currentController isKindOfClass: StocksViewController]){
+        var stockViewController = [[StocksViewController alloc] init];
+        [[currentController view] removeFromSuperview];
+        [containerView setDocumentView: [stockViewController view]];
+        currentController = stockViewController;
+    };
 }
 -(void) changeHash: (CPArray) arguments{
 	[[self delegate] changeHash: arguments];
+}
+-(void) loadLoginPage{
+
 }
 @end

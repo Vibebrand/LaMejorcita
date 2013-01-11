@@ -24,11 +24,11 @@
 }
 //Standard
 -(void) loadLoginPage{
-	console.log('loadLoginPage');
+	[mainViewController loadLoginPage];
 }
 //Logged
 -(void) loadStocksPage{
-	console.log('loadStocksPage');
+	[mainViewController createStocksPage];
 }
 -(void) loadPointsPage{
 	console.log('loadPointsPage');

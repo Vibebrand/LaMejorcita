@@ -34,16 +34,18 @@
 	[sharedApplication setArguments:arguments];
 }
 //Add routes
--(void) addStandardRoute:(CPString) urlpattern withCallback:(SEL) selector{
+-(void) addStandardRoute:(CPString) urlpattern withCallback:(SEL) selector withParams:(id) params{
 	var route = [[Route alloc] init];
 	[route setUrlPatern: urlpattern];
 	[route setCallback: selector];
+	[route setParams: params];
 	[standardRoutes addObject: route];
 }
--(void) addLoggedRoute:(CPString) urlpattern withCallback:(SEL) selector{
+-(void) addLoggedRoute:(CPString) urlpattern withCallback:(SEL) selector withParams:(id) params{
 	var route = [[Route alloc] init];
 	[route setUrlPatern: urlpattern];
 	[route setCallback: selector];
+	[route setParams: params];
 	[loggedRoutes addObject: route];
 }
 //Validation
@@ -53,22 +55,64 @@
 	else
 		[self validatePages: standardRoutes];
 }
--(void) validatePages: (CPArray) routes{
+-(id) validatePages: (CPArray) routes{
 	var sharedApplication = [CPApplication sharedApplication];
-	var args = [sharedApplication arguments];
+	var page              = [[sharedApplication arguments] componentsJoinedByString: @"/"];
+	var cookiePage        = [cookie value];
+	for (var i = 0; i < [routes count]; i++) {
+		var route         = [routes objectAtIndex: i];
+		var pattern       = new RegExp([self prepareUrlPattern: [route urlPatern]]);
+		if(pattern.test(page)){
+			var parameters = [self getParameters: page withPattern: [route urlPatern] withExtraParameters: [route params]];
+			[[self delegate] performSelector:[route callback] withObject:parameters];
+			return nil;
+		}
+	}
+	for (var i = 0; i < [routes count]; i++) {
+		var route         = [routes objectAtIndex: i];
+		var pattern       = new RegExp([self prepareUrlPattern: [route urlPatern]]);
+		if(pattern.test(cookiePage)){
+			var parameters = [self getParameters: cookiePage withPattern: [route urlPatern] withExtraParameters: [route params]];
+			[[self delegate] performSelector:[route callback] withObject:parameters];
+			return nil;
+		}
+	}
+	return nil;
 }
 -(CPString) prepareUrlPattern: (CPString) urlpattern{
+	urlpattern =[urlpattern stringByTrimmingCharactersInSet:[CPCharacterSet whitespaceCharacterSet]];
 	var mapparts = [urlpattern componentsSeparatedByString: @"/:"];
-	var pattern = [@"^" stringByAppendingString: mapparts];
-
-	console.log(mapparts);
-	/*var mapparts = url.split('/:');
-		var pattern  = '^'+mapparts[0];
-		for (var i = 1; i < mapparts.length; i++)
-			pattern+='/[a-zA-Z0-9_]*';
-		pattern+="/?$";
-		pattern = new RegExp(pattern);*/
-	return @"";
+	var pattern = [@"^" stringByAppendingString: [mapparts objectAtIndex: 0]];
+	for (var i = 1; i < [mapparts count]; i++)
+		pattern = [pattern stringByAppendingString: @"/[a-zA-Z0-9_]*"];
+	pattern = [pattern stringByAppendingString: @"/?$"];
+	return pattern;
+}
+-(id) getParameters: (CPString)hash withPattern:(CPString) pattern withExtraParameters:(id) extra {
+	var parameters = [[CPMutableDictionary alloc] init];
+	var params     = [[CPMutableArray alloc] init];
+	var hash       = [hash componentsSeparatedByString: @"/"];
+	var pattern    = [pattern componentsSeparatedByString: @"/"];
+	for (var i = 0; i < [hash count]; i++) {
+		var patternpart = [[pattern objectAtIndex: i] stringByTrimmingCharactersInSet: [CPCharacterSet whitespaceCharacterSet]];
+		if([patternpart hasPrefix: @":"])
+			[params addObject: [hash objectAtIndex:i]];
+	}
+	if([params count] > 0 && extra){
+		if([params count] == 1)
+			params = [params objectAtIndex: 0];
+		[parameters setObject:params forKey:@"params"];
+		[parameters setObject:extra forKey:@"params"];
+		return parameters;
+	}
+	if([params count] > 0 && !extra){
+		if([params count] == 1)
+			params = [params objectAtIndex: 0];
+		return params;
+	}
+	if([params count] < 1 && extra)
+		return extra;
+	return nil;
 }
 -(void) deletePageCookie{
 	[cookie setValue:nil expires:[CPDate date] domain: nil];

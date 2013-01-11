@@ -29,8 +29,9 @@
     var navigationController = [[NavigationController alloc] initWithCookiePrefix: @"lamejorcita"];
     masterControl            = [[MasterControl alloc] init];
 
-    [navigationController addStandardRoute: @"" withCallback:@selector(loadLoginPage)];
-    [navigationController addLoggedRoute: @"/Stocks" withCallback:@selector(loadStocksPage)];
+    [navigationController addStandardRoute: @"" withCallback:@selector(loadLoginPage) withParams: nil];
+    [navigationController addLoggedRoute: @"" withCallback:@selector(changeHash:) withParams: [[CPArray alloc] initWithObjects: @"",@"Stocks"]];
+    [navigationController addLoggedRoute: @"/Stocks" withCallback:@selector(loadStocksPage) withParams: nil];
 
     [headervewController setDelegate: mainViewController];
     [menuViewController setDelegate: mainViewController];

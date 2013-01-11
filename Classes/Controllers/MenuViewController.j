@@ -45,7 +45,7 @@
     var selectedId = [[aCollectionView selectionIndexes] firstIndex];
     switch(selectedId){
         case 0:
-            [[self delegate] changeHash: [[CPArray alloc] initWithObjects: @"!",@"Stocks"]];
+            [[self delegate] changeHash: [[CPArray alloc] initWithObjects: @"",@"Stocks"]];
         break;
     }
 }

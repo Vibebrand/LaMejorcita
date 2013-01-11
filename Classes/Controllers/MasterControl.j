@@ -16,17 +16,17 @@
 -(BOOL)validationRule{
 	return true;
 }
--(void) loadPage: (CPString) page{
-	switch(page){
-		case "stocks":
-			[[self mainViewController] createStocksPage];
-		break;
-	}
-}
 -(void) validateHash{
 	[[self navigationController] validateHash];
 }
 -(void) changeHash: (CPArray) arguments{
 	[[self navigationController] changeHash: arguments];
+}
+
+-(void) loadLoginPage{
+	console.log('loadLoginPage');
+}
+-(void) loadStocksPage{
+	console.log('loadStocksPage');
 }
 @end

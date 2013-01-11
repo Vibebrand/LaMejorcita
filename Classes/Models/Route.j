@@ -7,6 +7,7 @@
  */
 @implementation Route : CPObject{
 	CPString urlPatern @accessors;
+	id params @accessors;
 	SEL callback @accessors;
 }
 @end

@@ -29,6 +29,7 @@
 -(void) loadLoginPage{
 	[mainViewController loadLoginPage];
 }
+
 //Logged
 -(void) loadStocksPage{
 	[mainViewController createStocksPage];
@@ -44,5 +45,9 @@
 }
 -(void)getStocksData{
 	[stockService getStocksData];
+}
+//Stock
+-(void)setStockData: (CPArray) stocks{
+	[mainViewController setStockData: stocks];
 }
 @end

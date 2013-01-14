@@ -39,10 +39,11 @@
 -(void) createStocksPage{
     if(![currentController isKindOfClass: StocksViewController]){
         var stockViewController = [[StocksViewController alloc] init];
+        [stockViewController setDelegate: self];
         [containerView setDocumentView: [stockViewController view]];
         currentController = stockViewController;
-        [delegate getStocksData];
-    };
+        [menuViewController updateMenu];
+    }
 }
 -(void) loadPointsPage{
     [containerView setDocumentView: [[CPView alloc] init]];
@@ -62,5 +63,13 @@
 }
 -(void) loadLoginPage{
 
+}
+//Stocks
+-(void)setStockData: (CPArray) stocks{
+    if([currentController isKindOfClass: StocksViewController])
+        [currentController setStockData: stocks];
+}
+-(void) getStocksData{
+    [delegate getStocksData];
 }
 @end

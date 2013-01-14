@@ -16,6 +16,12 @@
 	NavigationController navigationController @accessors;
 	StockService stockService @accessors;
 }
+-(id) init{
+	self = [super init];
+	if(self){
+	}
+	return self;
+}
 -(BOOL)validationRule{
 	return true;
 }

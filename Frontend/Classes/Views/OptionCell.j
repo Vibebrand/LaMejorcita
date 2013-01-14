@@ -16,7 +16,7 @@
 {
 	if(!label){
 		label = [[CPTextField alloc] initWithFrame:CGRectInset([self bounds], 4, 4)];
-		[label setFont:[CPFont systemFontOfSize:16.0]];
+		[label setFont:[CPFont systemFontOfSize:14.0]];
         [label setTextShadowColor:[CPColor whiteColor]];
         [label setTextShadowOffset:CGSizeMake(0, 1)];
         [self addSubview:label];

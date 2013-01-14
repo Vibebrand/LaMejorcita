@@ -33,6 +33,7 @@
     	[containerView setAutohidesScrollers:YES];
     	[self setView: [[MainView alloc] initWithFrame: aFrame]];
     	[[self view] addSubview: containerView];
+
     }
     return self;
 }

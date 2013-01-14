@@ -15,11 +15,21 @@
 };
 -(void) loadView
 {
-	var tableView = [[CPTableView alloc] initWithFrame:CGRectMakeZero()];
+	var tableView    = [[CPTableView alloc] initWithFrame:CGRectMakeZero()];
 	var name         = [[CPTableColumn alloc] initWithIdentifier:@"name"];
 	var businessName = [[CPTableColumn alloc] initWithIdentifier:@"businessName"];
 	var address      = [[CPTableColumn alloc] initWithIdentifier:@"address"];
 	var manager      = [[CPTableColumn alloc] initWithIdentifier:@"manager"];
+	var bounds       = [[delegate view] bounds];
+	var width        = bounds.size.width/5;
+	[[name headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
+	[[businessName headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
+	[[address headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
+	[[manager headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
+	[name setWidth: width];
+	[businessName setWidth: width];
+	[address setWidth: width];
+	[manager setWidth: width];
 	[[name headerView] setStringValue: @"Nombre"];
 	[[businessName headerView] setStringValue: @"Razón Social"];
 	[[address headerView] setStringValue: @"Dirección"];

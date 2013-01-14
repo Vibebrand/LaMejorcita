@@ -30,8 +30,8 @@
     	[scrollView setAutoresizingMask:CPViewHeightSizable];
     	[optionItem setView:[[OptionCell alloc] init]];
     	[options setVerticalMargin: 0.0];
-    	[options setMinItemSize:CGSizeMake(20.0, 45.0)];
-	    [options setMaxItemSize:CGSizeMake(1000.0, 45.0)];
+    	[options setMinItemSize:CGSizeMake(20.0, 40.0)];
+	    [options setMaxItemSize:CGSizeMake(200.0, 40.0)];
 	    [options setMaxNumberOfColumns:1];
     	[options setAllowsEmptySelection: false];
 		[options setAllowsMultipleSelection: false];

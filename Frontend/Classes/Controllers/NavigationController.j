@@ -9,7 +9,8 @@
 @import <AppKit/CPCookie.j>
 @import "../Models/Route.j"
 
-@implementation NavigationController : CPObject{
+@implementation NavigationController : CPObject
+{
 	id delegate @accessors;
 	CPMutableArray standardRoutes;
 	CPMutableArray loggedRoutes;

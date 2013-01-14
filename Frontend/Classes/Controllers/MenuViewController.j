@@ -8,8 +8,10 @@
 @import <AppKit/CPViewController.j>
 @import "../Views/OptionCell.j"
 
-@implementation MenuViewController : CPViewController{
+@implementation MenuViewController : CPViewController
+{
     id delegate @accessors;
+    CPCollectionView options;
 	CPCollectionView optionsList;
     CPCookie currentOption;
     CPArray hashurls;
@@ -17,30 +19,25 @@
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
     if (self){
+        options        = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var scrollView = [[CPScrollView alloc] initWithFrame: aFrame];
-        var options    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var content    = [@"Bodegas", @"Vendedores", @"Puntos de Venta", @"Venta"];
         var optionItem = [[CPCollectionViewItem alloc] init];
-        var initial = Number([currentOption value]);
         currentOption  = [[CPCookie alloc] initWithName: @"lamejorcita.menuoption"];
-        hashurls = [[@"",@"Stocks"],[@"",@"Sellers"],[@"",@"Points"],[@"",@"Sales"]];
+        hashurls       = [[@"",@"Stocks"],[@"",@"Sellers"],[@"",@"Points"],[@"",@"Sales"]];
 
     	[scrollView setAutohidesScrollers:YES];
     	[scrollView setAutoresizingMask:CPViewHeightSizable];
     	[optionItem setView:[[OptionCell alloc] init]];
-
     	[options setVerticalMargin: 0.0];
-    	[options setMinItemSize:CGSizeMake(20.0, 45.0)];
-	    [options setMaxItemSize:CGSizeMake(1000.0, 45.0)];
+    	[options setMinItemSize:CGSizeMake(20.0, 40.0)];
+	    [options setMaxItemSize:CGSizeMake(200.0, 40.0)];
 	    [options setMaxNumberOfColumns:1];
     	[options setAllowsEmptySelection: false];
 		[options setAllowsMultipleSelection: false];
     	[options setDelegate: self];
     	[options setContent: content];
     	[options setItemPrototype:optionItem];
-
-        [options setSelectionIndexes:[CPIndexSet indexSetWithIndex: initial]];
-
     	[scrollView addSubview: options];
     	[self setView: scrollView];
     	optionsList = options;
@@ -51,5 +48,9 @@
     var selectedId = [[aCollectionView selectionIndexes] firstIndex];
     [currentOption setValue:selectedId expires:nil domain: nil];
     [[self delegate] changeHash: [hashurls objectAtIndex: selectedId]];
+}
+-(void) updateMenu{
+    var initial    = Number([currentOption value]);
+    [options setSelectionIndexes:[CPIndexSet indexSetWithIndex: initial]];
 }
 @end

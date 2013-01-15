@@ -11,7 +11,6 @@
 @implementation MenuViewController : CPViewController
 {
     id delegate @accessors;
-    CPCollectionView options;
 	CPCollectionView optionsList;
     CPCookie currentOption;
     CPArray hashurls;
@@ -19,7 +18,7 @@
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
     if (self){
-        options        = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
+        optionsList    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var scrollView = [[CPScrollView alloc] initWithFrame: aFrame];
         var content    = [@"Bodegas", @"Vendedores", @"Puntos de Venta", @"Venta"];
         var optionItem = [[CPCollectionViewItem alloc] init];
@@ -29,18 +28,17 @@
     	[scrollView setAutohidesScrollers:YES];
     	[scrollView setAutoresizingMask:CPViewHeightSizable];
     	[optionItem setView:[[OptionCell alloc] init]];
-    	[options setVerticalMargin: 0.0];
-    	[options setMinItemSize:CGSizeMake(20.0, 40.0)];
-	    [options setMaxItemSize:CGSizeMake(200.0, 40.0)];
-	    [options setMaxNumberOfColumns:1];
-    	[options setAllowsEmptySelection: false];
-		[options setAllowsMultipleSelection: false];
-    	[options setDelegate: self];
-    	[options setContent: content];
-    	[options setItemPrototype:optionItem];
-    	[scrollView addSubview: options];
+    	[optionsList setVerticalMargin: 0.0];
+    	[optionsList setMinItemSize:CGSizeMake(20.0, 40.0)];
+	    [optionsList setMaxItemSize:CGSizeMake(200.0, 40.0)];
+	    [optionsList setMaxNumberOfColumns:1];
+    	[optionsList setAllowsEmptySelection: false];
+		[optionsList setAllowsMultipleSelection: false];
+    	[optionsList setDelegate: self];
+    	[optionsList setContent: content];
+    	[optionsList setItemPrototype:optionItem];
+    	[scrollView setDocumentView: optionsList];
     	[self setView: scrollView];
-    	optionsList = options;
     }
     return self;
 }
@@ -51,6 +49,6 @@
 }
 -(void) updateMenu{
     var initial    = Number([currentOption value]);
-    [options setSelectionIndexes:[CPIndexSet indexSetWithIndex: initial]];
+    [optionsList setSelectionIndexes:[CPIndexSet indexSetWithIndex: initial]];
 }
 @end

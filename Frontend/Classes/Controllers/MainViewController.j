@@ -17,45 +17,57 @@
 @implementation MainViewController : CPViewController
 {
     id delegate @accessors;
-    CPScrollView containerView @accessors;
+    CPScrollView menuContainer @accessors;
+    CPScrollView mainContainer @accessors;
 	HeaderViewController headerViewController @accessors;
 	MenuViewController  menuViewController @accessors;
+
     CPViewController currentController;
+    CGRect fame;
 }
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
     if (self){
-        var width         = aFrame.size.width - 200;
-        var height        = aFrame.size.height - 100;
-        currentController = [[CPViewController alloc] init];
-        containerView     = [[CPScrollView alloc] initWithFrame: CGRectMake(200, 100, width, height)];
-    	[containerView setAutoresizingMask:  CPViewWidthSizable | CPViewHeightSizable];
-    	[containerView setAutohidesScrollers:YES];
-    	[self setView: [[MainView alloc] initWithFrame: aFrame]];
-    	[[self view] addSubview: containerView];
+        var width         = CGRectGetWidth(aFrame) - 200;
+        var height        = CGRectGetHeight(aFrame) - 100;
 
+        currentController = [[CPViewController alloc] init];
+        mainContainer     = [[CPScrollView alloc] initWithFrame: CGRectMake(200, 100, width, height)];
+        menuContainer     = [[CPScrollView alloc] initWithFrame: CGRectMake(0, 100, 200, height)];
+
+    	[mainContainer setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];
+        [mainContainer setAutohidesScrollers:YES];
+        [menuContainer setAutoresizingMask:CPViewHeightSizable];
+        [menuContainer setAutohidesScrollers:YES];
+        frame = aFrame;
     }
     return self;
+}
+-(void) loadView{
+    [menuContainer setDocumentView: [menuViewController view]];
+    [self setView: [[MainView alloc] initWithFrame: frame]];
+    [[self view] addSubview: menuContainer];
+    [[self view] addSubview: mainContainer];
 }
 -(void) createStocksPage{
     if(![currentController isKindOfClass: StocksViewController]){
         var stockViewController = [[StocksViewController alloc] init];
         [stockViewController setDelegate: self];
-        [containerView setDocumentView: [stockViewController view]];
+        [mainContainer setDocumentView: [stockViewController view]];
         currentController = stockViewController;
         [menuViewController updateMenu];
     }
 }
 -(void) loadPointsPage{
-    [containerView setDocumentView: [[CPView alloc] init]];
+    [mainContainer setDocumentView: [[CPView alloc] init]];
     currentController = [[CPViewController alloc] init];
 }
 -(void) loadSellersPage{
-    [containerView setDocumentView: [[CPView alloc] init]];
+    [mainContainer setDocumentView: [[CPView alloc] init]];
     currentController = [[CPViewController alloc] init];
 }
 -(void) loadSalesPage{
-    [containerView setDocumentView: [[CPView alloc] init]];
+    [mainContainer setDocumentView: [[CPView alloc] init]];
     currentController = [[CPViewController alloc] init];
 }
 

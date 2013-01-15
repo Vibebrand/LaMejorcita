@@ -26,7 +26,7 @@
     var bounds               = [contentView bounds];
     var mainViewController   = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
     var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, 100.0)];
-    var menuViewController   = [[MenuViewController alloc] initWithSize: CGRectMake(0, 100.0, 200.0, bounds.size.height)];
+    var menuViewController   = [[MenuViewController alloc] init];
     var navigationController = [[NavigationController alloc] initWithCookiePrefix: @"lamejorcita"];
     var stockService         = [[StockService alloc] init];
     masterControl            = [[MasterControl alloc] init];
@@ -44,14 +44,14 @@
     [navigationController setDelegate: masterControl];
     [stockService setDelegate: masterControl];
 
-    [mainViewController setHeaderViewController: headervewController];
+
     [mainViewController setMenuViewController: menuViewController];
+    [mainViewController setHeaderViewController: headervewController];
     [masterControl setMainViewController: mainViewController];
     [masterControl setNavigationController: navigationController];
     [masterControl setStockService:  stockService];
 
     [[mainViewController view] addSubview: [headervewController view]];
-    [[mainViewController view] addSubview: [menuViewController view]];
 
     [theWindow orderFront:self];
     [theWindow setContentView: [mainViewController view]];

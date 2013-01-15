@@ -24,8 +24,8 @@
     var theWindow            = [[CPWindow alloc] initWithContentRect:CGRectMakeZero() styleMask:CPBorderlessBridgeWindowMask];
     var contentView          = [theWindow contentView];
     var bounds               = [contentView bounds];
-    var mainViewController   = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
-    var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, bounds.size.width, 100.0)];
+    var mainViewController   = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, CGRectGetWidth(bounds), CGRectGetHeight(bounds))];
+    var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, CGRectGetWidth(bounds), 100.0)];
     var menuViewController   = [[MenuViewController alloc] init];
     var navigationController = [[NavigationController alloc] initWithCookiePrefix: @"lamejorcita"];
     var stockService         = [[StockService alloc] init];

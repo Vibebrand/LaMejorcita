@@ -17,12 +17,10 @@
 - (id)init{
     self = [super init];
     if (self){
-
         hashurls       = [[@"",@"Stocks"],[@"",@"Sellers"],[@"",@"Points"],[@"",@"Sales"]];
         currentOption  = [[CPCookie alloc] initWithName: @"lamejorcita.menuoption"];
-
-        var optionsList    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var content    = [@"Bodegas", @"Vendedores", @"Puntos de Venta", @"Venta"];
+        var optionsList    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var optionItem = [[CPCollectionViewItem alloc] init];
 
     	[optionItem setView:[[OptionCell alloc] init]];

@@ -21,24 +21,28 @@
 	var address      = [[CPTableColumn alloc] initWithIdentifier:@"address"];
 	var manager      = [[CPTableColumn alloc] initWithIdentifier:@"manager"];
 	var bounds       = [[delegate view] bounds];
-	var width        = bounds.size.width/5;
-	[[name headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
-	[[businessName headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
-	[[address headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
-	[[manager headerView] setFont: [CPFont boldSystemFontOfSize:14.0]]
+	var width        = bounds.size.width/7;
+	[[name headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
+	[[businessName headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
+	[[address headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
+	[[manager headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
+
 	[name setWidth: width];
 	[businessName setWidth: width];
 	[address setWidth: width];
 	[manager setWidth: width];
+
 	[[name headerView] setStringValue: @"Nombre"];
 	[[businessName headerView] setStringValue: @"Razón Social"];
 	[[address headerView] setStringValue: @"Dirección"];
 	[[manager headerView] setStringValue: @"Responsable"];
 	[tableView setUsesAlternatingRowBackgroundColors:YES];
+
     [tableView addTableColumn:name];
 	[tableView addTableColumn:businessName];
 	[tableView addTableColumn:address];
 	[tableView addTableColumn:manager];
+
 	[tableView setDataSource:self];
 	[tableView setDelegate: self];
 	[self setView: tableView];

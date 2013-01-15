@@ -21,14 +21,15 @@
         hashurls       = [[@"",@"Stocks"],[@"",@"Sellers"],[@"",@"Points"],[@"",@"Sales"]];
         currentOption  = [[CPCookie alloc] initWithName: @"lamejorcita.menuoption"];
 
-        var optionsList    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 185, 0)];
+        var optionsList    = [[CPCollectionView alloc] initWithFrame:CGRectMake(0, 0, 200, 0)];
         var content    = [@"Bodegas", @"Vendedores", @"Puntos de Venta", @"Venta"];
         var optionItem = [[CPCollectionViewItem alloc] init];
 
     	[optionItem setView:[[OptionCell alloc] init]];
+        [optionsList setAutoresizingMask: CPViewWidthSizable];
     	[optionsList setVerticalMargin: 0.0];
     	[optionsList setMinItemSize:CGSizeMake(20.0, 40.0)];
-	    [optionsList setMaxItemSize:CGSizeMake(185.0, 40.0)];
+	    [optionsList setMaxItemSize:CGSizeMake(200.0, 40.0)];
 	    [optionsList setMaxNumberOfColumns:1];
     	[optionsList setAllowsEmptySelection: false];
 		[optionsList setAllowsMultipleSelection: false];

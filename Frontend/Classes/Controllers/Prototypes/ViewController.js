@@ -9,6 +9,7 @@ function ViewController(){
 		@type Object
 		@description Controller delegate.
 	*/
+	this.view = new View();
 	this.delegate = null;
 	/**
 		@function

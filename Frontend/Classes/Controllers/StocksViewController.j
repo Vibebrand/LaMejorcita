@@ -32,6 +32,9 @@
 	[removeBtn setTarget: self];
 	[removeBtn setAction: @selector(removeStock:)];
 	[removeBtn setButtonType: CPToggleButton];
+	[detailBtn setTarget: self];
+	[detailBtn setAction: @selector(getDetail:)];
+	[detailBtn setButtonType: CPToggleButton];
 
 	[[name headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
 	[[businessName headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
@@ -64,8 +67,6 @@
 	[tableView setDataSource:self];
 	[tableView setDelegate: self];
 	[self setView: tableView];
-
-	CPLog.info(@"creation");
 }
 -(void) viewDidLoad{
 	[delegate getStocksData];
@@ -90,5 +91,10 @@
 //Action
 -(void) removeStock: (id)sender
 {
+	CPLog.info('remove');
+}
+-(void) getDetail: (id)sender
+{
+	CPLog.info('detail');
 }
 @end

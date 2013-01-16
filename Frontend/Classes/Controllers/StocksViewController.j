@@ -28,8 +28,10 @@
 
 	var removeBtn = [CPButton buttonWithTitle:@"-"];
 	var detailBtn = [CPButton buttonWithTitle:@"Detalle"];
+
 	[removeBtn setTarget: self];
 	[removeBtn setAction: @selector(removeStock:)];
+	[removeBtn setButtonType: CPToggleButton];
 
 	[[name headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
 	[[businessName headerView] setFont: [CPFont boldSystemFontOfSize:14.0]];
@@ -62,6 +64,8 @@
 	[tableView setDataSource:self];
 	[tableView setDelegate: self];
 	[self setView: tableView];
+
+	CPLog.info(@"creation");
 }
 -(void) viewDidLoad{
 	[delegate getStocksData];
@@ -77,9 +81,14 @@
 	data = stocks;
 	[[self view] reloadData];
 }
+- (void)tableView:(CPTableView)aTableView setObjectValue:(id)anObject forTableColumn:(CPTableColumn)aTableColumn row:(int)rowIndex
+{
+	var cellview  = [aTableColumn dataViewForRow:rowIndex];
+	if([cellview isKindOfClass: [CPButton class]])
+		[[cellview target] performSelector: [cellview action] withObject: cellview];
+}
 //Action
 -(void) removeStock: (id)sender
 {
-	alert('remove');
 }
 @end

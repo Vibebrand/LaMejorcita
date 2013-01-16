@@ -25,7 +25,7 @@
     var contentView          = [theWindow contentView];
     var bounds               = [contentView bounds];
     var mainViewController   = [[MainViewController alloc] initWithSize: CGRectMake(0, 0, CGRectGetWidth(bounds), CGRectGetHeight(bounds))];
-    var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, CGRectGetWidth(bounds), 100.0)];
+    var headervewController  = [[HeaderViewController alloc] initWithSize: CGRectMake(0, 0, CGRectGetWidth(bounds), 80.0)];
     var menuViewController   = [[MenuViewController alloc] init];
     var navigationController = [[NavigationController alloc] initWithCookiePrefix: @"lamejorcita"];
     var stockService         = [[StockService alloc] init];

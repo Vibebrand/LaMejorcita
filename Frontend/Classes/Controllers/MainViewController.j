@@ -28,12 +28,14 @@
 - (id)initWithSize: (CGRect)aFrame{
     self = [super init];
     if (self){
-        var width         = CGRectGetWidth(aFrame) - 200;
-        var height        = CGRectGetHeight(aFrame) - 100;
+        var margintTop = 80;
+        var marginLeft = 200;
+        var width         = CGRectGetWidth(aFrame) - marginLeft;
+        var height        = CGRectGetHeight(aFrame) - margintTop;
 
         currentController = [[CPViewController alloc] init];
-        mainContainer     = [[CPScrollView alloc] initWithFrame: CGRectMake(200, 100, width, height)];
-        menuContainer     = [[CPScrollView alloc] initWithFrame: CGRectMake(0, 100, 200, height)];
+        mainContainer     = [[CPScrollView alloc] initWithFrame: CGRectMake(marginLeft, margintTop, width, height)];
+        menuContainer     = [[CPScrollView alloc] initWithFrame: CGRectMake(0, margintTop, marginLeft, height)];
 
     	[mainContainer setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];
         [mainContainer setAutohidesScrollers:YES];

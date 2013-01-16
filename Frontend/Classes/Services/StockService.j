@@ -6,7 +6,7 @@
     id delegate @accessors;
 }
 -(void)getStocksData{
-	var request = [[CPURLRequest alloc] initWithURL:@"/Projects/Web/Mejorcita/Frontend/Mocks/Stocks.json"];
+	var request = [[CPURLRequest alloc] initWithURL:@"Mocks/Stocks.json"];
 	[request setHTTPMethod:@"GET"];
 	var urlConnection = [CPURLConnection connectionWithRequest:request delegate:self];
 }

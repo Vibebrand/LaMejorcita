@@ -15,9 +15,6 @@ function TableController() {
 		cell.html(value);
 		this.append(cell);
 	};
-	this.cleanData = function() {
-		
-	};
 	TableController.prototype._init_.call(this);
 };
 TableController.prototype = new ViewController();

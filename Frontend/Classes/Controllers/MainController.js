@@ -4,10 +4,15 @@ function MainController () {
 	var self = this;
 	var tableController = null;
 	var menuController = null
+	var pagecount = 0;
+	var objects = 15;
+
 	this.page = 'Stock';
+
 	this.viewDidLoad = function(){
 		self['load'+this.page].call(self);
 	};
+	//Stocks
 	this.loadStock = function(){
 		if(!tableController)
 			tableController = new TableController();
@@ -16,6 +21,16 @@ function MainController () {
 		tableController.createStockTable();
 		menuController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
+		self.makeSearch({});
+	};
+	this.setStocks = function(){
+
+	};
+	this.makeSearch = function(aditional){
+		var searchData  = $.extend({},{}, aditional);
+		searchData.objects = objects;
+		searchData.page = pagecount;
+		self.delegate['search'+self.page+'s'].call(null,searchData);
 	};
 	MainController.prototype._init_.call(this);
 };

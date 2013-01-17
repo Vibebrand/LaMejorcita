@@ -44,5 +44,8 @@ function MasterControl(){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 	};
+	this.searchStocks = function(searchData){
+		self.stockService.searchStocks(searchData);
+	};
 	_init_();
 };

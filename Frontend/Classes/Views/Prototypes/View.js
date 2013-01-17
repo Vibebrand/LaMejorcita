@@ -1,6 +1,7 @@
+
 function View () {
 	var container = $('<div></div>');
-	
+	self.controller = null;
 	this.addSubview = function(aView) {
 		if(typeof aView != "undefined" && aView.prototype == View)
 			this.container().append(aView.container());
@@ -31,4 +32,8 @@ function View () {
 		if(typeof jqueryObject.find != "undefined")
 			container = jqueryObject;
 	};
-}
+	View.prototype._init_.call(this);
+};
+View.prototype._init_ = function(){
+	
+};

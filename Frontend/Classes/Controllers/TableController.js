@@ -4,7 +4,7 @@ function TableController() {
 		this.view.setClass('stock-table');
 		this.body.empty();
 		this.header.empty();
-		var headers = ['Nombre','Razón Social','Dirección','Responsable'];
+		var headers = ['Nombre','Responsable', 'Teléfono'];
 		var row = $('<tr></tr>'); 
 		this.header.append(row);
 		for (var i = 0; i < headers.length; i++)
@@ -16,9 +16,8 @@ function TableController() {
 		var detailBtn = $('<button class="detail"></button>');
 		this.body.append(row);
 		createCellItem.call(row, stock.name);
-		createCellItem.call(row, stock.businessName);
-		createCellItem.call(row, stock.address);
 		createCellItem.call(row, stock.manager);
+		createCellItem.call(row, stock.phone);
 		createCellItem.call(row, detailBtn);
 		createCellItem.call(row, deleteBtn);
 		deleteBtn.text('-');

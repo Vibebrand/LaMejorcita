@@ -6,6 +6,7 @@ function StockService(){
 		  type: 'GET',
 		  dataType: 'json',
 		  data: searchData,
+		  timeout: self.timelimit,
 		  complete: function(xhr, textStatus) {
 		    //called when complete
 		  },

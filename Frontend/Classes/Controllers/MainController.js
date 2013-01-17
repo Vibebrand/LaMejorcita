@@ -18,6 +18,7 @@ function MainController () {
 			tableController = new TableController();
 		if(!menuController)
 			menuController = new MenuController();
+		menuController.delegate = self.delegate;
 		tableController.createStockTable();
 		menuController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
@@ -34,11 +35,23 @@ function MainController () {
 		searchData.page = pagecount;
 		self.delegate['search'+self.page+'s'].call(null,searchData);
 	};
+	//Load Pages
+	this.loadPoint = function(){
+		console.log('loadPoint');
+	};
+	this.loadSeller = function(){
+		console.log('loadSelle');
+	};
+	this.loadSale = function(){
+		console.log('loadSale ');
+	};
 	//Enable Disable
 	this.enableEvents = function(){
+		menuController.enableEvents();
 		tableController.enableEvents();
 	};
 	this.disableEvents = function(){
+		menuController.disableEvents();
 		tableController.disableEvents();
 	};
 	MainController.prototype._init_.call(this);

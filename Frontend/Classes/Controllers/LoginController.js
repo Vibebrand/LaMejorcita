@@ -11,19 +11,32 @@ function LoginController(){
 	this.delegate              = null;
 	this.messageController     = null;
 	this.textValidationService = null;
-
+	this.enableViewEvents = function() {
+		self.submitBtn.bind('click', onClickSubmit);
+		$(document).bind('keydown.login', function(event){onKeyDown(event)});
+	};
+	function onClickSubmit() {
+		if(validateFiles())
+			self.delegate.login(createData());
+	};
 	function onKeyDown(event){
 		if(event.keyCode === 13)
-			submitBtn.trigger('click');
+			self.submitBtn.trigger('click');
 	};
 	function validateFiles() {
 		var count = 0;
-		var inputs = section.find('input');
+		var inputs = self.view.container().find('input');
 		for (var i = 0; i < inputs.length; i++) {
 			if($.trim(inputs[i].value) === "")
 				count++;
 		};
 		return count < 1;
+	};
+	function createData() {
+		return {
+			"username": self.username.val(),
+			"password": self.password.val()
+		};
 	};
 	LoginController.prototype._init_.call(this);
 };
@@ -38,9 +51,11 @@ LoginController.prototype._init_= function(){
 	this.password.attr('placeholder','Contraseña');
 	this.submitBtn.text('Entrar');
 
+	this.view.setClass('login-container');
 	this.view.addSubview(this.username);
 	this.view.addSubview(this.password);
 	this.view.addSubview(this.submitBtn);
+	this.enableViewEvents();
 };
 
 	

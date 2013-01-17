@@ -1,11 +1,13 @@
 [
 	{
+		"_id":"safdsafdsa0fd1",
 		"name"         :"Bodega 1",
 		"businessName" :"Negocio 1",
 		"address"      :"Dirección 1",
 		"manager"      :"Responsable 1"
 	},
 	{
+		"_id":"safdsafdsa0fd2",
 		"name"         :"Bodega 2",
 		"businessName" :"Negocio 2",
 		"address"      :"Dirección 2",
@@ -13,6 +15,7 @@
 	}
 	,
 	{
+		"_id":"safdsafdsa0fd3",
 		"name"         :"Bodega 3",
 		"businessName" :"Negocio 3",
 		"address"      :"Dirección 3",
@@ -20,6 +23,7 @@
 	}
 	,
 	{
+		"_id":"safdsafdsa0fd4",
 		"name"         :"Bodega 4",
 		"businessName" :"Negocio 4",
 		"address"      :"Dirección 4",
@@ -27,6 +31,7 @@
 	}
 	,
 	{
+		"_id":"safdsafdsa0fd5",
 		"name"         :"Bodega 5",
 		"businessName" :"Negocio 5",
 		"address"      :"Dirección 5",
@@ -34,6 +39,7 @@
 	}
 	,
 	{
+		"_id":"safdsafdsa0fd6",
 		"name"         :"Bodega 6",
 		"businessName" :"Negocio 6",
 		"address"      :"Dirección 6",

@@ -23,14 +23,23 @@ function MainController () {
 		tableController.view.appendToView(this.view);
 		self.makeSearch({});
 	};
-	this.setStocks = function(){
-
+	this.setStocks = function(stocks){
+		for (var i = 0; i < stocks.length; i++)
+			tableController.addStockRow(stocks[i]);
+		tableController.enableEvents();
 	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
 		self.delegate['search'+self.page+'s'].call(null,searchData);
+	};
+	//Enable Disable
+	this.enableEvents = function(){
+		tableController.enableEvents();
+	};
+	this.disableEvents = function(){
+		tableController.disableEvents();
 	};
 	MainController.prototype._init_.call(this);
 };

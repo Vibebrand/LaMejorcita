@@ -47,5 +47,15 @@ function MasterControl(){
 	this.searchStocks = function(searchData){
 		self.stockService.searchStocks(searchData);
 	};
+	this.setStocks = function(stocks){
+		self.mainController.setStocks(stocks);
+	};
+	//Enable Disable
+	this.enableEvents = function(){
+		
+	};
+	this.disableEvents = function(){
+		
+	};
 	_init_();
 };

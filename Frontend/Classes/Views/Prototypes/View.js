@@ -1,6 +1,9 @@
+
 function View () {
+
 	var container = $('<div></div>');
-	
+	self.controller = null;
+
 	this.addSubview = function(aView) {
 		if(typeof aView != "undefined" && aView.prototype == View)
 			this.container().append(aView.container());
@@ -13,12 +16,12 @@ function View () {
 				aView.container().append(this.container());
 			if(typeof aView.find != "undefined")
 				aView.append(this.container());
+			this.controller.viewDidLoad();
 		};
 	};
 	this.removeView = function() {
 		var coppy = this.container().clone();
 		this.container().remove();
-		this.setContainer(coppy);
 	};
 	this.setClass = function(classname) {
 		if(typeof classname == "string")
@@ -27,8 +30,8 @@ function View () {
 	this.container = function() {
 		return container;
 	};
-	this.setContainer = function(jqueryObject) {
-		if(typeof jqueryObject.find != "undefined")
-			container = jqueryObject;
-	};
-}
+	View.prototype._init_.call(this);
+};
+View.prototype._init_ = function(){
+	
+};

@@ -1,45 +1,36 @@
 var Importer = {
-	imports: 0,
+	imports: [],
 	count: 0,
+	callback: function(){},
 	importfile: function importfile(filename){
-	 	if(Importer.trim(filename) != ""){
-	 		if(Importer.validateFiles(filename))
-	 			Importer.makeImport(filename);
-		 }
-	},
-	validateFiles: function validateFiles(filename){
-		var scripts = document.getElementsByTagName("script");
-		for (var i = 0; i < scripts.length; i++) {
-	 			var script =  scripts[i];
-	 			var oldFilename =  script.getAttribute('src')
-	 		if(oldFilename == filename)
+		if(Importer.trim(filename) === "")
+			return false;
+		for (var i = 0; i < Importer.imports.length; i++) {
+	 		if(Importer.imports[i] == filename)
 	 			return false;
 	 	};
+	 	Importer.imports.push(filename);
 	 	return true;
 	},
-	makeImport: function makeImport(filename){
-		var fileref = document.createElement('script');
-		fileref.setAttribute("type","text/javascript");
-		fileref.setAttribute("src", filename);
-		fileref.onload = fileref.onreadystatechange = function(){
-			if(!this.readyState || this.readyState ==="loaded" || this.readyState ==="complete")
+	loadImports: function loadImports (callback) {
+		if(typeof callback == "function")
+			Importer.callback = callback;
+		Importer.makeImport();
+	},
+	makeImport: function makeImport() {
+		var filename =  Importer.imports[Importer.count];
+		if(typeof filename != "undefined"){
+			var fileref = document.createElement('script');
+			fileref.setAttribute("type","text/javascript");
+			fileref.setAttribute("src", filename);
+			fileref.onload = fileref.onreadystatechange = function(){
 				Importer.count++;
-		};
-		if (typeof fileref!="undefined"){
-		  document.getElementsByTagName("head")[0].appendChild(fileref);
-		  Importer.imports++;
-		};
-	},
-	makeLoad :function  makeLoad (callback) {
-		if(Importer.count < Importer.imports)
-			window.setTimeout(function(){Importer.makeLoad(callback);},50);
-		else
-			callback.call();
-	},
-	loadImports: function loadImports (callback){
-		setTimeout(function(){
-			Importer.makeLoad(callback);
-		}, 50);
+				Importer.loadImports();
+			};
+			if (typeof fileref!="undefined")
+			  document.getElementsByTagName("head")[0].appendChild(fileref);
+		}else
+			Importer.callback.call();
 	},
 	trim : function trim(stringToTrim) {
 		return stringToTrim.replace(/^\s+|\s+$/g,"");

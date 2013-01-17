@@ -1,9 +1,11 @@
 function MasterControl(){
-	var self                  = this;
-	this.appContainer = $('.app-container');
-	this.headerContainer = $('header');
+	var self            = this;
+	var appContainer    = $('.app-container');
+	var headerContainer = $('header');
 
 	this.navigationController = null;
+	this.headerController     = null
+	this.loginController      = null
 	
 	this.createNavigation = function(){
 		this.navigationController.setOptions({
@@ -11,11 +13,12 @@ function MasterControl(){
 			loginValidation: validationRule
 		});
 		this.navigationController.addUnloggedUrl('', loadLoginPage);
-	}
+	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
 	};
 	function loadLoginPage () {
-		self.headerContainer.append(self.headerController.view.container());
-	}
+		self.headerController.view.appendToView(headerContainer);
+		self.loginController.view.appendToView(appContainer);
+	};
 };

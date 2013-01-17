@@ -1,10 +1,7 @@
 
 Importer.importfile('Classes/Services/TextValidationService.js');
 Importer.importfile('Classes/Views/Login.js');
-
-
 function LoginController(){
-	
 	var self      = this;
 	var username  = null;
 	var password  = null;
@@ -27,9 +24,12 @@ function LoginController(){
 		};
 		return count < 1;
 	};
-	
+	LoginController.prototype._init_.call(this);
 };
 LoginController.prototype = new ViewController();
+LoginController.prototype._init_= function(){
+	ViewController.prototype._init_.call(this);
+};
 
 	
 

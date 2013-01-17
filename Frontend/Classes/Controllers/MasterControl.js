@@ -26,7 +26,6 @@ function MasterControl(){
 		return $.cookie('lamejorcita.login')? true: false;
 	};
 	function loadLoginPage () {
-		console.log(self.loginController.view);
 		/*self.headerController.view.appendToView(headerContainer);
 		self.loginController.view.appendToView(appContainer);*/
 	};

@@ -7,7 +7,7 @@ import sys
 class Application(cyclone.web.Application):
     def __init__(self):
         handlers = [
-        (r"/Stocks",Bodegas)
+        (r"/Stocks",Bodegas),
         
         ]    
        
@@ -22,3 +22,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

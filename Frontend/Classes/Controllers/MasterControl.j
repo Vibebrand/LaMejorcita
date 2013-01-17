@@ -8,10 +8,19 @@
 @import <Foundation/CPObject.j>
 @import <AppKit/CPViewController.j>
 @import "../Controllers/NavigationController.j"
+@import "../Services/StockService.j"
 
-@implementation MasterControl : CPObject{
+@implementation MasterControl : CPObject
+{
 	CPView mainViewController @accessors;
 	NavigationController navigationController @accessors;
+	StockService stockService @accessors;
+}
+-(id) init{
+	self = [super init];
+	if(self){
+	}
+	return self;
 }
 -(BOOL)validationRule{
 	return true;
@@ -24,19 +33,27 @@
 }
 //Standard
 -(void) loadLoginPage{
-	console.log('loadLoginPage');
+	[mainViewController loadLoginPage];
 }
+
 //Logged
 -(void) loadStocksPage{
-	console.log('loadStocksPage');
+	[mainViewController createStocksPage];
 }
 -(void) loadPointsPage{
-	console.log('loadPointsPage');
+	[mainViewController loadPointsPage];
 }
 -(void) loadSellersPage{
-	console.log('loadSellersPage');
+	[mainViewController loadSellersPage];
 }
 -(void) loadSalesPage{
-	console.log('loadSalesPage');
+	[mainViewController loadSalesPage];
+}
+-(void)getStocksData{
+	[stockService getStocksData];
+}
+//Stock
+-(void)setStockData: (CPArray) stocks{
+	[mainViewController setStockData: stocks];
 }
 @end

@@ -1,4 +1,3 @@
-
 import cyclone.web
 import pymongo
 
@@ -47,11 +46,3 @@ class Refrigeradores(cyclone.web.RequestHandler):
 		self.write(self.diccionario[punto])
 
 #por punto , por refri , por bodega todos
-
-
-
-
-
-
-
-

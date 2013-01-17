@@ -143,6 +143,9 @@ navigationController.setOptions({
 			return undefined;
 		return param;
 	};
+	this.changePage = function(hashurl) {
+		window.location.hash = hashurl;
+	};
 };
 Array.prototype.clean = function(deleteValue) {
   for (var i = 0; i < this.length; i++) {

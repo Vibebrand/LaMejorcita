@@ -4,14 +4,14 @@ function MenuController (argument) {
 	this.viewDidLoad = function(){
 		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas'];
 		for (var i = 0; i < options.length; i++)
-			createOptionItem.call(this.view, options[i], i);
+			createOptionItem.call(self,options[i], i);
 	};
 	function createOptionItem (value, id){
 		var li = $('<li class="option-item"></li>');
 		var link = $('<a></a>');
 		li.append(link);
-		this.addSubview(li);
-		link.attr('href', pageHashs[id]);
+		self.view.addSubview(li);
+		link.attr('href', '#'+pageHashs[id]);
 		link.text(value);
 	};
 	MenuController.prototype._init_.call(this);

@@ -16,7 +16,6 @@ function MenuController (argument) {
 	//Events
 	function onClickOption(){
 		self.delegate.changePage($(this).data('href'));
-		self.delegate.disableEvents();
 	};
 	//Enable Disable
 	this.enableEvents = function(){

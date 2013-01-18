@@ -2,17 +2,22 @@ TableController.prototype = new ViewController();
 TableController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	var table = $('<table></table>');
-	this.body = $('<tbody></tbody>');
+	this.container = $('<tbody></tbody>');
 	this.header = $('<thead></thead>');
+	this.footer = $('<tfoot></tfoot>');
 	this.view.replaceContainerWith(table);
 	this.view.addSubview(this.header);
-	this.view.addSubview(this.body);
+	this.view.addSubview(this.container);
+	this.view.addSubview(this.footer);
 };
 function TableController (argument) {
 	var self = this;
 	this.tableHeaders = [];
 	this.viewDidLoad = function(){
 		createHeaders();
+	};
+	this.cleanTable = function(){
+		this.container.empty();
 	};
 	function createHeaders(){
 		var rowheader     = $('<tr></tr>');
@@ -38,7 +43,7 @@ function TableController (argument) {
 	};
 	function createRow(index){
 		var row     = $('<tr></tr>');
-		self.body.append(row);
+		self.container.append(row);
 		for (var i = 0; i < self.tableHeaders.length; i++) {
 			var tableheader = self.tableHeaders[i];
 			var cellValue = getCellData(index, tableheader.identifier,tableheader.itemPrototype, row);

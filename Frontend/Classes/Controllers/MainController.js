@@ -43,6 +43,7 @@ function MainController () {
 			deleteBtn.text('-');
 			detailBtn.bind('click', onClickDetail);
 			deleteBtn.bind('click', onClickDelete);
+			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
@@ -53,34 +54,16 @@ function MainController () {
 	};
 	//Sell points
 	this.loadPointsPage = function() {
-		if(this.page != "Points"){
-			tableController.view.removeView();
-			tableController.view.setClass('stock-table');
-			this.page                    = "Points";
-			var detailBtn                = $('<button class="detail-button"></button>');
-			var deleteBtn                = $('<button class="delete-button"></button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'manager','value':'Responsable'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
-			detailBtn.text('Detalle');
-			deleteBtn.text('-');
-			detailBtn.bind('click', onClickDetail);
-			deleteBtn.bind('click', onClickDelete);
-			tableController.view.appendToView(this.view);
-			self.makeSearch({});
-		};
+		self.page = "Points";
+		tableController.view.removeView();
 	};
 	this.loadSellersPage = function() {
+		self.page = "Sellers";
 		tableController.view.removeView();
-		tableController = new ViewController();
-		tableController.view.appendToView(this.view);
 	};
 	this.loadSalesPage = function() {
+		self.page = "Sales";
 		tableController.view.removeView();
-		tableController = new ViewController();
-		tableController.view.appendToView(this.view);
 	};
 	this.rowsNumber = function(){
 		return this.currentData.length;

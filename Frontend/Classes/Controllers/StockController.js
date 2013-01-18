@@ -1,14 +1,28 @@
-function TableController() {
+StockController.prototype = new ViewController();
+StockController.prototype._init_= function(){
+	ViewController.prototype._init_.call(this);
+	var table = $('<table></table>');
+	this.body = $('<tbody></tbody>');
+	this.header = $('<thead></thead>');
+
+	this.view.replaceContainerWith(table);
+	this.view.setClass('stock-table');
+	this.view.addSubview(this.header);
+	this.view.addSubview(this.body);
+};
+function StockController (argument) {
 	var self = this;
-	this.createStockTable = function() {
-		this.view.setClass('stock-table');
-		this.body.empty();
-		this.header.empty();
+	this.viewDidLoad = function(){
 		var headers = ['Nombre','Responsable', 'Teléfono'];
-		var row = $('<tr></tr>'); 
+		var row     = $('<tr></tr>');
 		this.header.append(row);
 		for (var i = 0; i < headers.length; i++)
 			createCellItem.call(row, headers[i]);
+	};
+	function createCellItem(value){
+		var cell = $('<td></td>');
+		cell.html(value);
+		this.append(cell);
 	};
 	this.addStockRow = function(stock){
 		var row = $('<tr></tr>');
@@ -24,16 +38,12 @@ function TableController() {
 		detailBtn.text('Detalle');
 		row.data('id', stock._id);
 	};
+	//Events
 	function getStockDetail(){
 		console.log('detail');
 	};
 	function deleteStock(){
 		console.log('delete');
-	};
-	function createCellItem(value){
-		var cell = $('<td></td>');
-		cell.html(value);
-		this.append(cell);
 	};
 	//Enable Disable
 	this.enableEvents = function(){
@@ -52,16 +62,5 @@ function TableController() {
 		deleteBtns.unbind('click');
 		detailBtns.unbind('click');
 	};
-	TableController.prototype._init_.call(this);
-};
-TableController.prototype = new ViewController();
-TableController.prototype._init_= function(){
-	ViewController.prototype._init_.call(this);
-	var table = $('<table></table>');
-	this.body = $('<tbody></tbody>');
-	this.header = $('<thead></thead>');
-
-	this.view.replaceContainerWith(table);
-	this.view.addSubview(this.header);
-	this.view.addSubview(this.body);
+	StockController.prototype._init_.call(this);
 };

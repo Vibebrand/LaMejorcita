@@ -1,4 +1,7 @@
 
+ViewController.prototype._init_ = function(){
+	this.view.controller = this;
+};
 function ViewController(){
 	this.view = new View();
 	this.delegate = null;
@@ -17,7 +20,4 @@ function ViewController(){
 		};
 	};
 	ViewController.prototype._init_.call(this);
-};
-ViewController.prototype._init_ = function(){
-	this.view.controller = this;
 };

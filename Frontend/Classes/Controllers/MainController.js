@@ -1,28 +1,28 @@
 Importer.importfile('Classes/Controllers/MenuController.js');
-Importer.importfile('Classes/Controllers/TableController.js');
+Importer.importfile('Classes/Controllers/StockController.js');
 function MainController () {
 	var self = this;
-	var tableController = null;
+	var tableController = new ViewController();
 	var menuController = null
 	var pagecount = 0;
 	var objects = 15;
 
-	this.page = 'Stock';
-
-	this.viewDidLoad = function(){
-		self['load'+this.page].call(self);
-	};
 	//Stocks
-	this.loadStock = function(){
-		if(!tableController)
-			tableController = new TableController();
-		if(!menuController)
+	this.loadStockPage = function(){
+		if(!menuController){
 			menuController = new MenuController();
-		menuController.delegate = self.delegate;
-		tableController.createStockTable();
+			menuController.delegate = self.delegate;
+		};
 		menuController.view.appendToView(this.view);
-		tableController.view.appendToView(this.view);
-		self.makeSearch({});
+
+		if(!(tableController instanceof StockController)){
+			var stockController = new StockController();
+			tableController.view.removeView();
+			stockController.view.appendToView(this.view);
+			tableController = stockController;
+			this.page = "Stock";
+			this.makeSearch({});
+		};
 	};
 	this.setStocks = function(stocks){
 		for (var i = 0; i < stocks.length; i++)

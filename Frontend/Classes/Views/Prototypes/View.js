@@ -1,4 +1,7 @@
 
+View.prototype._init_ = function(){
+	
+};
 function View () {
 
 	var container = $('<div></div>');
@@ -20,7 +23,6 @@ function View () {
 		};
 	};
 	this.removeView = function() {
-		var coppy = this.container().clone();
 		this.container().remove();
 	};
 	this.setClass = function(classname) {
@@ -37,7 +39,4 @@ function View () {
 		}
 	};
 	View.prototype._init_.call(this);
-};
-View.prototype._init_ = function(){
-	
 };

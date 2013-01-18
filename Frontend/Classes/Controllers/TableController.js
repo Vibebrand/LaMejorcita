@@ -17,7 +17,7 @@ function TableController (argument) {
 		createHeaders();
 	};
 	this.cleanTable = function(){
-		this.container.empty();
+		self.container.empty();
 	};
 	function createHeaders(){
 		var rowheader     = $('<tr></tr>');

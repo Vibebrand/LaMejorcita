@@ -50,7 +50,7 @@ function MainController () {
 	};
 	this.setStocks = function(stocks){
 		self.currentData = stocks;
-		tableController.loadTable();
+		tableController.loadTable(true);
 	};
 	//Sell points
 	this.loadPointsPage = function() {

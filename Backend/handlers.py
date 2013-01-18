@@ -1,9 +1,10 @@
 import cyclone.web
-import pymongo
+from pymongo import Connection
+import json
 
 class Bodegas(cyclone.web.RequestHandler):
 	def get(self):
-		conection= pymongo.Connection('0.0.0.0',27017)
+		conection= Connection('0.0.0.0',27017)
 		db=conection["Mejorcita"]
 		bodegasinfo= db["bodegasinfo"]
 		
@@ -11,19 +12,18 @@ class Bodegas(cyclone.web.RequestHandler):
 		self.pagina=int(self.get_argument("pagina",None))-1
 		self.keywords=self.get_argument("keywords",None)
 		self.inicio=(self.pagina*self.object)
-		self.final=self.inicio+self.object
 
 		if self.keywords:
-			for i in self.palabras:
-				x=i.split('+')
-				self.campo.update({x[0]:x[1]})
-
-			#self.lista=[i for i in bodegasinfo.find()]
-			#elf.write(self.keywords)
-			#self.write(str({"Bodegas":(str(self.lista[self.inicio:self.final]))[1:-1]}))
+			self.final=self.inicio+self.object
+			self.palabras={}
+			self.keywords=self.keywords.split(' ')
+			for i in (range(len(self.keywords)/2)):
+				self.palabras.update({self.keywords[i]:json.loads(self.keywords[i+1])})
+			self.lista=[i for i in bodegasinfo.find(spec=self.palabras)]
+			self.write(str({"Bodegas":(str(self.lista[self.inicio:self.final]))[1:-1]}))
 		else:
-			self.lista=[i for i in bodegasinfo.find()]
-			self.write(str({"Bodegas":(str(self.lista[self.inicio:self.final]))[1:-1]}))			
+			self.lista=[i for i in bodegasinfo.find(skip=self.inicio,limit=self.object)]
+			self.write(str({"Bodegas":(str(self.lista))[1:-1]}))			
 		#todas , una ,
 
 class Puntos(cyclone.web.RequestHandler):

@@ -10,9 +10,7 @@ TableController.prototype._init_= function(){
 };
 function TableController (argument) {
 	var self = this;
-	this.delegate;
 	this.tableHeaders = [];
-	this.cellPrototypes = [];
 	this.viewDidLoad = function(){
 		createHeaders();
 	};
@@ -32,55 +30,26 @@ function TableController (argument) {
 		this.append(cell);
 	};
 	this.loadTable = function(){
-		if(typeof self.delegate != "undefined"&& typeof self.delegate.getTableCount === "function"&& typeof self.delegate.rowsNumber() === "number"){
-			for (var i = 0; i < self.delegate.rowsNumber(); i++) {
-				
-			};
+		if(typeof self.delegate != "undefined"&& typeof self.delegate.rowsNumber === "function"&& typeof self.delegate.rowsNumber() === "number"){
+			for (var i = 0; i < self.delegate.rowsNumber(); i++)
+				createRow(i);
 		};
 	};
+	function createRow(index){
+		var row     = $('<tr></tr>');
+		for (var i = 0; i < self.tableHeaders.length; i++) {
+			var tableheader = self.tableHeaders[i];
+			var cellValue = getCellData(tableheader.identifier, index, tableheader.itemPrototype);
+			createCellItem.call(row,cellValue);
+		};
+		self.header.append(row);
+	};
+	function getCellData(identifier, index ,itemPrototype){
+		if(typeof itemPrototype === "undefined")
+			return self.delegate.getCellData(identifier, index);
 
-	/*function createCellItem(value){
-		var cell = $('<td></td>');
-		cell.html(value);
-		this.append(cell);
+		if(typeof itemPrototype === "object")
+			return itemPrototype;
 	};
-	this.addStockRow = function(stock){
-		var row = $('<tr></tr>');
-		var deleteBtn = $('<button class="delete"></button>');
-		var detailBtn = $('<button class="detail"></button>');
-		this.body.append(row);
-		createCellItem.call(row, stock.name);
-		createCellItem.call(row, stock.manager);
-		createCellItem.call(row, stock.phone);
-		createCellItem.call(row, detailBtn);
-		createCellItem.call(row, deleteBtn);
-		deleteBtn.text('-');
-		detailBtn.text('Detalle');
-		row.data('id', stock._id);
-	};
-	//Events
-	function getStockDetail(){
-		console.log('detail');
-	};
-	function deleteStock(){
-		console.log('delete');
-	};
-	//Enable Disable
-	this.enableEvents = function(){
-		var table = this.view.container();
-		var deleteBtns = table.find('.delete');
-		var detailBtns = table.find('.detail');
-		deleteBtns.unbind('click');
-		detailBtns.unbind('click');
-		deleteBtns.bind('click', deleteStock);
-		detailBtns.bind('click', getStockDetail);
-	};
-	this.disableEvents = function(){
-		var table = this.view.container();
-		var deleteBtns = table.find('.delete');
-		var detailBtns = table.find('.detail');
-		deleteBtns.unbind('click');
-		detailBtns.unbind('click');
-	};*/
 	TableController.prototype._init_.call(this);
 };

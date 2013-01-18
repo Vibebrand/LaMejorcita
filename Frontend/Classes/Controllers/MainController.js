@@ -23,22 +23,28 @@ function MainController () {
 	};
 	//Stocks
 	this.loadStockPage = function(){
-		tableController = new TableController();
+		tableController       = new TableController();
+		tableController.delegate = self;
+		var detailBtn         = $('<button class="detail-button"></button>');
+		var deleteBtn         = $('<button class="delete-button"></button>');
+		detailBtn.text('Detalle');
+		deleteBtn.text('-');
 		tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 										{'identifier': 'manager','value':'Responsable'},
-										{'identifier': 'phone','value':'Teléfono'}];
+										{'identifier': 'phone','value':'Teléfono'},
+										{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+										{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}
+										];
+
 		tableController.view.appendToView(this.view);
-		/*if(!(tableController instanceof StockController)){
-			var stockController = new StockController();
-			tableController.view.removeView();
-			stockController.view.appendToView(this.view);
-			tableController = stockController;
-			this.page = "Stock";
-			this.makeSearch({});
-		};*/
+		self.makeSearch({});
 	};
 	this.rowsNumber = function(){
 		return this.currentData.length;
+	};
+	this.getCellData = function(identifier, index){
+		var celldata = this.currentData[index];
+		return celldata[identifier];
 	};
 	///
 	this.loadPointsPage = function() {
@@ -58,9 +64,8 @@ function MainController () {
 		tableController.view.appendToView(this.view);
 	};
 	this.setStocks = function(stocks){
-		for (var i = 0; i < stocks.length; i++)
-			tableController.addStockRow(stocks[i]);
-		tableController.enableEvents();
+		self.currentData = stocks;
+		tableController.loadTable();
 	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);

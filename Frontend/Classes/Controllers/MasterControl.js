@@ -11,8 +11,10 @@ function MasterControl(){
 	this.messageController    = null;
 	this.mainController       = null;
 
-	this.userService = null;
-	this.stockService = null;
+	this.userService   = null;
+	this.stockService  = null;
+	this.salesService  = null;
+	this.pointsService = null;
 
 	function _init_() {
 		self.navigationController = new NavigationController();
@@ -68,6 +70,18 @@ function MasterControl(){
 	};
 	this.setStocks = function(stocks){
 		self.mainController.setStocks(stocks);
+	};
+	//POS
+	this.searchPoints = function(searchData){
+
+	};
+	//Sellers
+	this.searchSellers = function(searchData){
+
+	};
+	//Sales
+	this.searchSales = function(searchData){
+
 	};
 	//Enable Disable
 	this.enableEvents = function(){

@@ -28,11 +28,11 @@ function MainController () {
 	};
 	//Stocks
 	this.loadStockPage = function(){
-		if(this.page != "Stock"){
+		if(this.page != "Stocks"){
 			
 			tableController.view.removeView();
 			tableController.view.setClass('stock-table');
-			this.page                    = "Stock";
+			this.page                    = "Stocks";
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
@@ -54,7 +54,7 @@ function MainController () {
 		self.currentData = stocks;
 		tableController.loadTable(true);
 	};
-	//Sell points
+	//Sale points
 	this.loadPointsPage = function() {
 		if(self.page != "Points"){
 			
@@ -68,6 +68,7 @@ function MainController () {
 											{'identifier': 'email','value':'Correo electrónico'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.makeSearch({});
 		};
 	};
 	//Sellers
@@ -83,6 +84,7 @@ function MainController () {
 											{'identifier': 'stock','value':'Bodega'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.makeSearch({});
 		};
 	};
 	this.loadSalesPage = function() {
@@ -96,6 +98,7 @@ function MainController () {
 											{'identifier': 'amount','value':'Monto'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.makeSearch({});
 		};
 		
 		
@@ -112,7 +115,7 @@ function MainController () {
 		var searchData  = $.extend({},{}, aditional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
-		self.delegate['search'+self.page+'s'].call(null,searchData);
+		self.delegate['search'+self.page].call(null,searchData);
 	};
 	//Events
 	function onClickDetail(){

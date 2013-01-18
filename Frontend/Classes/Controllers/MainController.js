@@ -29,6 +29,7 @@ function MainController () {
 	//Stocks
 	this.loadStockPage = function(){
 		if(this.page != "Stock"){
+			
 			tableController.view.removeView();
 			tableController.view.setClass('stock-table');
 			this.page                    = "Stock";
@@ -43,6 +44,7 @@ function MainController () {
 			deleteBtn.text('-');
 			detailBtn.bind('click', onClickDetail);
 			deleteBtn.bind('click', onClickDelete);
+
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -54,16 +56,49 @@ function MainController () {
 	};
 	//Sell points
 	this.loadPointsPage = function() {
-		self.page = "Points";
-		tableController.view.removeView();
+		if(self.page != "Points"){
+			
+			tableController.view.removeView();
+			tableController.view.setClass('salepoints-table');
+			self.page = "Points";
+			tableController.tableHeaders = [{'identifier': 'joinDate','value':'Fecha de ingreso'},
+											{'identifier': 'address','value':'Dirección'},
+											{'identifier': 'district','value':'Colonia'},
+											{'identifier': 'phone','value':'telefono'},
+											{'identifier': 'email','value':'Correo electrónico'}];
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+		};
 	};
+	//Sellers
 	this.loadSellersPage = function() {
-		self.page = "Sellers";
-		tableController.view.removeView();
+		if(self.page != "Sellers"){
+			tableController.cleanTable();
+			tableController.view.removeView();
+			tableController.view.setClass('sellers-table');
+			self.page = "Sellers";
+			tableController.tableHeaders = [{'identifier': 'curp','value':'CURP'},
+											{'identifier': 'name','value':'Nombre'},
+											{'identifier': 'device','value':'Dispositivo'},
+											{'identifier': 'stock','value':'Bodega'}];
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+		};
 	};
 	this.loadSalesPage = function() {
-		self.page = "Sales";
-		tableController.view.removeView();
+		if(self.page != "Sales"){
+			tableController.view.removeView();
+			tableController.view.setClass('sales-table');
+			self.page = "Sales";
+			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
+											{'identifier': 'salepoint','value':'Punto de venta'},
+											{'identifier': 'status','value':'Estado'},
+											{'identifier': 'amount','value':'Monto'}];
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+		};
+		
+		
 	};
 	this.rowsNumber = function(){
 		return this.currentData.length;

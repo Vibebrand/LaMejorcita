@@ -15,13 +15,14 @@ function TableController (argument) {
 		createHeaders();
 	};
 	function createHeaders(){
-		var row     = $('<tr></tr>');
-		self.header.append(row);
+		var rowheader     = $('<tr></tr>');
+		self.header.empty();
+		self.header.append(rowheader);
 		for (var i = 0; i < self.tableHeaders.length; i++){
 			if(self.tableHeaders[i].constructor === Object &&typeof self.tableHeaders[i].identifier != "undefined")
-				createCellItem.call(row, self.tableHeaders[i].value);
+				createCellItem.call(rowheader, self.tableHeaders[i].value);
 			else if(typeof self.tableHeaders[i] == "string")
-				createCellItem.call(row, self.tableHeaders[i]);
+				createCellItem.call(rowheader, self.tableHeaders[i]);
 		};
 	};
 	function createCellItem(value){
@@ -37,7 +38,7 @@ function TableController (argument) {
 	};
 	function createRow(index){
 		var row     = $('<tr></tr>');
-		self.header.append(row);
+		self.body.append(row);
 		for (var i = 0; i < self.tableHeaders.length; i++) {
 			var tableheader = self.tableHeaders[i];
 			var cellValue = getCellData(index, tableheader.identifier,tableheader.itemPrototype, row);

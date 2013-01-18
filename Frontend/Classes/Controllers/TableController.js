@@ -40,13 +40,13 @@ function TableController (argument) {
 		self.header.append(row);
 		for (var i = 0; i < self.tableHeaders.length; i++) {
 			var tableheader = self.tableHeaders[i];
-			var cellValue = getCellData(tableheader.identifier, index, tableheader.itemPrototype);
+			var cellValue = getCellData(index, tableheader.identifier,tableheader.itemPrototype, row);
 			createCellItem.call(row,cellValue);
 		};
 	};
-	function getCellData(identifier, index ,itemPrototype){
+	function getCellData( index, identifier, itemPrototype, row){
 		if(typeof itemPrototype === "undefined")
-			return self.delegate.getCellData(identifier, index);
+			return self.delegate.getCellData(index, identifier, row);
 		if(typeof itemPrototype === "object" && typeof itemPrototype.clone === "function")
 			return itemPrototype.clone(true);
 	};

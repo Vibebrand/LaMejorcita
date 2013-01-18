@@ -39,14 +39,11 @@ function MainController () {
 		tableController.view.appendToView(this.view);
 		self.makeSearch({});
 	};
-	this.rowsNumber = function(){
-		return this.currentData.length;
+	this.setStocks = function(stocks){
+		self.currentData = stocks;
+		tableController.loadTable();
 	};
-	this.getCellData = function(identifier, index){
-		var celldata = this.currentData[index];
-		return celldata[identifier];
-	};
-	///
+	//Sell points
 	this.loadPointsPage = function() {
 	
 		tableController.view.removeView();
@@ -63,9 +60,13 @@ function MainController () {
 		tableController = new ViewController();
 		tableController.view.appendToView(this.view);
 	};
-	this.setStocks = function(stocks){
-		self.currentData = stocks;
-		tableController.loadTable();
+	this.rowsNumber = function(){
+		return this.currentData.length;
+	};
+	this.getCellData = function(index, identifier, row){
+		var celldata = this.currentData[index];
+		if(typeof row.data('id') === "undefined")row.data('id',celldata._id);
+		return celldata[identifier];
 	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);

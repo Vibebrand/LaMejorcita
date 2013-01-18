@@ -1,20 +1,26 @@
 Importer.importfile('Classes/Controllers/MenuController.js');
 Importer.importfile('Classes/Controllers/StockController.js');
+MainController.prototype = new ViewController();
+MainController.prototype._init_= function(){
+	ViewController.prototype._init_.call(this);
+	this.view.setClass('main-container');
+};
 function MainController () {
 	var self = this;
 	var tableController = new ViewController();
 	var menuController = null
 	var pagecount = 0;
 	var objects = 15;
-
-	//Stocks
-	this.loadStockPage = function(){
+	
+	this.viewDidLoad = function(){
 		if(!menuController){
 			menuController = new MenuController();
 			menuController.delegate = self.delegate;
 		};
 		menuController.view.appendToView(this.view);
-
+	};
+	//Stocks
+	this.loadStockPage = function(){
 		if(!(tableController instanceof StockController)){
 			var stockController = new StockController();
 			tableController.view.removeView();
@@ -23,6 +29,23 @@ function MainController () {
 			this.page = "Stock";
 			this.makeSearch({});
 		};
+	};
+	this.loadPointsPage = function() {
+	
+		tableController.view.removeView();
+		tableController = new ViewController();
+		tableController.view.appendToView(this.view);
+		
+	};
+	this.loadSellersPage = function() {
+		tableController.view.removeView();
+		tableController = new ViewController();
+		tableController.view.appendToView(this.view);
+	};
+	this.loadSalesPage = function() {
+		tableController.view.removeView();
+		tableController = new ViewController();
+		tableController.view.appendToView(this.view);
 	};
 	this.setStocks = function(stocks){
 		for (var i = 0; i < stocks.length; i++)
@@ -55,9 +78,4 @@ function MainController () {
 		tableController.disableEvents();
 	};
 	MainController.prototype._init_.call(this);
-};
-MainController.prototype = new ViewController();
-MainController.prototype._init_= function(){
-	ViewController.prototype._init_.call(this);
-	this.view.setClass('main-container');
 };

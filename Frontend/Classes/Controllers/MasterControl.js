@@ -22,6 +22,7 @@ function MasterControl(){
 		});
 		self.navigationController.addUnloggedUrl('', loadLoginPage);
 		self.navigationController.addLoggedUrl('', self.changePage, '/Stocks');
+
 		self.navigationController.addLoggedUrl('/Stocks', loadStockPage);
 		self.navigationController.addLoggedUrl('/Points', loadPointsPage);
 		self.navigationController.addLoggedUrl('/Sellers', loadSellersPage);
@@ -47,13 +48,19 @@ function MasterControl(){
 		self.mainController.loadStockPage();
 	};
 	function loadPointsPage(){
-
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadPointsPage();
 	};
 	function loadSellersPage(){
-
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadSellersPage();
 	};		
 	function loadSalesPage(){
-
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadSalesPage();
 	};
 	//Stock
 	this.searchStocks = function(searchData){

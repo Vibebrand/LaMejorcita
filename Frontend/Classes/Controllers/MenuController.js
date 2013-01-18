@@ -1,6 +1,6 @@
 function MenuController (argument) {
 	var self = this;
-	var pageHashs = ['/Stocks', '/Poitns' , '/Sellers', '/Sales'];
+	var pageHashs = ['/Stocks', '/Points' , '/Sellers', '/Sales'];
 	this.viewDidLoad = function(){
 		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas'];
 		for (var i = 0; i < options.length; i++)

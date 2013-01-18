@@ -37,19 +37,18 @@ function TableController (argument) {
 	};
 	function createRow(index){
 		var row     = $('<tr></tr>');
+		self.header.append(row);
 		for (var i = 0; i < self.tableHeaders.length; i++) {
 			var tableheader = self.tableHeaders[i];
 			var cellValue = getCellData(tableheader.identifier, index, tableheader.itemPrototype);
 			createCellItem.call(row,cellValue);
 		};
-		self.header.append(row);
 	};
 	function getCellData(identifier, index ,itemPrototype){
 		if(typeof itemPrototype === "undefined")
 			return self.delegate.getCellData(identifier, index);
-
-		if(typeof itemPrototype === "object")
-			return itemPrototype;
+		if(typeof itemPrototype === "object" && typeof itemPrototype.clone === "function")
+			return itemPrototype.clone(true);
 	};
 	TableController.prototype._init_.call(this);
 };

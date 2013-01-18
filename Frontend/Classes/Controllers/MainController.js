@@ -27,15 +27,15 @@ function MainController () {
 		tableController.delegate = self;
 		var detailBtn         = $('<button class="detail-button"></button>');
 		var deleteBtn         = $('<button class="delete-button"></button>');
-		detailBtn.text('Detalle');
-		deleteBtn.text('-');
 		tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 										{'identifier': 'manager','value':'Responsable'},
 										{'identifier': 'phone','value':'Teléfono'},
 										{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
-										{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}
-										];
-
+										{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+		detailBtn.text('Detalle');
+		deleteBtn.text('-');
+		detailBtn.bind('click', onClickDetail);
+		deleteBtn.bind('click', onClickDelete);
 		tableController.view.appendToView(this.view);
 		self.makeSearch({});
 	};
@@ -73,24 +73,19 @@ function MainController () {
 		searchData.page = pagecount;
 		self.delegate['search'+self.page+'s'].call(null,searchData);
 	};
-	//Load Pages
-	this.loadPoint = function(){
-		console.log('loadPoint');
+	//Events
+	function onClickDetail(){
+		console.log('detail');
 	};
-	this.loadSeller = function(){
-		console.log('loadSelle');
-	};
-	this.loadSale = function(){
-		console.log('loadSale ');
-	};
+ 	function onClickDelete(){
+ 		console.log('delete');
+ 	};
 	//Enable Disable
 	this.enableEvents = function(){
 		menuController.enableEvents();
-		tableController.enableEvents();
 	};
 	this.disableEvents = function(){
 		menuController.disableEvents();
-		tableController.disableEvents();
 	};
 	MainController.prototype._init_.call(this);
 };

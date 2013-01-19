@@ -6,5 +6,9 @@ function UserService(){
 		$.cookie('lamejorcita.login' , true);
 		window.location.reload();
 	};
+
+	this.searchSellers = function(searchData){
+		console.log(searchData);
+	};
 };
 UserService.prototype = new Service();

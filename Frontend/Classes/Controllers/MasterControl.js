@@ -73,15 +73,15 @@ function MasterControl(){
 	};
 	//POS
 	this.searchPoints = function(searchData){
-
+		self.pointsService.searchPoints(searchData);
 	};
 	//Sellers
 	this.searchSellers = function(searchData){
-
+		self.userService.searchSellers(searchData);
 	};
 	//Sales
 	this.searchSales = function(searchData){
-
+		self.salesService.searchSales(searchData);
 	};
 	//Enable Disable
 	this.enableEvents = function(){

@@ -57,14 +57,14 @@ function MainController () {
 	//Sale points
 	this.loadPointsPage = function() {
 		if(self.page != "Points"){
-			
 			tableController.view.removeView();
 			tableController.view.setClass('salepoints-table');
 			self.page = "Points";
 			tableController.tableHeaders = [{'identifier': 'joinDate','value':'Fecha de ingreso'},
 											{'identifier': 'address','value':'Dirección'},
-											{'identifier': 'district','value':'Colonia'},
-											{'identifier': 'phone','value':'telefono'},
+											{'identifier': 'manager','value':'Representante'},
+											{'identifier': 'temperature','value':'Temperatura'},
+											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'email','value':'Correo electrónico'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);

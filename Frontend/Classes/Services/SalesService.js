@@ -24,13 +24,13 @@ function SalesService (argument) {
 				observations: "Observación"+i,
 				products:{
 					products: [],
-					count:5
+					amount:1000.50
 				},
 				geoposition: {
 					latitude: "21.8818",
 					longitude: "-102.2913"
 				},
-				salePoint:{
+				salepoint:{
 					_id: "sdfadsasalepoint"+i,
 					district: "Colonia "+i,
 					address: "Dirección "+i,
@@ -45,7 +45,7 @@ function SalesService (argument) {
 					fridge: {
 						serial : "afsdll0132fridge"+i,
 						temperature: -10,
-						status: true
+						status: "bien"
 					},
 					manager:{
 						_id:"asfdo90qwqewr"+i,
@@ -58,6 +58,7 @@ function SalesService (argument) {
 			sales.push(sale);
 		};
 		console.log(sales);
+		self.delegate.setSales(sales);
 	};
 };
 SalesService.prototype = new Service();

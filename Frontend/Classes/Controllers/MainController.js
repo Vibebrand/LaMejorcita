@@ -36,7 +36,7 @@ function MainController () {
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'manager','value':'Responsable'},
+											{'identifier': 'manager.name','value':'Responsable'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
@@ -62,14 +62,18 @@ function MainController () {
 			self.page = "Points";
 			tableController.tableHeaders = [{'identifier': 'joinDate','value':'Fecha de ingreso'},
 											{'identifier': 'address','value':'Dirección'},
-											{'identifier': 'manager','value':'Representante'},
-											{'identifier': 'temperature','value':'Temperatura'},
+											{'identifier': 'manager.name','value':'Representante'},
+											{'identifier': 'fridge.temperature','value':'Temperatura'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'email','value':'Correo electrónico'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
+	};
+	this.setSalePoints = function(salepoints){
+		self.currentData = salepoints;
+		tableController.loadTable(true);
 	};
 	//Sellers
 	this.loadSellersPage = function() {
@@ -78,38 +82,46 @@ function MainController () {
 			tableController.view.removeView();
 			tableController.view.setClass('sellers-table');
 			self.page = "Sellers";
-			tableController.tableHeaders = [{'identifier': 'curp','value':'CURP'},
+			tableController.tableHeaders = [{'identifier': 'stock.name','value':'Bodega'},
 											{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'device','value':'Dispositivo'},
-											{'identifier': 'stock','value':'Bodega'}];
+											{'identifier': 'curp','value':'CURP'},
+											{'identifier': 'device','value':'Dispositivo'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
 	};
+	this.setSellers = function(sellers) {
+		self.currentData = sellers;
+		tableController.loadTable(true);
+	};
+	//Sales
 	this.loadSalesPage = function() {
 		if(self.page != "Sales"){
 			tableController.view.removeView();
 			tableController.view.setClass('sales-table');
 			self.page = "Sales";
 			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
-											{'identifier': 'salepoint','value':'Punto de venta'},
-											{'identifier': 'status','value':'Estado'},
-											{'identifier': 'amount','value':'Monto'}];
+											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
+											{'identifier': 'salepoint.fridge.status','value':'Estado'},
+											{'identifier': 'products.amount','value':'Monto'}];
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
-		
-		
 	};
+	this.setSales = function(sales){
+		self.currentData = sales;
+		tableController.loadTable(true);
+	};
+	//table methods
 	this.rowsNumber = function(){
 		return this.currentData.length;
 	};
 	this.getCellData = function(index, identifier, row){
-		var celldata = this.currentData[index];
+		var celldata = self.currentData[index];
 		if(typeof row.data('id') === "undefined")row.data('id',celldata._id);
-		return celldata[identifier];
+		return tableController.getStringData(identifier, celldata);
 	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);

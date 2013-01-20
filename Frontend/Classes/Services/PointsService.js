@@ -10,6 +10,7 @@ function PointsService (argument) {
 				address: "Dirección "+i,
 				joinDate: "2013/01/01",
 				phone: "1234567",
+				email: "salepoint"+i+"@mail.com",
 				maxSaleNumber: 1000,
 				minSaleNumber: 50,
 				geoposition: {
@@ -18,19 +19,19 @@ function PointsService (argument) {
 				},
 				fridge: {
 					serial : "afsdll0132fridge"+i,
-					temperature:  -10,
-					status: true
+					temperature: -10,
+					status: "bien"
 				},
 				manager:{
 					_id:"asfdo90qwqewr"+i,
 					name: "Guy Fawkes",
-					curp: 'PIIG720116BV1',
-					email: "faukes@mail.com"
+					curp: 'PIIG720116BV1'
 				}
 			};
 			salepoints.push(salepoint);
 		};
 		console.log(salepoints);
+		self.delegate.setSalePoints(salepoints);
 	};
 };
 PointsService.prototype = new Service();

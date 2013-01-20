@@ -75,13 +75,22 @@ function MasterControl(){
 	this.searchPoints = function(searchData){
 		self.pointsService.searchPoints(searchData);
 	};
+	this.setSalePoints = function(salepoints){
+		self.mainController.setSalePoints(salepoints);
+	};
 	//Sellers
 	this.searchSellers = function(searchData){
 		self.userService.searchSellers(searchData);
 	};
+	this.setSellers = function(sellers) {
+		self.mainController.setSellers(sellers);
+	};
 	//Sales
 	this.searchSales = function(searchData){
 		self.salesService.searchSales(searchData);
+	};
+	this.setSales = function(sales){
+		self.mainController.setSales(sales);
 	};
 	//Enable Disable
 	this.enableEvents = function(){

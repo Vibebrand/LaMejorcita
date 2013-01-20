@@ -16,18 +16,25 @@ function UserService(){
 				name: "Guy Fawkes",
 				curp: 'PIIG720116BV1',
 				stock:{
-					"_id"			:"safdsafdsa0fd"+i,
-					"name"         	:"Bodega "+i,
-					"businessName" 	:"Negocio "+i,
-					"address"      	:"Dirección "+i,
-					"manager"      	:"Responsable "+i,
-					"phone"     	:"Telefono "+i
+					_id			: "safdsafdsa0fd"+i,
+					name        :"Bodega "+i,
+					businessName:"Negocio "+i,
+					district 	:"Colonia "+i,
+					address     :"Dirección "+i,
+					manager     :{
+						_id	 : "asfdo90qwqewr"+i,
+						name : "Guy Fawkes",
+						curp : 'PIIG720116BV'+i,
+						email: "faukes@mail.com"
+					},
+					phone      	:"123456"+i
 				},
-				device: 'safdsafdevicesdf'+i+'20'
+				device: 'safdsafdevicesdf'+i+'20',
 			};
 			sellers.push(seller);
 		};
 		console.log(sellers);
+		self.delegate.setSellers(sellers);
 	};
 };
 UserService.prototype = new Service();

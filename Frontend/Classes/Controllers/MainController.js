@@ -29,12 +29,11 @@ function MainController () {
 	//Stocks
 	this.loadStockPage = function(){
 		if(this.page != "Stocks"){
-			
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.view.removeView();
 			tableController.view.setClass('stock-table');
 			this.page                    = "Stocks";
-			var detailBtn                = $('<button class="detail-button"></button>');
-			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'manager.name','value':'Responsable'},
 											{'identifier': 'phone','value':'Teléfono'},
@@ -57,6 +56,8 @@ function MainController () {
 	//Sale points
 	this.loadPointsPage = function() {
 		if(self.page != "Points"){
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.view.removeView();
 			tableController.view.setClass('salepoints-table');
 			self.page = "Points";
@@ -65,7 +66,14 @@ function MainController () {
 											{'identifier': 'manager.name','value':'Representante'},
 											{'identifier': 'fridge.temperature','value':'Temperatura'},
 											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'email','value':'Correo electrónico'}];
+											{'identifier': 'email','value':'Correo electrónico'},
+											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			detailBtn.bind('click', onClickDetail);
+			deleteBtn.bind('click', onClickDelete);
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -78,6 +86,8 @@ function MainController () {
 	//Sellers
 	this.loadSellersPage = function() {
 		if(self.page != "Sellers"){
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.cleanTable();
 			tableController.view.removeView();
 			tableController.view.setClass('sellers-table');
@@ -85,7 +95,13 @@ function MainController () {
 			tableController.tableHeaders = [{'identifier': 'stock.name','value':'Bodega'},
 											{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'curp','value':'CURP'},
-											{'identifier': 'device','value':'Dispositivo'}];
+											{'identifier': 'device','value':'Dispositivo'},
+											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			detailBtn.bind('click', onClickDetail);
+			deleteBtn.bind('click', onClickDelete);
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -98,13 +114,21 @@ function MainController () {
 	//Sales
 	this.loadSalesPage = function() {
 		if(self.page != "Sales"){
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.view.removeView();
 			tableController.view.setClass('sales-table');
 			self.page = "Sales";
 			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
 											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
 											{'identifier': 'salepoint.fridge.status','value':'Estado'},
-											{'identifier': 'products.amount','value':'Monto'}];
+											{'identifier': 'products.amount','value':'Monto'},
+											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			detailBtn.bind('click', onClickDetail);
+			deleteBtn.bind('click', onClickDelete);
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});

@@ -28,15 +28,74 @@ function MainController () {
 	};
 	//Stocks
 	this.loadStockPage = function(){
-		if(this.page != "Stock"){
-			tableController.view.removeView();
-			tableController.view.setClass('stock-table');
-			this.page                    = "Stock";
+		if(this.page != "Stocks"){
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
+			tableController.view.removeView();
+			tableController.view.setClass('stock-table');
+			this.page                    = "Stocks";
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'manager','value':'Responsable'},
+											{'identifier': 'manager.name','value':'Responsable'},
 											{'identifier': 'phone','value':'Teléfono'},
+											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			detailBtn.bind('click', onClickDetail);
+			deleteBtn.bind('click', onClickDelete);
+
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+			self.makeSearch({});
+		};
+	};
+	this.setStocks = function(stocks){
+		self.currentData = stocks;
+		tableController.loadTable(true);
+	};
+	//Sale points
+	this.loadPointsPage = function() {
+		if(self.page != "Points"){
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
+			tableController.view.removeView();
+			tableController.view.setClass('salepoints-table');
+			self.page = "Points";
+			tableController.tableHeaders = [{'identifier': 'joinDate','value':'Fecha de ingreso'},
+											{'identifier': 'address','value':'Dirección'},
+											{'identifier': 'manager.name','value':'Representante'},
+											{'identifier': 'fridge.temperature','value':'Temperatura'},
+											{'identifier': 'phone','value':'Teléfono'},
+											{'identifier': 'email','value':'Correo electrónico'},
+											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			detailBtn.bind('click', onClickDetail);
+			deleteBtn.bind('click', onClickDelete);
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+			self.makeSearch({});
+		};
+	};
+	this.setSalePoints = function(salepoints){
+		self.currentData = salepoints;
+		tableController.loadTable(true);
+	};
+	//Sellers
+	this.loadSellersPage = function() {
+		if(self.page != "Sellers"){
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
+			tableController.cleanTable();
+			tableController.view.removeView();
+			tableController.view.setClass('sellers-table');
+			self.page = "Sellers";
+			tableController.tableHeaders = [{'identifier': 'stock.name','value':'Bodega'},
+											{'identifier': 'name','value':'Nombre'},
+											{'identifier': 'curp','value':'CURP'},
+											{'identifier': 'device','value':'Dispositivo'},
 											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
@@ -48,36 +107,51 @@ function MainController () {
 			self.makeSearch({});
 		};
 	};
-	this.setStocks = function(stocks){
-		self.currentData = stocks;
+	this.setSellers = function(sellers) {
+		self.currentData = sellers;
 		tableController.loadTable(true);
 	};
-	//Sell points
-	this.loadPointsPage = function() {
-		self.page = "Points";
-		tableController.view.removeView();
-	};
-	this.loadSellersPage = function() {
-		self.page = "Sellers";
-		tableController.view.removeView();
-	};
+	//Sales
 	this.loadSalesPage = function() {
-		self.page = "Sales";
-		tableController.view.removeView();
+		if(self.page != "Sales"){
+			var detailBtn                = $('<button class="detail-button"></button>');
+			var deleteBtn                = $('<button class="delete-button"></button>');
+			tableController.view.removeView();
+			tableController.view.setClass('sales-table');
+			self.page = "Sales";
+			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
+											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
+											{'identifier': 'salepoint.fridge.status','value':'Estado'},
+											{'identifier': 'products.amount','value':'Monto'},
+											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			detailBtn.bind('click', onClickDetail);
+			deleteBtn.bind('click', onClickDelete);
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+			self.makeSearch({});
+		};
 	};
+	this.setSales = function(sales){
+		self.currentData = sales;
+		tableController.loadTable(true);
+	};
+	//table methods
 	this.rowsNumber = function(){
 		return this.currentData.length;
 	};
 	this.getCellData = function(index, identifier, row){
-		var celldata = this.currentData[index];
+		var celldata = self.currentData[index];
 		if(typeof row.data('id') === "undefined")row.data('id',celldata._id);
-		return celldata[identifier];
+		return tableController.getStringData(identifier, celldata);
 	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
-		self.delegate['search'+self.page+'s'].call(null,searchData);
+		self.delegate['search'+self.page].call(null,searchData);
 	};
 	//Events
 	function onClickDetail(){

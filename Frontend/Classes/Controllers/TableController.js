@@ -47,14 +47,29 @@ function TableController (argument) {
 		for (var i = 0; i < self.tableHeaders.length; i++) {
 			var tableheader = self.tableHeaders[i];
 			var cellValue = getCellData(index, tableheader.identifier,tableheader.itemPrototype, row);
-			createCellItem.call(row,cellValue);
+			createCellItem.call(row, cellValue);
 		};
 	};
 	function getCellData( index, identifier, itemPrototype, row){
 		if(typeof itemPrototype === "undefined")
 			return self.delegate.getCellData(index, identifier, row);
+		
 		if(typeof itemPrototype === "object" && typeof itemPrototype.clone === "function")
 			return itemPrototype.clone(true);
+	};
+	this.getStringData = function(identifier, dataobject) {
+		if(typeof identifier != "undefined"){
+			var keys = identifier.split('.');
+			identifier = keys[1];
+			if(identifier != "undefined" && keys.length >= 2){
+				for (var i = 2; i < keys.length; i++) 
+					identifier+='.'+keys[i];
+			};
+			if(typeof dataobject[keys[0]] != "object")
+				return dataobject[keys[0]];
+			if(typeof dataobject[keys[0]] === "object")
+				return self.getStringData(identifier, dataobject[keys[0]]);
+		};
 	};
 	TableController.prototype._init_.call(this);
 };

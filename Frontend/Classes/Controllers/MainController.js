@@ -146,7 +146,7 @@ function MainController () {
 		return tableController.getStringData(identifier, celldata);
 	};
 	this.tableLoaded = function() {
-		self.enableEvents();
+		self.delegate.enableEvents();
 	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);
@@ -170,9 +170,11 @@ function MainController () {
 		detailBtn.bind('click',onClickDetail);
 		deleteBtn.bind('click',onClickDelete);
 		menuController.enableEvents();
+		searchController.enableEvents();
 	};
 	this.disableEvents = function(){
 		menuController.disableEvents();
+		searchController.disableEvents();
 		tableController.view.container().find('button').unbind('click');
 	};
 	MainController.prototype._init_.call(this);

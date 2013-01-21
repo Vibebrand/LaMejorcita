@@ -29,6 +29,7 @@ function MenuController (argument) {
 		$(this).addClass('selected');
 		$.cookie('lamejorcita.option', $(this).data('id'));
 		self.delegate.changePage($(this).data('href'));
+		self.delegate.disableEvents();
 	};
 	//Enable Disable
 	this.enableEvents = function(){

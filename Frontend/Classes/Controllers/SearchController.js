@@ -13,5 +13,11 @@ SearchController.prototype._init_= function(){
 };
 function SearchController () {
 	var self = this;
+	this.enableEvents = function() {
+		
+	};
+	this.disableEvents = function() {
+		
+	};
 	SearchController.prototype._init_.call(this);
 };

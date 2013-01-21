@@ -47,5 +47,8 @@ function StockService(){
 		console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
+	this.searchProducts = function(searchData){
+		console.log(searchData);
+	};
 };
 StockService.prototype = new Service();

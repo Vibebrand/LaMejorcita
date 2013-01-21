@@ -132,7 +132,7 @@ function MainController () {
 											{'identifier': 'products.amount','value':'Monto'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
 			detailBtn.text('Detalle');
-			createVisualizationButtons
+			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -141,6 +141,27 @@ function MainController () {
 	this.setSales = function(sales){
 		self.currentData = sales;
 		tableController.loadTable(true);
+	};
+	//Products
+	this.loadProductsPage = function() {
+		if(self.page != "Products"){
+			var detailBtn = $('<button class="detail-button"></button>');
+			tableController.view.removeView();
+			tableController.view.setClass('products-table');
+			self.page = "Products";
+			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
+											{'identifier': 'count','value':'Cantidad'},
+											{'identifier': 'salePrice','value':'Precio'},
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
+			detailBtn.text('Detalle');
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+			self.makeSearch({});
+		};
+	};
+	this.setProducts = function(sales){
+		//self.currentData = sales;
+		//tableController.loadTable(true);
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -164,6 +185,8 @@ function MainController () {
 			else
 				stringValue = "Mal";
 		};
+
+
 		return stringValue;
 	};
 	this.tableLoaded = function() {

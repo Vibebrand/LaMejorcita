@@ -47,5 +47,21 @@ function StockService(){
 		console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
+	this.searchProducts = function(searchData){
+		console.log(searchData);
+		var products = [];
+		for (var i = 0; i < 5; i++) {
+			var product = {
+				_id 			: "sadfdsadfprod"+i,
+				name 			: "Producto"+i,
+				salePrice 		: (8/(i+1))*10,
+				count			: 15,
+				registationDate :"2013/13/01"
+			};
+			products.push(product);
+		};
+		console.log(products);
+		self.delegate.setProducts(products);
+	};
 };
 StockService.prototype = new Service();

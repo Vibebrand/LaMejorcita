@@ -1,8 +1,8 @@
 function MenuController (argument) {
 	var self = this;
-	var pageHashs = ['/Stocks', '/POS' , '/Sellers', '/Sales', '/Distribution'];
+	var pageHashs = ['/Stocks', '/POS' , '/Sellers', '/Sales', '/Products'];
 	this.viewDidLoad = function(){
-		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas'/*, 'Distribución'*/];
+		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas', 'Products'];
 		for (var i = 0; i < options.length; i++){
 			var classname = "";
 			if(!$.cookie('lamejorcita.option') && i === 0)

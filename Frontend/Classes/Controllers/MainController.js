@@ -93,8 +93,8 @@ function MainController () {
 	//Sellers
 	this.loadSellersPage = function() {
 		if(self.page != "Sellers"){
-			var detailBtn                = $('<button class="detail-button"></button>');
-			var deleteBtn                = $('<button class="delete-button"></button>');
+			var detailBtn = $('<button class="detail-button"></button>');
+			var deleteBtn = $('<button class="delete-button"></button>');
 			tableController.cleanTable();
 			tableController.view.removeView();
 			tableController.view.setClass('sellers-table');
@@ -132,7 +132,7 @@ function MainController () {
 											{'identifier': 'products.amount','value':'Monto'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
 			detailBtn.text('Detalle');
-			createVisualizationButtons
+			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -140,6 +140,30 @@ function MainController () {
 	};
 	this.setSales = function(sales){
 		self.currentData = sales;
+		tableController.loadTable(true);
+	};
+	//Products
+	this.loadProductsPage = function() {
+		if(self.page != "Products"){
+			var detailBtn = $('<button class="detail-button"></button>');
+			var deleteBtn = $('<button class="delete-button"></button>');
+			tableController.view.removeView();
+			tableController.view.setClass('products-table');
+			self.page = "Products";
+			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
+											{'identifier': 'salePrice','value':'Precio'},
+											{'identifier': 'count','value':'Cantidad'},
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			detailBtn.text('Detalle');
+			deleteBtn.text('-');
+			tableController.cleanTable();
+			tableController.view.appendToView(this.view);
+			self.makeSearch({});
+		};
+	};
+	this.setProducts = function(products){
+		self.currentData = products;
 		tableController.loadTable(true);
 	};
 	//table methods
@@ -164,6 +188,8 @@ function MainController () {
 			else
 				stringValue = "Mal";
 		};
+
+
 		return stringValue;
 	};
 	this.tableLoaded = function() {

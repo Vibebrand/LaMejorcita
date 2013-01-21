@@ -25,10 +25,11 @@ function MasterControl(){
 		self.navigationController.addUnloggedUrl('', loadLoginPage);
 		self.navigationController.addLoggedUrl('', self.changePage, '/Stocks');
 
-		self.navigationController.addLoggedUrl('/Stocks', loadStockPage);
-		self.navigationController.addLoggedUrl('/POS', loadPOSPage);
-		self.navigationController.addLoggedUrl('/Sellers', loadSellersPage);
-		self.navigationController.addLoggedUrl('/Sales', loadSalesPage);
+		self.navigationController.addLoggedUrl('/Stocks', 	loadStockPage);
+		self.navigationController.addLoggedUrl('/POS', 		loadPOSPage);
+		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
+		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
+		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
 	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
@@ -64,6 +65,11 @@ function MasterControl(){
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadSalesPage();
 	};
+	function loadProductsPage(){
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadProductsPage();
+	};
 	//Stock
 	this.searchStocks = function(searchData){
 		self.stockService.searchStocks(searchData);
@@ -91,6 +97,13 @@ function MasterControl(){
 	};
 	this.setSales = function(sales){
 		self.mainController.setSales(sales);
+	};
+	//Products
+	this.searchProducts = function(searchData){
+		self.stockService.searchProducts(searchData);
+	};
+	this.setProducts = function(products){
+		self.mainController.setProducts(products);
 	};
 	//Enable Disable
 	this.enableEvents = function(){

@@ -25,7 +25,12 @@ function SalesService (argument) {
 						"_id"			:"safdsafdsa0fd"+i,
 						"name"         	:"Bodega "+i,
 						"businessName" 	:"Negocio "+i,
-						"address"      	:"Dirección "+i,
+						address: {
+							street: "Calle "+i,
+							district: "Colonia "+i,
+							numInt: "",
+							numExt: i+1
+						},
 						"manager"      	:"Responsable "+i,
 						"phone"     	:"Telefono "+i
 					},
@@ -34,7 +39,12 @@ function SalesService (argument) {
 				salepoint:{
 					_id: "sdfadsasalepoint"+i,
 					district: "Colonia "+i,
-					address: "Dirección "+i,
+					address: {
+						street: "Calle "+i,
+						district: "Colonia "+i,
+						intNum: "",
+						extNum: String(i+1)
+					},
 					joinDate: "2013/01/01",
 					phone: "1234567",
 					maxSaleNumber: 1000,
@@ -44,9 +54,9 @@ function SalesService (argument) {
 						longitude: "-102.2913"
 					},
 					fridge: {
-						serial : "afsdll0132fridge"+i,
+						serial : String("afsdll0132fridge"+i).toUpperCase(),
 						temperature: -10,
-						status: "bien"
+						status: true
 					},
 					manager:{
 						_id:"asfdo90qwqewr"+i,

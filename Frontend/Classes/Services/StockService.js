@@ -24,8 +24,12 @@ function StockService(){
 				_id			: "safdsafdsa0fd"+i,
 				name        :"Bodega "+i,
 				businessName:"Negocio "+i,
-				district 	:"Colonia "+i,
-				address     :"Dirección "+i,
+				address: {
+					street: "Calle "+i,
+					district: "Colonia "+i,
+					intNum: "",
+					extNum: String(i+1)
+				},
 				manager     :{
 					_id	 : "asfdo90qwqewr"+i,
 					name : "Guy Fawkes",

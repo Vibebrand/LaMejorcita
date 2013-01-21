@@ -42,6 +42,8 @@ function MainController () {
 			tableController.view.setClass('stock-table');
 			this.page                    = "Stocks";
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
+											{'identifier': 'address','value':'Dirección'},
+											{'identifier': 'address.district','value':'Colonia'},
 											{'identifier': 'manager.name','value':'Responsable'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
@@ -66,10 +68,11 @@ function MainController () {
 			tableController.view.removeView();
 			tableController.view.setClass('pos-table');
 			self.page = "POS";
-			tableController.tableHeaders = [{'identifier': 'joinDate','value':'Fecha de ingreso'},
+			tableController.tableHeaders = [{'identifier': 'fridge.serial','value':'Serial'},
+											{'identifier': 'fridge.status','value':'Estado'},
 											{'identifier': 'address','value':'Dirección'},
+											{'identifier': 'address.district','value':'Colonia'},
 											{'identifier': 'manager.name','value':'Representante'},
-											{'identifier': 'fridge.temperature','value':'Temperatura'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'email','value':'Correo electrónico'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
@@ -96,10 +99,10 @@ function MainController () {
 			tableController.view.removeView();
 			tableController.view.setClass('sellers-table');
 			self.page = "Sellers";
-			tableController.tableHeaders = [{'identifier': 'stock.name','value':'Bodega'},
-											{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'curp','value':'CURP'},
-											{'identifier': 'device','value':'Dispositivo'},
+			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
+											{'identifier': 'phone','value':'Teléfono'},
+											{'identifier': 'email','value':'Correo electrónico'},
+											{'identifier': 'stock.name','value':'Bodega'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
@@ -144,8 +147,19 @@ function MainController () {
 	};
 	this.getCellData = function(index, identifier, row){
 		var celldata = self.currentData[index];
+		var stringValue = tableController.getStringData(identifier, celldata);
 		if(typeof row.data('id') === "undefined")row.data('id',celldata._id);
-		return tableController.getStringData(identifier, celldata);
+
+		if(identifier === "address")
+			stringValue =  getAddressString(celldata[identifier]);
+		if(identifier === "salepoint.fridge.status" || identifier === "fridge.status"){
+			var fridgeStatus = stringValue;
+			if(fridgeStatus)
+				stringValue = "Bien";
+			else
+				stringValue = "Mal";
+		};
+		return stringValue;
 	};
 	this.tableLoaded = function() {
 		self.delegate.enableEvents();
@@ -155,6 +169,12 @@ function MainController () {
 		searchData.objects = objects;
 		searchData.page = pagecount;
 		self.delegate['search'+self.page].call(null,searchData);
+	};
+	function getAddressString(address){
+		var addressText = address.street+" #"+address.extNum;
+		if(address.intNum != "")
+			addressText+= " int. "+address.intNum;
+		return addressText;
 	};
 	function createVisualizationButtons(){
 		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find != "undefined"){

@@ -6,8 +6,12 @@ function POSService (argument) {
 		for (var i = 0; i < 15; i++) {
 			var pos = {
 				_id: "sdfadsasalepoint"+i,
-				district: "Colonia "+i,
-				address: "Dirección "+i,
+				address: {
+					street: "Calle "+i,
+					district: "Colonia "+i,
+					intNum: "",
+					extNum: String(i+1)
+				},
 				joinDate: "2013/01/01",
 				phone: "1234567",
 				email: "salepoint"+i+"@mail.com",
@@ -18,9 +22,9 @@ function POSService (argument) {
 					longitude: "-102.2913"
 				},
 				fridge: {
-					serial : "afsdll0132fridge"+i,
+					serial : String("afsdll0132fridge"+i).toUpperCase(),
 					temperature: -10,
-					status: "bien"
+					status: true
 				},
 				manager:{
 					_id:"asfdo90qwqewr"+i,

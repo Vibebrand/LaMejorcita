@@ -7,6 +7,16 @@ function SalesService (argument) {
 			var sale = {
 				_id: "_sdafsadfdsa0"+i,
 				date: "2013/01/01",
+				time: "13:30:33",
+				observations: "Observación"+i,
+				products:{
+					products: [],
+					amount:1000.50
+				},
+				geoposition: {
+					latitude: "21.8818",
+					longitude: "-102.2913"
+				},
 				seller: {
 					_id:"asfdo90qwqewr"+i,
 					name: "Guy Fawkes",
@@ -20,15 +30,6 @@ function SalesService (argument) {
 						"phone"     	:"Telefono "+i
 					},
 					device: 'safdsafdevicesdf'+i+'20'
-				},
-				observations: "Observación"+i,
-				products:{
-					products: [],
-					amount:1000.50
-				},
-				geoposition: {
-					latitude: "21.8818",
-					longitude: "-102.2913"
 				},
 				salepoint:{
 					_id: "sdfadsasalepoint"+i,

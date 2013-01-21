@@ -120,6 +120,7 @@ function MainController () {
 			tableController.view.setClass('sales-table');
 			self.page = "Sales";
 			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
+											{'identifier': 'time','value':'Hora'},
 											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
 											{'identifier': 'salepoint.fridge.status','value':'Estado'},
 											{'identifier': 'products.amount','value':'Monto'},

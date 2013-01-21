@@ -26,6 +26,24 @@ function PointsService (argument) {
 					_id:"asfdo90qwqewr"+i,
 					name: "Guy Fawkes",
 					curp: 'PIIG720116BV1'
+				},
+				stock: {
+					_id			: "safdsafdsa0fd"+i,
+					name        :"Bodega "+i,
+					businessName:"Negocio "+i,
+					district 	:"Colonia "+i,
+					address     :"Dirección "+i,
+					manager     :{
+						_id	 : "asfdo90qwqewr"+i,
+						name : "Guy Fawkes",
+						curp : 'PIIG720116BV'+i,
+						email: "faukes@mail.com"
+					},
+					phone      	:"123456"+i,
+					geoposition: {
+						latitude: "21.8818",
+						longitude: "-102.2913"
+					}
 				}
 			};
 			salepoints.push(salepoint);

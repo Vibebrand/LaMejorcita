@@ -32,10 +32,15 @@ function StockService(){
 					curp : 'PIIG720116BV'+i,
 					email: "faukes@mail.com"
 				},
-				phone      	:"123456"+i
+				phone      	:"123456"+i,
+				geoposition: {
+					latitude: "21.8818",
+					longitude: "-102.2913"
+				}
 			};
 			stocks.push(stock)
 		};
+		console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
 };

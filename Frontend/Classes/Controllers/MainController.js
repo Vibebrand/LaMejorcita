@@ -11,6 +11,7 @@ function MainController () {
 	var tableController = null;
 	var menuController = null
 	var searchController = null;
+	var buttonsContainer;
 	var pagecount = 0;
 	var objects = 15;
 	this.currentData = [];
@@ -47,6 +48,7 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
+			createVisualizationButtons
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -75,6 +77,7 @@ function MainController () {
 
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
+			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -101,6 +104,7 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
+			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -127,6 +131,7 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
+			createVisualizationButtons
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -154,15 +159,21 @@ function MainController () {
 		searchData.page = pagecount;
 		self.delegate['search'+self.page].call(null,searchData);
 	};
-	function createButtonsView(){
-		var buttonsContainer  = $('<div class="buttons-container"></div>');
-		var mapBtn = $('<button class="map-button"></button>');
-		var listBtn = $('<button class="list-button"></button>');
-		mapBtn.text('Mapa');
-		listBtn.text('Lista');
-		buttonsContainer.append(mapBtn);
-		buttonsContainer.append(listBtn);
-		return buttonsContainer;
+	function createVisualizationButtons(){
+		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find != "undefined"){
+			buttonsContainer  = $('<div class="buttons-container"></div>');
+			var mapBtn = $('<button class="map-button"></button>');
+			var listBtn = $('<button class="list-button"></button>');
+			buttonsContainer.append(mapBtn);
+			buttonsContainer.append(listBtn);
+			self.view.addSubview(buttonsContainer);
+			mapBtn.text('Mapa');
+			listBtn.text('Lista');
+		};
+	};
+	function removeVisualizationButtons(){
+		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")
+			buttonsContainer.remove();
 	};
 	//Events
 	function onClickDetail(){

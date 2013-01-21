@@ -24,7 +24,6 @@ function MainController () {
 		}
 		menuController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
-		
 	};
 	//Stocks
 	this.loadStockPage = function(){

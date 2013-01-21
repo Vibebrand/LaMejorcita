@@ -14,7 +14,7 @@ function MasterControl(){
 	this.userService   = null;
 	this.stockService  = null;
 	this.salesService  = null;
-	this.pointsService = null;
+	this.posService = null;
 
 	function _init_() {
 		self.navigationController = new NavigationController();
@@ -26,7 +26,7 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('', self.changePage, '/Stocks');
 
 		self.navigationController.addLoggedUrl('/Stocks', loadStockPage);
-		self.navigationController.addLoggedUrl('/Points', loadPointsPage);
+		self.navigationController.addLoggedUrl('/POS', loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers', loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales', loadSalesPage);
 	};
@@ -49,10 +49,10 @@ function MasterControl(){
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadStockPage();
 	};
-	function loadPointsPage(){
+	function loadPOSPage(){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
-		self.mainController.loadPointsPage();
+		self.mainController.loadPOSPage();
 	};
 	function loadSellersPage(){
 		self.headerController.view.appendToView(headerContainer);
@@ -72,11 +72,11 @@ function MasterControl(){
 		self.mainController.setStocks(stocks);
 	};
 	//POS
-	this.searchPoints = function(searchData){
-		self.pointsService.searchPoints(searchData);
+	this.searchPOS = function(searchData){
+		self.posService.searchPOS(searchData);
 	};
-	this.setSalePoints = function(salepoints){
-		self.mainController.setSalePoints(salepoints);
+	this.setPOSData = function(posdata){
+		self.mainController.setPOSData(posdata);
 	};
 	//Sellers
 	this.searchSellers = function(searchData){

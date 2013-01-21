@@ -57,13 +57,13 @@ function MainController () {
 		tableController.loadTable(true);
 	};
 	//Sale points
-	this.loadPointsPage = function() {
-		if(self.page != "Points"){
+	this.loadPOSPage = function() {
+		if(self.page != "POS"){
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.view.removeView();
-			tableController.view.setClass('salepoints-table');
-			self.page = "Points";
+			tableController.view.setClass('pos-table');
+			self.page = "POS";
 			tableController.tableHeaders = [{'identifier': 'joinDate','value':'Fecha de ingreso'},
 											{'identifier': 'address','value':'Dirección'},
 											{'identifier': 'manager.name','value':'Representante'},
@@ -80,8 +80,8 @@ function MainController () {
 			self.makeSearch({});
 		};
 	};
-	this.setSalePoints = function(salepoints){
-		self.currentData = salepoints;
+	this.setPOSData = function(posdata){
+		self.currentData = posdata;
 		tableController.loadTable(true);
 	};
 	//Sellers
@@ -153,6 +153,16 @@ function MainController () {
 		searchData.objects = objects;
 		searchData.page = pagecount;
 		self.delegate['search'+self.page].call(null,searchData);
+	};
+	function createButtonsView(){
+		var buttonsContainer  = $('<div class="buttons-container"></div>');
+		var mapBtn = $('<button class="map-button"></button>');
+		var listBtn = $('<button class="list-button"></button>');
+		mapBtn.text('Mapa');
+		listBtn.text('Lista');
+		buttonsContainer.append(mapBtn);
+		buttonsContainer.append(listBtn);
+		return buttonsContainer;
 	};
 	//Events
 	function onClickDetail(){

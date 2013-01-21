@@ -1,6 +1,6 @@
 function MenuController (argument) {
 	var self = this;
-	var pageHashs = ['/Stocks', '/Points' , '/Sellers', '/Sales', '/Distribution'];
+	var pageHashs = ['/Stocks', '/POS' , '/Sellers', '/Sales', '/Distribution'];
 	this.viewDidLoad = function(){
 		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas'/*, 'Distribución'*/];
 		for (var i = 0; i < options.length; i++){
@@ -33,7 +33,7 @@ function MenuController (argument) {
 	};
 	//Enable Disable
 	this.enableEvents = function(){
-		var li = this.view.container().find('li.option-item');
+		var li = this.view.container().find('li.option-item:not(.selected)');
 		li.unbind('click');
 		li.bind('click', onClickOption);
 	};

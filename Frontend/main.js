@@ -13,7 +13,7 @@ Importer.importfile('Classes/Controllers/MessageController.js');
 
 Importer.importfile('Classes/Services/UserService.js');
 Importer.importfile('Classes/Services/StockService.js');
-Importer.importfile('Classes/Services/PointsService.js');
+Importer.importfile('Classes/Services/POSService.js');
 Importer.importfile('Classes/Services/SalesService.js');
 
 $(document).ready(function(){Importer.loadImports(main);});
@@ -25,7 +25,7 @@ function main(){
 	var userService       = new UserService();
 	var stockService      = new StockService();
 	var mainController    = new MainController();
-	var pointsService     = new PointsService();
+	var posService     = new POSService();
 	var salesService      = new SalesService();
 
 	loginController.delegate  = masterControl;
@@ -35,7 +35,7 @@ function main(){
 	userService.delegate      = masterControl;
 	stockService.delegate     = masterControl;
 	salesService.delegate = masterControl;
-	pointsService.delegate = masterControl;
+	posService.delegate = masterControl;
 
 	loginController.messageController = messageController;
 
@@ -47,7 +47,7 @@ function main(){
 	masterControl.userService   = userService;
 	masterControl.stockService  = stockService;
 	masterControl.salesService  = salesService;
-	masterControl.pointsService = pointsService;
+	masterControl.posService = posService;
 
 	masterControl.navigationController.load();
 };

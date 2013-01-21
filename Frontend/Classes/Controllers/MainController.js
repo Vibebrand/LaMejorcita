@@ -44,8 +44,8 @@ function MainController () {
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'manager.name','value':'Responsable'},
 											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
 			createVisualizationButtons
@@ -72,8 +72,8 @@ function MainController () {
 											{'identifier': 'fridge.temperature','value':'Temperatura'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'email','value':'Correo electrónico'},
-											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
@@ -100,8 +100,8 @@ function MainController () {
 											{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'curp','value':'CURP'},
 											{'identifier': 'device','value':'Dispositivo'},
-											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
 			removeVisualizationButtons();
@@ -118,7 +118,6 @@ function MainController () {
 	this.loadSalesPage = function() {
 		if(self.page != "Sales"){
 			var detailBtn                = $('<button class="detail-button"></button>');
-			var deleteBtn                = $('<button class="delete-button"></button>');
 			tableController.view.removeView();
 			tableController.view.setClass('sales-table');
 			self.page = "Sales";
@@ -127,10 +126,8 @@ function MainController () {
 											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
 											{'identifier': 'salepoint.fridge.status','value':'Estado'},
 											{'identifier': 'products.amount','value':'Monto'},
-											{'identifier': 'delete','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
 			detailBtn.text('Detalle');
-			deleteBtn.text('-');
 			createVisualizationButtons
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);

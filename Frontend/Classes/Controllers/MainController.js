@@ -93,8 +93,8 @@ function MainController () {
 	//Sellers
 	this.loadSellersPage = function() {
 		if(self.page != "Sellers"){
-			var detailBtn                = $('<button class="detail-button"></button>');
-			var deleteBtn                = $('<button class="delete-button"></button>');
+			var detailBtn = $('<button class="detail-button"></button>');
+			var deleteBtn = $('<button class="delete-button"></button>');
 			tableController.cleanTable();
 			tableController.view.removeView();
 			tableController.view.setClass('sellers-table');
@@ -146,22 +146,25 @@ function MainController () {
 	this.loadProductsPage = function() {
 		if(self.page != "Products"){
 			var detailBtn = $('<button class="detail-button"></button>');
+			var deleteBtn = $('<button class="delete-button"></button>');
 			tableController.view.removeView();
 			tableController.view.setClass('products-table');
 			self.page = "Products";
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'count','value':'Cantidad'},
 											{'identifier': 'salePrice','value':'Precio'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
+											{'identifier': 'count','value':'Cantidad'},
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
+											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
+			deleteBtn.text('-');
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
 	};
-	this.setProducts = function(sales){
-		//self.currentData = sales;
-		//tableController.loadTable(true);
+	this.setProducts = function(products){
+		self.currentData = products;
+		tableController.loadTable(true);
 	};
 	//table methods
 	this.rowsNumber = function(){

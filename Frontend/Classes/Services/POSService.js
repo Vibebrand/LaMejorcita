@@ -23,7 +23,7 @@ function POSService (argument) {
 				},
 				fridge: {
 					serial : String("afsdll0132fridge"+i).toUpperCase(),
-					temperature: -10,
+					temperature: "-10 C",
 					status: true
 				},
 				manager:{

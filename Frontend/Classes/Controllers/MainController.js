@@ -128,6 +128,7 @@ function MainController () {
 											{'identifier': 'time','value':'Hora'},
 											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
 											{'identifier': 'salepoint.fridge.status','value':'Estado'},
+											{'identifier': 'products.products','value':'Cantidad'},
 											{'identifier': 'products.amount','value':'Monto'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
 			detailBtn.text('Detalle');
@@ -152,6 +153,10 @@ function MainController () {
 
 		if(identifier === "address")
 			stringValue =  getAddressString(celldata[identifier]);
+
+		if(identifier === "products.products")
+			stringValue =  celldata.products.products.length;
+
 		if(identifier === "salepoint.fridge.status" || identifier === "fridge.status"){
 			var fridgeStatus = stringValue;
 			if(fridgeStatus)

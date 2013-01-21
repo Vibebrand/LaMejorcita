@@ -2,7 +2,7 @@ function MenuController (argument) {
 	var self = this;
 	var pageHashs = ['/Stocks', '/Points' , '/Sellers', '/Sales', '/Distribution'];
 	this.viewDidLoad = function(){
-		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas', 'Distribución'];
+		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas'/*, 'Distribución'*/];
 		for (var i = 0; i < options.length; i++){
 			var classname = "";
 			if(!$.cookie('lamejorcita.option') && i === 0)

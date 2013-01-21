@@ -39,6 +39,7 @@ function TableController (argument) {
 		if(typeof self.delegate != "undefined"&& typeof self.delegate.rowsNumber === "function"&& typeof self.delegate.rowsNumber() === "number"){
 			for (var i = 0; i < self.delegate.rowsNumber(); i++)
 				createRow(i);
+			self.delegate.tableLoaded();
 		};
 	};
 	function createRow(index){

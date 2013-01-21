@@ -1,4 +1,5 @@
 Importer.importfile('Classes/Controllers/MenuController.js');
+Importer.importfile('Classes/Controllers/SearchController.js');
 Importer.importfile('Classes/Controllers/TableController.js');
 MainController.prototype = new ViewController();
 MainController.prototype._init_= function(){
@@ -9,20 +10,26 @@ function MainController () {
 	var self = this;
 	var tableController = null;
 	var menuController = null
+	var searchController = null;
 	var pagecount = 0;
 	var objects = 15;
 	this.currentData = [];
 	
 	this.viewDidLoad = function(){
 		if(!menuController){
-			menuController = new MenuController();
+			menuController          = new MenuController();
 			menuController.delegate = self.delegate;
 		};
 		if(!tableController){
-			tableController = new TableController();
-			tableController.delegate     = self;
+			tableController          = new TableController();
+			tableController.delegate = self;
+		}
+		if(!searchController){
+			searchController          = new SearchController();
+			searchController.delegate = self;
 		}
 		menuController.view.appendToView(this.view);
+		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
 	};
 	//Stocks
@@ -40,9 +47,6 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
-			detailBtn.bind('click', onClickDetail);
-			deleteBtn.bind('click', onClickDelete);
-
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -71,8 +75,6 @@ function MainController () {
 
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
-			detailBtn.bind('click', onClickDetail);
-			deleteBtn.bind('click', onClickDelete);
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -99,8 +101,6 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
-			detailBtn.bind('click', onClickDetail);
-			deleteBtn.bind('click', onClickDelete);
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -127,8 +127,6 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
-			detailBtn.bind('click', onClickDetail);
-			deleteBtn.bind('click', onClickDelete);
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
@@ -147,6 +145,9 @@ function MainController () {
 		if(typeof row.data('id') === "undefined")row.data('id',celldata._id);
 		return tableController.getStringData(identifier, celldata);
 	};
+	this.tableLoaded = function() {
+		self.enableEvents();
+	};
 	this.makeSearch = function(aditional){
 		var searchData  = $.extend({},{}, aditional);
 		searchData.objects = objects;
@@ -162,10 +163,17 @@ function MainController () {
  	};
 	//Enable Disable
 	this.enableEvents = function(){
+		var detailBtn = tableController.view.container().find('.detail-button');
+		var deleteBtn = tableController.view.container().find('.delete-button');
+		detailBtn.unbind('click');
+		deleteBtn.unbind('click');
+		detailBtn.bind('click',onClickDetail);
+		deleteBtn.bind('click',onClickDelete);
 		menuController.enableEvents();
 	};
 	this.disableEvents = function(){
 		menuController.disableEvents();
+		tableController.view.container().find('button').unbind('click');
 	};
 	MainController.prototype._init_.call(this);
 };

@@ -124,6 +124,7 @@ function MainController () {
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.updateMenu(2);
+			self.makeSearch({});
 		};
 		self.showTable();
 		self.updateMenu();

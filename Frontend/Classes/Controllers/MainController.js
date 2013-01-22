@@ -39,8 +39,8 @@ function MainController () {
 		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
 	};
-	this.updateMenu = function(){
-		menuController.changeOption($.cookie('lamejorcita.option'));
+	this.updateMenu = function(index){
+		menuController.changeOption(index);
 	};
 	//Stocks
 	this.loadStockPage = function(){
@@ -65,7 +65,7 @@ function MainController () {
 			self.makeSearch({});
 		};
 		self.showTable();
-		self.updateMenu();
+		self.updateMenu(0);
 	};
 	this.setStocks = function(stocks){
 		self.currentData = stocks;
@@ -97,7 +97,7 @@ function MainController () {
 			self.makeSearch({});
 		};
 		self.showTable();
-		self.updateMenu();
+		self.updateMenu(1);
 	};
 	this.setPOSData = function(posdata){
 		self.currentData = posdata;
@@ -123,7 +123,7 @@ function MainController () {
 			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.makeSearch({});
+			self.updateMenu(2);
 		};
 		self.showTable();
 		self.updateMenu();
@@ -153,7 +153,7 @@ function MainController () {
 			self.makeSearch({});
 		};
 		self.showTable();
-		self.updateMenu();
+		self.updateMenu(3);
 	};
 	this.setSales = function(sales){
 		self.currentData = sales;
@@ -180,7 +180,7 @@ function MainController () {
 			self.makeSearch({});
 		};
 		self.showTable();
-		self.updateMenu();
+		self.updateMenu(4);
 	};
 	this.setProducts = function(products){
 		self.currentData = products;

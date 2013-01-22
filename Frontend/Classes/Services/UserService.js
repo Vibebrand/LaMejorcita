@@ -35,8 +35,7 @@ function UserService(){
 						email: "faukes@mail.com"
 					},
 					phone      	:"123456"+i
-				},
-				
+				}
 			};
 			sellers.push(seller);
 		};

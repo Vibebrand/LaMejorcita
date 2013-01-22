@@ -1,7 +1,7 @@
 function SalesService (argument) {
 	var self = this;
 	this.searchSales = function(searchData){
-		console.log(searchData);
+		//console.log(searchData);
 		var sales = [];
 		for (var i = 0; i < 15; i++){
 			var sale = {
@@ -75,7 +75,7 @@ function SalesService (argument) {
 			};
 			sales.push(sale);
 		};
-		console.log(sales);
+		//console.log(sales);
 		self.delegate.setSales(sales);
 	};
 };

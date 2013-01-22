@@ -30,6 +30,7 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
+		self.navigationController.addLoggedUrl('/Detail/:detailId', loadDetailPage);
 	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
@@ -69,6 +70,11 @@ function MasterControl(){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadProductsPage();
+	};
+	function loadDetailPage(detailId){
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadDetailPage(detailId);
 	};
 	//Stock
 	this.searchStocks = function(searchData){

@@ -1,37 +1,46 @@
 Importer.importfile('Classes/Controllers/MenuController.js');
 Importer.importfile('Classes/Controllers/SearchController.js');
 Importer.importfile('Classes/Controllers/TableController.js');
+Importer.importfile('Classes/Controllers/DetailController.js');
 MainController.prototype = new ViewController();
 MainController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.view.setClass('main-container');
 };
 function MainController () {
-	var self = this;
-	var tableController = null;
-	var menuController = null
-	var searchController = null;
 	var buttonsContainer;
-	var pagecount = 0;
-	var objects = 15;
+	var self             = this;
+	var pagecount        = 0;
+	var objects          = 15;
+	var tableController  = null;
+	var detailController = null;
+	var menuController   = null;
+	var searchController = null;
 	this.currentData = [];
 	
 	this.viewDidLoad = function(){
 		if(!menuController){
 			menuController          = new MenuController();
-			menuController.delegate = self.delegate;
+			menuController.delegate = self;
 		};
 		if(!tableController){
 			tableController          = new TableController();
 			tableController.delegate = self;
-		}
+		};
 		if(!searchController){
 			searchController          = new SearchController();
 			searchController.delegate = self;
-		}
+		};
+		if(!detailController){
+			detailController = new DetailController();
+			detailController.delegate = self;
+		};
 		menuController.view.appendToView(this.view);
 		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
+	};
+	this.updateMenu = function(index){
+		menuController.changeOption(index);
 	};
 	//Stocks
 	this.loadStockPage = function(){
@@ -50,11 +59,13 @@ function MainController () {
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
-			createVisualizationButtons
+			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu(0);
 	};
 	this.setStocks = function(stocks){
 		self.currentData = stocks;
@@ -85,6 +96,8 @@ function MainController () {
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu(1);
 	};
 	this.setPOSData = function(posdata){
 		self.currentData = posdata;
@@ -110,8 +123,10 @@ function MainController () {
 			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.makeSearch({});
+			self.updateMenu(2);
 		};
+		self.showTable();
+		self.updateMenu();
 	};
 	this.setSellers = function(sellers) {
 		self.currentData = sellers;
@@ -137,6 +152,8 @@ function MainController () {
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu(3);
 	};
 	this.setSales = function(sales){
 		self.currentData = sales;
@@ -157,14 +174,28 @@ function MainController () {
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
+			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu(4);
 	};
 	this.setProducts = function(products){
 		self.currentData = products;
 		tableController.loadTable(true);
+	};
+	//Detail
+	this.loadDetailPage = function(detailId){
+		var table      = tableController.view.container();
+		var detailView = detailController.view.container();
+		detailController.currentId = detailId;
+		table.fadeOut('fast', function(){
+			detailView.hide('fast');
+			detailController.view.appendToView(self.view);
+			detailView.fadeIn('fast');
+		});
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -198,18 +229,21 @@ function MainController () {
 		searchData.page = pagecount;
 		self.delegate['search'+self.page].call(null,searchData);
 	};
+	this.showTable = function(){
+		tableController.view.container().show();
+	};
 	//creation
 	function createVisualizationButtons(){
-		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find != "undefined"){
+		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find == "undefined"){
 			buttonsContainer  = $('<div class="buttons-container"></div>');
 			var mapBtn = $('<button class="map-button"></button>');
 			var listBtn = $('<button class="list-button"></button>');
 			buttonsContainer.append(mapBtn);
 			buttonsContainer.append(listBtn);
-			self.view.addSubview(buttonsContainer);
 			mapBtn.text('Mapa');
 			listBtn.text('Lista');
 		};
+		self.view.addSubview(buttonsContainer);
 	};
 	function removeVisualizationButtons(){
 		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")
@@ -233,7 +267,7 @@ function MainController () {
 	}; 
 	//Events
 	function onClickDetail(){
-		console.log('detail');
+		
 	};
  	function onClickDelete(){
  		console.log('delete');
@@ -253,6 +287,10 @@ function MainController () {
 		menuController.disableEvents();
 		searchController.disableEvents();
 		tableController.view.container().find('button').unbind('click');
+	};
+	//delegate
+	this.changePage = function(hashpage){
+		self.delegate.changePage(hashpage);
 	};
 	MainController.prototype._init_.call(this);
 };

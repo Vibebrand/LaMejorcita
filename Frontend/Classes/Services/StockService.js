@@ -17,7 +17,7 @@ function StockService(){
 		    //called when there is an error
 		  }
 		});*/
-		console.log(searchData);
+		//console.log(searchData);
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {
 			var stock = {
@@ -46,7 +46,7 @@ function StockService(){
 			};
 			stocks.push(stock)
 		};
-		console.log(stocks);
+		//console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
 	this.searchProducts = function(searchData){

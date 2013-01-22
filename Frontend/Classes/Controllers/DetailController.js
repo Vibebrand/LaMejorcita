@@ -13,7 +13,8 @@ function DetailController (argument) {
 	this.detailId = null;
 	this.viewDidLoad = function(){
 		this.backButton.bind('click', function(){
-			self.delegate.triggerOption($.cookie('lamejorcita.option'));
+			var index = $.cookie('lamejorcita.option')? $.cookie('lamejorcita.option'): 0;
+			self.delegate.triggerOption(index);
 		});
 	};
 	this.loadStockDetail = function(){

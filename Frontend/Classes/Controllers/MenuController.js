@@ -20,6 +20,10 @@ function MenuController (argument) {
 		$(options[index]).addClass('selected');
 		$.cookie('lamejorcita.option', index);
 	};
+	this.triggerOption = function(index){
+		var options = self.view.container().find('li.option-item');
+		$(options[index]).trigger('click');
+	};
 	//Events
 	function onClickOption(){
 		self.changeOption($(this).data('id'));

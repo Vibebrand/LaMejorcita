@@ -15,6 +15,7 @@ function TableController (argument) {
 	this.tableHeaders = [];
 	this.viewDidLoad = function(){
 		createHeaders();
+		self.delegate.enableEvents();
 	};
 	this.cleanTable = function(){
 		self.container.empty();

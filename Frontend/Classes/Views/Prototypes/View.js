@@ -23,7 +23,7 @@ function View () {
 		};
 	};
 	this.removeView = function() {
-		this.container().remove();
+		container.remove();
 	};
 	this.setClass = function(classname) {
 		if(typeof classname == "string")

@@ -14,14 +14,15 @@ function MenuController (argument) {
 		li.data('id', id);
 		li.text(value);
 	};
-	this.changeOption = function(clicked ,index){
+	this.changeOption = function(index){
 		var options = self.view.container().find('li.option-item');
 		options.removeClass('selected');
-		this.attr('class','selected');
+		$(options[index]).addClass('selected');
+		$.cookie('lamejorcita.option', index);
 	};
 	//Events
 	function onClickOption(){
-		self.changeOption.call($(this),true, $(this).data('id'));
+		self.changeOption($(this).data('id'));
 		self.delegate.changePage($(this).data('href'));
 		if(!$(this).hasClass('selected'))
 			self.delegate.disableEvents();

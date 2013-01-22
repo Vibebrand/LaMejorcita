@@ -39,13 +39,8 @@ function MainController () {
 		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
 	};
-	this.chooseSelected = function(){
-		var option =  $.cookie('lamejorcita.option')? $.cookie('lamejorcita.option'): 0;
-		console.log(self.page);
-		if(self.page == "Detail")
-			menuController.changeOption(false , option);
-		else
-			menuController.changeOption(true , option);
+	this.updateMenu = function(){
+		menuController.changeOption($.cookie('lamejorcita.option'));
 	};
 	//Stocks
 	this.loadStockPage = function(){
@@ -64,12 +59,13 @@ function MainController () {
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
-			createVisualizationButtons
+			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.showTable();
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu();
 	};
 	this.setStocks = function(stocks){
 		self.currentData = stocks;
@@ -98,9 +94,10 @@ function MainController () {
 			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.showTable();
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu();
 	};
 	this.setPOSData = function(posdata){
 		self.currentData = posdata;
@@ -126,9 +123,10 @@ function MainController () {
 			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.showTable();
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu();
 	};
 	this.setSellers = function(sellers) {
 		self.currentData = sellers;
@@ -152,9 +150,10 @@ function MainController () {
 			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.showTable();
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu();
 	};
 	this.setSales = function(sales){
 		self.currentData = sales;
@@ -175,11 +174,13 @@ function MainController () {
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
+			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
-			self.showTable();
 			self.makeSearch({});
 		};
+		self.showTable();
+		self.updateMenu();
 	};
 	this.setProducts = function(products){
 		self.currentData = products;
@@ -195,7 +196,6 @@ function MainController () {
 			detailController.view.appendToView(self.view);
 			detailView.fadeIn('fast');
 		});
-
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -234,16 +234,16 @@ function MainController () {
 	};
 	//creation
 	function createVisualizationButtons(){
-		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find != "undefined"){
+		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find == "undefined"){
 			buttonsContainer  = $('<div class="buttons-container"></div>');
 			var mapBtn = $('<button class="map-button"></button>');
 			var listBtn = $('<button class="list-button"></button>');
 			buttonsContainer.append(mapBtn);
 			buttonsContainer.append(listBtn);
-			self.view.addSubview(buttonsContainer);
 			mapBtn.text('Mapa');
 			listBtn.text('Lista');
 		};
+		self.view.addSubview(buttonsContainer);
 	};
 	function removeVisualizationButtons(){
 		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")

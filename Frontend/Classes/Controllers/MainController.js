@@ -47,8 +47,6 @@ function MainController () {
 		if(this.page != "Stocks"){
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
-			tableController.view.removeView();
-			tableController.view.setClass('stock-table');
 			this.page                    = "Stocks";
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'address','value':'Dirección'},
@@ -57,14 +55,16 @@ function MainController () {
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.view.setClass('stock-table');
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
 			createVisualizationButtons();
 			tableController.cleanTable();
-			tableController.view.appendToView(this.view);
+			tableController.view.removeView();
 			self.makeSearch({});
 		};
-		self.showTable();
+		detailController.view.removeView();
+		tableController.view.appendToView(this.view);
 		self.updateMenu(0);
 	};
 	this.setStocks = function(stocks){
@@ -74,11 +74,9 @@ function MainController () {
 	//Sale points
 	this.loadPOSPage = function() {
 		if(self.page != "POS"){
+			self.page = "POS";
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
-			tableController.view.removeView();
-			tableController.view.setClass('pos-table');
-			self.page = "POS";
 			tableController.tableHeaders = [{'identifier': 'fridge.serial','value':'Serial'},
 											{'identifier': 'fridge.status','value':'Estado'},
 											{'identifier': 'address','value':'Dirección'},
@@ -88,15 +86,16 @@ function MainController () {
 											{'identifier': 'email','value':'Correo electrónico'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
-
+			tableController.view.setClass('pos-table');
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
 			createVisualizationButtons();
 			tableController.cleanTable();
-			tableController.view.appendToView(this.view);
+			tableController.view.removeView();
 			self.makeSearch({});
 		};
-		self.showTable();
+		detailController.view.removeView();
+		tableController.view.appendToView(this.view);
 		self.updateMenu(1);
 	};
 	this.setPOSData = function(posdata){
@@ -106,28 +105,26 @@ function MainController () {
 	//Sellers
 	this.loadSellersPage = function() {
 		if(self.page != "Sellers"){
+			self.page = "Sellers";
 			var detailBtn = $('<button class="detail-button"></button>');
 			var deleteBtn = $('<button class="delete-button"></button>');
-			tableController.cleanTable();
-			tableController.view.removeView();
-			tableController.view.setClass('sellers-table');
-			self.page = "Sellers";
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'email','value':'Correo electrónico'},
 											{'identifier': 'stock.name','value':'Bodega'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.view.setClass('sellers-table');
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
 			removeVisualizationButtons();
 			tableController.cleanTable();
-			tableController.view.appendToView(this.view);
-			self.updateMenu(2);
+			tableController.view.removeView();
 			self.makeSearch({});
 		};
-		self.showTable();
-		self.updateMenu();
+		detailController.view.removeView();
+		tableController.view.appendToView(this.view);
+		self.updateMenu(2);
 	};
 	this.setSellers = function(sellers) {
 		self.currentData = sellers;
@@ -136,10 +133,9 @@ function MainController () {
 	//Sales
 	this.loadSalesPage = function() {
 		if(self.page != "Sales"){
-			var detailBtn                = $('<button class="detail-button"></button>');
-			tableController.view.removeView();
-			tableController.view.setClass('sales-table');
 			self.page = "Sales";
+			var detailBtn                = $('<button class="detail-button"></button>');
+			tableController.view.setClass('sales-table');
 			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
 											{'identifier': 'time','value':'Hora'},
 											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
@@ -150,10 +146,11 @@ function MainController () {
 			detailBtn.text('Detalle');
 			createVisualizationButtons();
 			tableController.cleanTable();
-			tableController.view.appendToView(this.view);
+			tableController.view.removeView();
 			self.makeSearch({});
 		};
-		self.showTable();
+		detailController.view.removeView();
+		tableController.view.appendToView(this.view);
 		self.updateMenu(3);
 	};
 	this.setSales = function(sales){
@@ -163,24 +160,24 @@ function MainController () {
 	//Products
 	this.loadProductsPage = function() {
 		if(self.page != "Products"){
+			self.page = "Products";
 			var detailBtn = $('<button class="detail-button"></button>');
 			var deleteBtn = $('<button class="delete-button"></button>');
-			tableController.view.removeView();
-			tableController.view.setClass('products-table');
-			self.page = "Products";
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'salePrice','value':'Precio'},
 											{'identifier': 'count','value':'Cantidad'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.view.setClass('products-table');
 			detailBtn.text('Detalle');
 			deleteBtn.text('-');
 			removeVisualizationButtons();
 			tableController.cleanTable();
-			tableController.view.appendToView(this.view);
+			tableController.view.removeView();
 			self.makeSearch({});
 		};
-		self.showTable();
+		detailController.view.removeView();
+		tableController.view.appendToView(this.view);
 		self.updateMenu(4);
 	};
 	this.setProducts = function(products){
@@ -189,14 +186,11 @@ function MainController () {
 	};
 	//Detail
 	this.loadDetailPage = function(detailId){
-		var table      = tableController.view.container();
-		var detailView = detailController.view.container();
 		detailController.currentId = detailId;
-		table.fadeOut('fast', function(){
-			detailView.hide('fast');
-			detailController.view.appendToView(self.view);
-			detailView.fadeIn('fast');
-		});
+		removeVisualizationButtons();
+		detailController.view.removeView();
+		tableController.view.removeView();
+		detailController.view.appendToView(self.view);
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -231,7 +225,12 @@ function MainController () {
 		self.delegate['search'+self.page].call(null,searchData);
 	};
 	this.showTable = function(){
+		detailController.view.container().hide();
 		tableController.view.container().show();
+	};
+	function showDetail(){
+		tableController.view.container().hide();
+		detailController.view.container().show();
 	};
 	//creation
 	function createVisualizationButtons(){
@@ -268,7 +267,8 @@ function MainController () {
 	}; 
 	//Events
 	function onClickDetail(){
-		
+		detailId = $(this).parents('tr').data('id');
+		self.changePage('/Detail/'+detailId);
 	};
  	function onClickDelete(){
  		console.log('delete');
@@ -292,6 +292,10 @@ function MainController () {
 	//delegate
 	this.changePage = function(hashpage){
 		self.delegate.changePage(hashpage);
+	};
+	//options
+	this.triggerOption = function(index){
+		menuController.triggerOption(index);
 	};
 	MainController.prototype._init_.call(this);
 };

@@ -25,6 +25,8 @@ function StockService(){
 				name        :"Bodega "+i,
 				businessName:"Negocio "+i,
 				phone      	:"123456"+i,
+				maxSale: 1000,
+				minSale: 50,
 				address: {
 					street: "Calle "+i,
 					district: "Colonia "+i,

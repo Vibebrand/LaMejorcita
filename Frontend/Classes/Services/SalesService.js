@@ -11,8 +11,8 @@ function SalesService (argument) {
 				observations: "Observación"+i,
 				device: 'safdsafdevicesdf'+i+'20',
 				products:{
-					products: [],
-					amount:1000.50
+					products: [{},{},{},{},{}],
+					amount:75
 				},
 				geoposition: {
 					latitude: "21.8818",
@@ -56,8 +56,6 @@ function SalesService (argument) {
 					},
 					joinDate: "2013/01/01",
 					phone: "1234567",
-					maxSaleNumber: 1000,
-					minSaleNumber: 50,
 					geoposition: {
 						latitude: "21.8818",
 						longitude: "-102.2913"

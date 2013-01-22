@@ -8,8 +8,6 @@ function POSService (argument) {
 				_id: "sdfadsasalepoint"+i,
 				phone: "1234567",
 				email: "salepoint"+i+"@mail.com",
-				maxSale: 1000,
-				minSale: 50,
 				registationDate: "2013/01/01",
 				geoposition: {
 					latitude: "21.8818",
@@ -36,6 +34,8 @@ function POSService (argument) {
 					name        :"Bodega "+i,
 					businessName:"Negocio "+i,
 					phone      	:"123456"+i,
+					maxSale: 1000,
+					minSale: 50,
 					address: {
 						street: "Calle "+i,
 						district: "Colonia "+i,

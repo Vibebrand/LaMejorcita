@@ -184,7 +184,7 @@ function MainController () {
 		if(identifier.indexOf("fridge.status") != -1)
 			stringValue =  getFridgeStatus(stringValue);
 
-		if(identifier.indexOf("salePrice") != -1)
+		if(identifier.indexOf("salePrice") != -1 || identifier.indexOf("amount") != -1 )
 			stringValue = getPrice(stringValue);
 
 		return stringValue;

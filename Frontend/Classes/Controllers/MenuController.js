@@ -3,43 +3,38 @@ function MenuController (argument) {
 	var pageHashs = ['/Stocks', '/POS' , '/Sellers', '/Sales', '/Products'];
 	this.viewDidLoad = function(){
 		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas', 'Products'];
-		for (var i = 0; i < options.length; i++){
-			var classname = "";
-			if(!$.cookie('lamejorcita.option') && i === 0)
-				classname  = "selected";
-
-			if(Number($.cookie("lamejorcita.option")) === i)
-				classname  = "selected";
-			
-			createOptionItem.call(self,options[i], i, classname);
-		};
+		for (var i = 0; i < options.length; i++)
+			createOptionItem.call(self,options[i], i);
 		self.enableEvents();
 	};
-	function createOptionItem (value, id, classname){
+	function createOptionItem (value, id){
 		var li = $('<li class="option-item"></li>');
 		self.view.addSubview(li);
 		li.data('href', '#'+pageHashs[id]);
 		li.data('id', id);
-		li.addClass(classname)
 		li.text(value);
+	};
+	this.changeOption = function(clicked ,index){
+		var options = self.view.container().find('li.option-item');
+		options.removeClass('selected');
+		this.attr('class','selected');
 	};
 	//Events
 	function onClickOption(){
-		self.view.container().find('li.option-item').removeClass('selected');
-		$(this).addClass('selected');
-		$.cookie('lamejorcita.option', $(this).data('id'));
+		self.changeOption.call($(this),true, $(this).data('id'));
 		self.delegate.changePage($(this).data('href'));
-		self.delegate.disableEvents();
+		if(!$(this).hasClass('selected'))
+			self.delegate.disableEvents();
 	};
 	//Enable Disable
 	this.enableEvents = function(){
-		var li = this.view.container().find('li.option-item:not(.selected)');
-		li.unbind('click');
-		li.bind('click', onClickOption);
+		var options = this.view.container().find('li.option-item');
+		options.unbind('click');
+		options.bind('click', onClickOption);
 	};
 	this.disableEvents = function(){
-		var li = this.view.container().find('li.option-item');
-		li.unbind('click');
+		var options = this.view.container().find('li.option-item');
+		options.unbind('click');
 	};
 	MenuController.prototype._init_.call(this);
 };

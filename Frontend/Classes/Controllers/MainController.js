@@ -1,37 +1,51 @@
 Importer.importfile('Classes/Controllers/MenuController.js');
 Importer.importfile('Classes/Controllers/SearchController.js');
 Importer.importfile('Classes/Controllers/TableController.js');
+Importer.importfile('Classes/Controllers/DetailController.js');
 MainController.prototype = new ViewController();
 MainController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.view.setClass('main-container');
 };
 function MainController () {
-	var self = this;
-	var tableController = null;
-	var menuController = null
-	var searchController = null;
 	var buttonsContainer;
-	var pagecount = 0;
-	var objects = 15;
+	var self             = this;
+	var pagecount        = 0;
+	var objects          = 15;
+	var tableController  = null;
+	var detailController = null;
+	var menuController   = null;
+	var searchController = null;
 	this.currentData = [];
 	
 	this.viewDidLoad = function(){
 		if(!menuController){
 			menuController          = new MenuController();
-			menuController.delegate = self.delegate;
+			menuController.delegate = self;
 		};
 		if(!tableController){
 			tableController          = new TableController();
 			tableController.delegate = self;
-		}
+		};
 		if(!searchController){
 			searchController          = new SearchController();
 			searchController.delegate = self;
-		}
+		};
+		if(!detailController){
+			detailController = new DetailController();
+			detailController.delegate = self;
+		};
 		menuController.view.appendToView(this.view);
 		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
+	};
+	this.chooseSelected = function(){
+		var option =  $.cookie('lamejorcita.option')? $.cookie('lamejorcita.option'): 0;
+		console.log(self.page);
+		if(self.page == "Detail")
+			menuController.changeOption(false , option);
+		else
+			menuController.changeOption(true , option);
 	};
 	//Stocks
 	this.loadStockPage = function(){
@@ -53,6 +67,7 @@ function MainController () {
 			createVisualizationButtons
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.showTable();
 			self.makeSearch({});
 		};
 	};
@@ -83,6 +98,7 @@ function MainController () {
 			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.showTable();
 			self.makeSearch({});
 		};
 	};
@@ -110,6 +126,7 @@ function MainController () {
 			removeVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.showTable();
 			self.makeSearch({});
 		};
 	};
@@ -135,6 +152,7 @@ function MainController () {
 			createVisualizationButtons();
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.showTable();
 			self.makeSearch({});
 		};
 	};
@@ -159,12 +177,25 @@ function MainController () {
 			deleteBtn.text('-');
 			tableController.cleanTable();
 			tableController.view.appendToView(this.view);
+			self.showTable();
 			self.makeSearch({});
 		};
 	};
 	this.setProducts = function(products){
 		self.currentData = products;
 		tableController.loadTable(true);
+	};
+	//Detail
+	this.loadDetailPage = function(detailId){
+		var table      = tableController.view.container();
+		var detailView = detailController.view.container();
+		detailController.currentId = detailId;
+		table.fadeOut('fast', function(){
+			detailView.hide('fast');
+			detailController.view.appendToView(self.view);
+			detailView.fadeIn('fast');
+		});
+
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -197,6 +228,9 @@ function MainController () {
 		searchData.objects = objects;
 		searchData.page = pagecount;
 		self.delegate['search'+self.page].call(null,searchData);
+	};
+	this.showTable = function(){
+		tableController.view.container().show();
 	};
 	//creation
 	function createVisualizationButtons(){
@@ -233,7 +267,7 @@ function MainController () {
 	}; 
 	//Events
 	function onClickDetail(){
-		console.log('detail');
+		
 	};
  	function onClickDelete(){
  		console.log('delete');
@@ -253,6 +287,10 @@ function MainController () {
 		menuController.disableEvents();
 		searchController.disableEvents();
 		tableController.view.container().find('button').unbind('click');
+	};
+	//delegate
+	this.changePage = function(hashpage){
+		self.delegate.changePage(hashpage);
 	};
 	MainController.prototype._init_.call(this);
 };

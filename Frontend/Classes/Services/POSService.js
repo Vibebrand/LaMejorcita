@@ -6,17 +6,11 @@ function POSService (argument) {
 		for (var i = 0; i < 15; i++) {
 			var pos = {
 				_id: "sdfadsasalepoint"+i,
-				address: {
-					street: "Calle "+i,
-					district: "Colonia "+i,
-					intNum: "",
-					extNum: String(i+1)
-				},
-				joinDate: "2013/01/01",
 				phone: "1234567",
 				email: "salepoint"+i+"@mail.com",
-				maxSaleNumber: 1000,
-				minSaleNumber: 50,
+				maxSale: 1000,
+				minSale: 50,
+				registationDate: "2013/01/01",
 				geoposition: {
 					latitude: "21.8818",
 					longitude: "-102.2913"
@@ -31,10 +25,17 @@ function POSService (argument) {
 					name: "Guy Fawkes",
 					curp: 'PIIG720116BV1'
 				},
+				address: {
+					street: "Calle "+i,
+					district: "Colonia "+i,
+					intNum: "",
+					extNum: String(i+1)
+				},
 				stock: {
 					_id			: "safdsafdsa0fd"+i,
 					name        :"Bodega "+i,
 					businessName:"Negocio "+i,
+					phone      	:"123456"+i,
 					address: {
 						street: "Calle "+i,
 						district: "Colonia "+i,
@@ -47,7 +48,6 @@ function POSService (argument) {
 						curp : 'PIIG720116BV'+i,
 						email: "faukes@mail.com"
 					},
-					phone      	:"123456"+i,
 					geoposition: {
 						latitude: "21.8818",
 						longitude: "-102.2913"

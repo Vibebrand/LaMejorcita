@@ -9,6 +9,7 @@ function SalesService (argument) {
 				date: "2013/01/01",
 				time: "13:30:33",
 				observations: "Observación"+i,
+				device: 'safdsafdevicesdf'+i+'20',
 				products:{
 					products: [],
 					amount:1000.50
@@ -22,19 +23,27 @@ function SalesService (argument) {
 					name: "Guy Fawkes",
 					curp: 'PIIG720116BV1',
 					stock:{
-						"_id"			:"safdsafdsa0fd"+i,
-						"name"         	:"Bodega "+i,
-						"businessName" 	:"Negocio "+i,
+						_id			: "safdsafdsa0fd"+i,
+						name        :"Bodega "+i,
+						businessName:"Negocio "+i,
+						phone      	:"123456"+i,
 						address: {
 							street: "Calle "+i,
 							district: "Colonia "+i,
-							numInt: "",
-							numExt: i+1
+							intNum: "",
+							extNum: String(i+1)
 						},
-						"manager"      	:"Responsable "+i,
-						"phone"     	:"Telefono "+i
-					},
-					device: 'safdsafdevicesdf'+i+'20'
+						manager     :{
+							_id	 : "asfdo90qwqewr"+i,
+							name : "Guy Fawkes",
+							curp : 'PIIG720116BV'+i,
+							email: "faukes@mail.com"
+						},
+						geoposition: {
+							latitude: "21.8818",
+							longitude: "-102.2913"
+						}
+					}
 				},
 				salepoint:{
 					_id: "sdfadsasalepoint"+i,

@@ -24,6 +24,7 @@ function StockService(){
 				_id			: "safdsafdsa0fd"+i,
 				name        :"Bodega "+i,
 				businessName:"Negocio "+i,
+				phone      	:"123456"+i,
 				address: {
 					street: "Calle "+i,
 					district: "Colonia "+i,
@@ -36,7 +37,6 @@ function StockService(){
 					curp : 'PIIG720116BV'+i,
 					email: "faukes@mail.com"
 				},
-				phone      	:"123456"+i,
 				geoposition: {
 					latitude: "21.8818",
 					longitude: "-102.2913"

@@ -1,13 +1,13 @@
 import cyclone.web
 from twisted.internet import reactor
 from twisted.python import log
-from handlers import Bodegas
+from handlers import BodegasHandler
 import sys
 
 class Application(cyclone.web.Application):
     def __init__(self):
         handlers = [
-        (r"/Stocks",Bodegas),
+        (r"/stocks",BodegasHandler),
         
         ]    
        

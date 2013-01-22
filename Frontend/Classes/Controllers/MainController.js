@@ -181,14 +181,11 @@ function MainController () {
 		if(identifier === "products.products")
 			stringValue =  celldata.products.products.length;
 
-		if(identifier === "salepoint.fridge.status" || identifier === "fridge.status"){
-			var fridgeStatus = stringValue;
-			if(fridgeStatus)
-				stringValue = "Bien";
-			else
-				stringValue = "Mal";
-		};
+		if(identifier.indexOf("fridge.status") != -1)
+			stringValue =  getFridgeStatus(stringValue);
 
+		if(identifier.indexOf("salePrice") != -1)
+			stringValue = getPrice(stringValue);
 
 		return stringValue;
 	};
@@ -201,12 +198,7 @@ function MainController () {
 		searchData.page = pagecount;
 		self.delegate['search'+self.page].call(null,searchData);
 	};
-	function getAddressString(address){
-		var addressText = address.street+" #"+address.extNum;
-		if(address.intNum != "")
-			addressText+= " int. "+address.intNum;
-		return addressText;
-	};
+	//creation
 	function createVisualizationButtons(){
 		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find != "undefined"){
 			buttonsContainer  = $('<div class="buttons-container"></div>');
@@ -223,6 +215,22 @@ function MainController () {
 		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")
 			buttonsContainer.remove();
 	};
+	//Data obtaining
+	function getAddressString(address){
+		var addressText = address.street+" #"+address.extNum;
+		if(address.intNum != "")
+			addressText+= " int. "+address.intNum;
+		return addressText;
+	};
+	function getFridgeStatus(fridgeStatus){
+		if(fridgeStatus)
+			return "Bien";
+		else
+			return "Mal";
+	};
+	function getPrice(stringValue){
+		return "$ "+Number(stringValue).toFixed(2);
+	}; 
 	//Events
 	function onClickDetail(){
 		console.log('detail');

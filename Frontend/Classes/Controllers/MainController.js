@@ -82,7 +82,7 @@ function MainController () {
 											{'identifier': 'fridge.status','value':'Estado'},
 											{'identifier': 'address','value':'Dirección'},
 											{'identifier': 'address.district','value':'Colonia'},
-											{'identifier': 'manager.name','value':'Representante'},
+											{'identifier': 'representative.name','value':'Representante'},
 											{'identifier': 'phone','value':'Teléfono'},
 											{'identifier': 'email','value':'Correo electrónico'},
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},

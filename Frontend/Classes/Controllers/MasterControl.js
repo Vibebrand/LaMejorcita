@@ -120,8 +120,10 @@ function MasterControl(){
 	this.getStockDetail = function(stockId){
 		self.stockService.getStockDetail(stockId);
 	};
-
-	self.setDetail = function(data){
+	this.getPosDetail = function(posId){
+		self.posService.getPosDetail(posId);
+	};
+	this.setDetail = function(data){
 		self.mainController.setDetail(data);
 	};
 	//Enable Disable

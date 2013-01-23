@@ -19,6 +19,7 @@ function DetailController (argument) {
 	this.detailId = null;
 	this.pagenum = 0;
 	this.page = "Stock"
+	this.currentData = {};
 	this.viewDidLoad = function(){
 		var loadCall = self['load'+self.page+'Detail'];
 		if(typeof loadCall == "function")loadCall.call(self);
@@ -29,6 +30,7 @@ function DetailController (argument) {
 		self.delegate.getDetail(self.page, self.detailId);
 	};
 	this.setStockDetail = function(stock){
+		this.currentData = stock;
 		var container         = self.view.container();
 		var businessnameValue = container.find('.businessname .value');
 		var addressValue      = container.find('.address .value');
@@ -50,7 +52,7 @@ function DetailController (argument) {
 		self.detailTitle.text('Información');
 		self.view.container().remove('.info-container');
 		
-		var infoContainer = $('<div class="info-container "></div>');
+		var infoContainer = $('<div class="info-container  stockDetail"></div>');
 
 		var stockname     = $('<div class="stockname"></div>');
 		var businessname  = $('<div class="businessname"></div>');
@@ -58,24 +60,16 @@ function DetailController (argument) {
 		var address       = $('<div class="address"></div>');
 		var phone         = $('<div class="phone"></div>');
 		
-		var managerText   = $('<h3 class="text"></h3>');
+		var managerText   = $('<h3 class="title"></h3>');
 
 		var managerName       = $('<span class="name"></span>');
 		var managerCurp       = $('<span class="curp"></span>');
 		var managerEmail      = $('<span class="email"></span>');
 		
-		var managerNameText   = $('<h4 class="text"></h4>');
-		var managerEmailText  = $('<h4 class="text"></h4>');
-		var managerCurpText   = $('<h4 class="curp"></h4>');
-		
-		var managerNameValue  = $('<span class="value"></span>');
-		var managerEmailValue = $('<span class="value"></span>');
-		var managerCurpValue  = $('<span class="value"></span>');
-		
-		var nameText          = $('<h3 class="text"></h3>');
-		var businessnameText  = $('<h3 class="text"></h3>');
-		var addressText       = $('<h3 class="text"></h3>');
-		var phoneText         = $('<h3 class="text"></h3>');
+		var nameText          = $('<h3 class="title"></h3>');
+		var businessnameText  = $('<h3 class="title"></h3>');
+		var addressText       = $('<h3 class="title"></h3>');
+		var phoneText         = $('<h3 class="title"></h3>');
 		
 		var nameValue         = $('<span class="value"></span>');
 		var businessnameValue = $('<span class="value"></span>');
@@ -112,20 +106,110 @@ function DetailController (argument) {
 		addressText.text('Dirección');
 	};
 	//POS detail
-	this.loadPOSDetail = function(){
+	this.loadPosDetail = function(){
 		createPOSView();
-		//self.delegate.getDetail(self.page, self.detailId);
+		self.delegate.getDetail(self.page, self.detailId);
 	};
-	this.setPOSDetail = function(pos){
-		self.detailTitle.text('Información');
-		self.view.container().remove('.info-container');
+	this.setPosDetail = function(pos){
+		self.currentData = pos;
+		var container    = self.view.container();
+		var businessnames = container.find('.posInfo .posname');
+		var address = container.find('.address .value');
+		var phone = container.find('.phone .value');
+		var email = container.find('.email .value');
+		var temperature = container.find('.fridgeInfo  .temperature .value');
+		var serial = container.find('.fridgeInfo  .serial .value');
+		var fstatus = container.find('.fridgeInfo  .status .value');
+		var rname = container.find('.representative .name');
+		var remail = container.find('.representative .email');
+		var rcurp = container.find('.representative .curp');
+
+		businessnames.text(pos.name);
+		address.text(pos.address.district+' '+self.delegate.getAddressString(pos.address));
+		phone.text(pos.phone);
+		email.text(pos.email);
+		temperature.text(pos.fridge.temperature+'°C');
+		serial.text(pos.fridge.serial);
+		fstatus.text(pos.fridge.status? '✔':'✘');
+		rname.text(pos.representative.name);
+		remail.text(pos.representative.email);
+		rcurp.text(pos.representative.curp);
 	};
 	function createPOSView(){
 		self.detailTitle.text('Información');
 		self.view.container().remove('.info-container');
-		var infoContainer = $('<div class="info-container "></div>');
-	
+		var infoContainer = $('<div class="info-container posDetail"></div>');
+		var posInfo = $('<div class="posInfo"></div>');
+		var fridgeInfo = $('<div class="fridgeInfo"></div>');
 
+		var businessname = $('<h3 class="posname"></h3>');
+		var representative = $('<div class="representative"></div>');
+		var address = $('<div class="address"></div>');
+		var phone = $('<div class="phone"></div>');
+		var email = $('<div class="email"></div>');
+		var temperature = $('<div class="temperature"></div>');
+		var serial = $('<div class="serial"></div>');
+		var fstatus  = $('<div class="status"></div>');
+
+		var representativeTitle = $('<h3 class="title"></h3>');
+		var addressTitle = $('<h3 class="title"></h3>');
+		var phoneTitle = $('<h3 class="title"></h3>');
+		var emailTitle = $('<h3 class="title"></h3>');
+		var serialTitle = $('<h3 class="title"></h3>');
+		var temperatureTitle = $('<h3 class="title"></h3>');
+		var fstatusTitle = $('<h3 class="title"></h3>');
+
+		var rname = $('<span class="name"></span>');
+		var remail = $('<span class="email"></span>');
+		var rcurp = $('<span class="curp"></span>');
+		var phoneValue = $('<span class="value"></span>');
+		var emailValue = $('<span class="value"></span>');
+		var addressValue = $('<span class="value"></span>');
+
+		var temperatureValue = $('<span class="value"></span>');
+		var serialValue = $('<span class="value"></span>');
+		var fstatusValue = $('<span class="value"></span>');
+
+		self.view.addSubview(infoContainer);
+
+		infoContainer.append(fridgeInfo);
+		infoContainer.append(posInfo);
+
+		fridgeInfo.append(serial);
+		fridgeInfo.append(fstatus);
+		fridgeInfo.append(temperature);
+		posInfo.append(businessname);
+		posInfo.append(representative);
+		posInfo.append(address);
+		posInfo.append(email);
+		posInfo.append(phone);
+
+		representative.append(representativeTitle);
+		address.append(addressTitle);
+		email.append(emailTitle);
+		phone.append(phoneTitle);
+		fstatus.append(fstatusTitle);
+		serial.append(serialTitle);
+		temperature.append(temperatureTitle);
+
+		representative.append(rname);
+		representative.append(remail);
+		representative.append(rcurp);
+		address.append(addressValue);
+		email.append(emailValue);
+		phone.append(phoneValue);
+		fstatus.append(fstatusValue);
+		serial.append(serialValue);
+		temperature.append(temperatureValue);
+		
+		fstatusTitle.text('Estado');
+		serialTitle.text('Refrigerador');
+		temperatureTitle.text('Temperatura');
+		businessname.text('"Punto de venta"');
+		representativeTitle.text('Representante');
+		addressTitle.text('Dirección');
+		phoneTitle.text('Teléfono');
+		emailTitle.text('Correo electrónico');
 	};
 	//Seller detail
 	//Sale detail
@@ -139,8 +223,8 @@ function DetailController (argument) {
 	//Events
 	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
-		var index = self.page;
-		if($.trim(prevPage) != "")
+		var index = self.pagenum;
+		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page'))
 			self.delegate.changePage(prevPage);
 		else
 			self.delegate.triggerOption(index);

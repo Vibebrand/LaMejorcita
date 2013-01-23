@@ -24,6 +24,7 @@ function DetailController (argument) {
 		var loadCall = self['load'+self.page+'Detail'];
 		if(typeof loadCall == "function")loadCall.call(self);
 	};
+	//Stock Detail
 	this.loadStockDetail = function(){
 		createStockView();
 		self.delegate.getDetail(self.page, self.detailId);
@@ -70,11 +71,6 @@ function DetailController (argument) {
 		managerText.text('Responsable');
 		addressText.text('Dirección');
 	};
-	self.setDetail = function(data){
-		var setCall = self['set'+self.page+'Detail'];
-		if(typeof setCall =="function") setCall.call(self, data);
-		self.delegate.enableEvents();
-	};
 	this.setStockDetail = function(stock){
 		var container = self.view.container();
 		var nameValue = container.find('.name .value');
@@ -85,6 +81,16 @@ function DetailController (argument) {
 		businessnameValue.text(stock.businessName);
 		managerValue.text(stock.manager.name);
 		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));
+	};
+	//POS detail
+	//Seller detail
+	//Sale detail
+	//Product detail
+	//General
+	self.setDetail = function(data){
+		var setCall = self['set'+self.page+'Detail'];
+		if(typeof setCall =="function") setCall.call(self, data);
+		self.delegate.enableEvents();
 	};
 	//Events
 	function onClickBack(){

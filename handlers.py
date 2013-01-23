@@ -3,7 +3,7 @@ import json
 from bson import ObjectId
 from Backend.Data.InterfazDB.DBmodule import DBModule
 
-
+ 
 class GetBodegasHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):

@@ -17,9 +17,10 @@ function StockService(){
 		    //called when there is an error
 		  }
 		});*/
-		//console.log(searchData);
+		console.log(searchData);
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {
+
 			var stock = {
 				_id			: "safdsafdsa0fd"+i,
 				name        :"Bodega "+i,
@@ -46,13 +47,14 @@ function StockService(){
 			};
 			stocks.push(stock)
 		};
-		//console.log(stocks);
+		console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
 	this.getStockDetail = function(stockId){
+		var date = new Date();
 		var stock = {
 			_id			: "safdsafdsa0fd",
-			name        :"Bodega ",
+			name        :"Bodega "+date.getHours() +" "+date.getMinutes()+" "+date.getSeconds(),
 			businessName:"Negocio ",
 			phone      	:"123456",
 			maxSale: 1000,

@@ -79,7 +79,6 @@ function StockService(){
 		console.log(stock);
 		self.delegate.setDetail(stock);
 	};
-
 	this.searchProducts = function(searchData){
 		console.log(searchData);
 		var products = [];

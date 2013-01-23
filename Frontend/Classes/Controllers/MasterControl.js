@@ -123,6 +123,12 @@ function MasterControl(){
 	this.getPosDetail = function(posId){
 		self.posService.getPosDetail(posId);
 	};
+	this.getSellerDetail = function(sellerId){
+		self.userService.getSellerDetail(sellerId);
+	};
+	this.getSaleDetail = function(saleId){
+		self.salesService.getSaleDetail(saleId);
+	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
 	};

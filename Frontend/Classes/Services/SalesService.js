@@ -46,31 +46,36 @@ function SalesService (argument) {
 					}
 				},
 				salepoint:{
-					_id: "sdfadsasalepoint"+i,
-					district: "Colonia "+i,
-					address: {
-						street: "Calle "+i,
-						district: "Colonia "+i,
-						intNum: "",
-						extNum: String(i+1)
-					},
-					joinDate: "2013/01/01",
-					phone: "1234567",
-					geoposition: {
-						latitude: "21.8818",
-						longitude: "-102.2913"
-					},
-					fridge: {
-						serial : String("afsdll0132fridge"+i).toUpperCase(),
-						temperature: -10,
-						status: true
-					},
-					manager:{
-						_id:"asfdo90qwqewr"+i,
-						name: "Guy Fawkes",
-						curp: 'PIIG720116BV1',
-						email: "faukes@mail.com"
-					}
+						_id: "sdfadsasalepoint"+i,
+						name: "Negocio",
+						phone: "1234567",
+						email: "salepoint"+i+"@mail.com",
+						registationDate: "2013/01/01",
+						geoposition: {
+							latitude: "21.8818",
+							longitude: "-102.2913"
+						},
+						fridge: {
+							serial : String("afsdll0132fridge"+i).toUpperCase(),
+							temperature: -10,
+							status: true
+						},
+						representative:{
+							name: "Rep Guy",
+							curp: 'PIIG720116BV1',
+							mail: "slave.guy@mail.com"
+						},
+						address: {
+							street: "Calle "+i,
+							district: "Colonia "+i,
+							intNum: "",
+							extNum: String(i+1)
+						},
+						stock: {
+							_id			: "safdsafdsa0fd"+i,
+							name        :"Bodega "+i
+						}
+							
 				}
 			};
 			sales.push(sale);

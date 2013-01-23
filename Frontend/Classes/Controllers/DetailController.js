@@ -88,7 +88,7 @@ function DetailController (argument) {
 	this.setPosDetail = function(pos){
 		self.currentData = pos;
 		var container    = self.view.container();
-		var businessnames = container.find('.posInfo .posname');
+		var businessnames = container.find('.posInfo .posname .title');
 		var address = container.find('.address .value');
 		var phone = container.find('.phone .value');
 		var email = container.find('.email .value');
@@ -111,80 +111,56 @@ function DetailController (argument) {
 		rcurp.text(pos.representative.curp);
 	};
 	function createPOSView(){
+		var infoContainer = $('<div class="info-container posDetail"></div>');
+		var posInfo       = $('<div class="posInfo"></div>');
+		var fridgeInfo    = $('<div class="fridgeInfo"></div>');
 		removeInfoContainer();
 		self.detailTitle.text('Información');
-		var infoContainer = $('<div class="info-container posDetail"></div>');
-		var posInfo = $('<div class="posInfo"></div>');
-		var fridgeInfo = $('<div class="fridgeInfo"></div>');
-
-		var businessname = $('<h3 class="posname"></h3>');
-		var representative = $('<div class="representative"></div>');
-		var address = $('<div class="address"></div>');
-		var phone = $('<div class="phone"></div>');
-		var email = $('<div class="email"></div>');
-		var temperature = $('<div class="temperature"></div>');
-		var serial = $('<div class="serial"></div>');
-		var fstatus  = $('<div class="status"></div>');
-
-		var representativeTitle = $('<h3 class="title"></h3>');
-		var addressTitle = $('<h3 class="title"></h3>');
-		var phoneTitle = $('<h3 class="title"></h3>');
-		var emailTitle = $('<h3 class="title"></h3>');
-		var serialTitle = $('<h3 class="title"></h3>');
-		var temperatureTitle = $('<h3 class="title"></h3>');
-		var fstatusTitle = $('<h3 class="title"></h3>');
-
-		var rname = $('<span class="name"></span>');
-		var remail = $('<span class="email"></span>');
-		var rcurp = $('<span class="curp"></span>');
-		var phoneValue = $('<span class="value"></span>');
-		var emailValue = $('<span class="value"></span>');
-		var addressValue = $('<span class="value"></span>');
-
-		var temperatureValue = $('<span class="value"></span>');
-		var serialValue = $('<span class="value"></span>');
-		var fstatusValue = $('<span class="value"></span>');
-
 		self.view.addSubview(infoContainer);
-
 		infoContainer.append(fridgeInfo);
 		infoContainer.append(posInfo);
 
-		fridgeInfo.append(serial);
-		fridgeInfo.append(fstatus);
-		fridgeInfo.append(temperature);
-		posInfo.append(businessname);
-		posInfo.append(representative);
-		posInfo.append(address);
-		posInfo.append(email);
-		posInfo.append(phone);
+		createField({
+			field: 'posname',
+			container: posInfo
+		});
+		createField({
+			field: 'representative',
+			title:{classname:'title', value: 'Representante'},
+			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}],
+			container: posInfo
+		});
+		createField({
+			field: 'address',
+			title:{classname:'title', value: 'Dirección'},
+			container: posInfo
+		});
+		createField({
+			field: 'email',
+			title:{classname:'title', value: 'Correo electrónico'},
+			container: posInfo
+		});
+		createField({
+			field: 'phone',
+			title:{classname:'title', value: 'Teléfono'},
+			container: posInfo
+		});
 
-		representative.append(representativeTitle);
-		address.append(addressTitle);
-		email.append(emailTitle);
-		phone.append(phoneTitle);
-		fstatus.append(fstatusTitle);
-		serial.append(serialTitle);
-		temperature.append(temperatureTitle);
-
-		representative.append(rname);
-		representative.append(remail);
-		representative.append(rcurp);
-		address.append(addressValue);
-		email.append(emailValue);
-		phone.append(phoneValue);
-		fstatus.append(fstatusValue);
-		serial.append(serialValue);
-		temperature.append(temperatureValue);
-		
-		fstatusTitle.text('Estado');
-		serialTitle.text('Refrigerador');
-		temperatureTitle.text('Temperatura');
-		businessname.text('"Punto de venta"');
-		representativeTitle.text('Representante');
-		addressTitle.text('Dirección');
-		phoneTitle.text('Teléfono');
-		emailTitle.text('Correo electrónico');
+		createField({
+			field: 'serial',
+			title:{classname:'title', value: 'Refrigerador'},
+			container: fridgeInfo
+		});
+		createField({
+			field: 'status',
+			title:{classname:'title', value: 'Estado'},
+			container: fridgeInfo
+		});
+		createField({
+			field: 'temperature',
+			title:{classname:'title', value: 'Temperatura'},
+			container: fridgeInfo
+		});
 	};
 	//Seller detail
 
@@ -200,9 +176,7 @@ function DetailController (argument) {
 		},options);
 		var field =  $('<div></div>');
 		var title = $('<h3></h3>');
-		console.log(field);
 		field.append(title);
-
 		field.attr('class', options.field);
 		title.attr('class', options.title.classname);
 		title.text(options.title.value);

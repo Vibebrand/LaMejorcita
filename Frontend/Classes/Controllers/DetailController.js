@@ -38,7 +38,7 @@ function DetailController (argument) {
 		var manEmailValue     = container.find('.manager .email .value');
 		var manCurpValue      = container.find('.manager .curp .value');
 
-		businessnameValue.text(stock.businessname);
+		businessnameValue.text(stock.businessName);
 		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));
 		nameValue.text(stock.name);
 		phoneValue.text(stock.phone);
@@ -58,24 +58,24 @@ function DetailController (argument) {
 		var address       = $('<div class="address"></div>');
 		var phone         = $('<div class="phone"></div>');
 		
-		var managerText   = $('<h4 class="text"></h4>');
+		var managerText   = $('<h3 class="text"></h3>');
 
 		var managerName       = $('<div class="name"></div>');
 		var managerCurp       = $('<div class="curp"></div>');
 		var managerEmail      = $('<div class="email"></div>');
 		
-		var managerNameText   = $('<h5 class="text"></h5>');
-		var managerEmailText  = $('<h5 class="text"></h5>');
-		var managerCurpText   = $('<h5 class="curp"></h5>');
+		var managerNameText   = $('<h4 class="text"></h4>');
+		var managerEmailText  = $('<h4 class="text"></h4>');
+		var managerCurpText   = $('<h4 class="curp"></h4>');
 		
 		var managerNameValue  = $('<span class="value"></span>');
 		var managerEmailValue = $('<span class="value"></span>');
 		var managerCurpValue  = $('<span class="value"></span>');
 		
-		var nameText          = $('<h4 class="text"></h4>');
-		var businessnameText  = $('<h4 class="text"></h4>');
-		var addressText       = $('<h4 class="text"></h4>');
-		var phoneText         = $('<h4 class="text"></h4>');
+		var nameText          = $('<h3 class="text"></h3>');
+		var businessnameText  = $('<h3 class="text"></h3>');
+		var addressText       = $('<h3 class="text"></h3>');
+		var phoneText         = $('<h3 class="text"></h3>');
 		
 		var nameValue         = $('<span class="value"></span>');
 		var businessnameValue = $('<span class="value"></span>');

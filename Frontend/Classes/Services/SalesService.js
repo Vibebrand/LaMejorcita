@@ -20,13 +20,15 @@ function SalesService (argument) {
 				},
 				seller: {
 					_id:"asfdo90qwqewr"+i,
-					name: "Guy Fawkes",
+					name: "Sales Guy",
 					curp: 'PIIG720116BV1',
+					email: "sales.guy@mail.com",
+					device: 'safdsafdevicesdf'+i+'20',
+					phone:"123456"+i,
 					stock:{
 						_id			: "safdsafdsa0fd"+i,
 						name        :"Bodega "+i,
 						businessName:"Negocio "+i,
-						phone      	:"123456"+i,
 						address: {
 							street: "Calle "+i,
 							district: "Colonia "+i,
@@ -37,45 +39,42 @@ function SalesService (argument) {
 							_id	 : "asfdo90qwqewr"+i,
 							name : "Guy Fawkes",
 							curp : 'PIIG720116BV'+i,
-							email: "faukes@mail.com"
+							email: "sales.guy@mail.com"
 						},
-						geoposition: {
-							latitude: "21.8818",
-							longitude: "-102.2913"
-						}
+						phone      	:"123456"+i
 					}
 				},
 				salepoint:{
-						_id: "sdfadsasalepoint"+i,
-						name: "Negocio",
-						phone: "1234567",
-						email: "salepoint"+i+"@mail.com",
-						registationDate: "2013/01/01",
-						geoposition: {
-							latitude: "21.8818",
-							longitude: "-102.2913"
-						},
-						fridge: {
-							serial : String("afsdll0132fridge"+i).toUpperCase(),
-							temperature: -10,
-							status: true
-						},
-						representative:{
-							name: "Rep Guy",
-							curp: 'PIIG720116BV1',
-							mail: "slave.guy@mail.com"
-						},
-						address: {
-							street: "Calle "+i,
-							district: "Colonia "+i,
-							intNum: "",
-							extNum: String(i+1)
-						},
-						stock: {
-							_id			: "safdsafdsa0fd"+i,
-							name        :"Bodega "+i
-						}
-							
+					_id: "sdfadsasalepoint"+i,
+					name: "Negocio",
+					phone: "1234567",
+					email: "salepoint"+i+"@mail.com",
+					registationDate: "2013/01/01",
+					geoposition: {
+						latitude: "21.8818",
+						longitude: "-102.2913"
+					},
+					fridge: {
+						serial : String("afsdll0132fridge"+i).toUpperCase(),
+						temperature: -10,
+						status: true
+					},
+					representative:{
+						name: "Rep Guy",
+						curp: 'PIIG720116BV1',
+						email: "rep.guy@mail.com"
+					},
+					address: {
+						street: "Calle "+i,
+						district: "Colonia "+i,
+						intNum: "",
+						extNum: String(i+1)
+					},
+					stock: {
+						_id			: "safdsafdsa0fd"+i,
+						name        :"Bodega "+i,
+						businessName:"Negocio "+i
+					}	
 				}
 			};
 			sales.push(sale);

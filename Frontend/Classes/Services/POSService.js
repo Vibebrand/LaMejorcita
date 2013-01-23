@@ -22,7 +22,7 @@ function POSService (argument) {
 				representative:{
 					name: "Rep Guy",
 					curp: 'PIIG720116BV1',
-					mail: "slave.guy@mail.com"
+					email: "rep.guy@mail.com"
 				},
 				address: {
 					street: "Calle "+i,
@@ -61,7 +61,7 @@ function POSService (argument) {
 			representative:{
 				name: "Rep Guy",
 				curp: 'PIIG720116BV1',
-				mail: "slave.guy@mail.com"
+				email: "rep.guy@mail.com"
 			},
 			address: {
 				street: "Calle ",

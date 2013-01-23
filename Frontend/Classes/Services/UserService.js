@@ -13,9 +13,9 @@ function UserService(){
 		for (var i = 0; i < 15; i++) {
 			var seller = {
 				_id:"asfdo90qwqewr"+i,
-				name: "Guy Fawkes",
+				name: "Sales Guy",
 				curp: 'PIIG720116BV1',
-				email: "faukes@mail.com",
+				email: "sales.guy@mail.com",
 				device: 'safdsafdevicesdf'+i+'20',
 				phone:"123456"+i,
 				stock:{
@@ -32,7 +32,7 @@ function UserService(){
 						_id	 : "asfdo90qwqewr"+i,
 						name : "Guy Fawkes",
 						curp : 'PIIG720116BV'+i,
-						email: "faukes@mail.com"
+						email: "sales.guy@mail.com"
 					},
 					phone      	:"123456"+i
 				}

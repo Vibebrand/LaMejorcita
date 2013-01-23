@@ -52,27 +52,32 @@ function DetailController (argument) {
 		var infoContainer = $('<div class="info-container  stockDetail"></div>');
 		removeInfoContainer();
 		self.detailTitle.text('Información');
-		infoContainer.append(createField({
+		createField({
 			field: 'stockname',
-			title:{classname:'title', value: 'Nombre'}
-		}));
-		infoContainer.append(createField({
+			title:{classname:'title', value: 'Nombre'},
+			container: infoContainer
+		});
+		createField({
 			field: 'businessName',
-			title:{classname:'title', value: 'Razón social'}
-		}));
-		infoContainer.append(createField({
+			title:{classname:'title', value: 'Razón social'},
+			container: infoContainer
+		});
+		createField({
 			field: 'manager',
 			title:{classname:'title', value: 'Responsable'},
-			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}]
-		}));
-		infoContainer.append(createField({
+			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}],
+			container: infoContainer
+		});
+		createField({
 			field: 'address',
-			title:{classname:'title', value: 'Dirección'}
-		}));
-		infoContainer.append(createField({
+			title:{classname:'title', value: 'Dirección'},
+			container: infoContainer
+		});
+		createField({
 			field: 'phone',
-			title:{classname:'title', value: 'Teléfono'}
-		}));
+			title:{classname:'title', value: 'Teléfono'},
+			container: infoContainer
+		});
 		self.view.addSubview(infoContainer);
 	};
 	//POS detail
@@ -187,7 +192,12 @@ function DetailController (argument) {
 	//Product detail
 	//General
 	function  createField(options){
-		var options = $.extend({},{field: 'field', title: {classname: 'title', value: ''}, value: [{classname: 'value', value: ''}]},options);
+		var options = $.extend({},{
+			field: 'field', 
+			title: {classname: 'title', value: ''}, 
+			value: [{classname: 'value', value: ''}], 
+			container: $('<div></div>')
+		},options);
 		var field =  $('<div></div>');
 		var title = $('<h3></h3>');
 		console.log(field);
@@ -203,7 +213,7 @@ function DetailController (argument) {
 			value.attr('class', options.value[i].classname);
 			value.text(options.value[i].value);
 		};
-		return field;
+		options.container.append(field);
 	};
 	self.setDetail = function(data){
 		var setCall = self['set'+self.page+'Detail'];

@@ -11,7 +11,7 @@ class Application(cyclone.web.Application):
         (r"/points",GetPuntosHandler),
         (r"/sales",GetVentasHandler),
         (r"/sellers",GetVendedorHandler),
-        (r"/products",GetProductosHandler)
+        (r"/products",GetProductosHandler),
         (r"/stocksdetail",GetBodegasDetailHandler),
         (r"/pointsdetail",GetPuntosDetailHandler),
         (r"/salesdetail",GetVentasDetailHandler),

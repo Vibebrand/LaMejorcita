@@ -25,7 +25,7 @@ function StockService(){
 				_id			: "safdsafdsa0fd"+i,
 				name        :"Bodega "+i,
 				businessName:"Negocio "+i,
-				phone      	:"123456"+i,
+				phone      	:"97778"+i,
 				maxSale: 1000,
 				minSale: 50,
 				address: {

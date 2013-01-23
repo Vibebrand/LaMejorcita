@@ -49,9 +49,8 @@ function DetailController (argument) {
 		manCurpValue.text(stock.manager.curp);
 	};
 	function createStockView(){
+		removeInfoContainer();
 		self.detailTitle.text('Información');
-		self.view.container().remove('.info-container');
-		
 		var infoContainer = $('<div class="info-container  stockDetail"></div>');
 
 		var stockname     = $('<div class="stockname"></div>');
@@ -136,8 +135,8 @@ function DetailController (argument) {
 		rcurp.text(pos.representative.curp);
 	};
 	function createPOSView(){
+		removeInfoContainer();
 		self.detailTitle.text('Información');
-		self.view.container().remove('.info-container');
 		var infoContainer = $('<div class="info-container posDetail"></div>');
 		var posInfo = $('<div class="posInfo"></div>');
 		var fridgeInfo = $('<div class="fridgeInfo"></div>');
@@ -219,6 +218,10 @@ function DetailController (argument) {
 		var setCall = self['set'+self.page+'Detail'];
 		if(typeof setCall =="function") setCall.call(self, data);
 		self.delegate.enableEvents();
+	};
+	function removeInfoContainer(){
+		var container = self.view.container().find('.info-container');
+		container.remove();
 	};
 	//Events
 	function onClickBack(){

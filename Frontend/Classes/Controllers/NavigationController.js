@@ -144,6 +144,7 @@ navigationController.setOptions({
 		return param;
 	};
 	this.changePage = function(hashurl) {
+		$.cookie(options.cookiePrefix+'prevPage', $.cookie(options.cookiePrefix+'page'))
 		window.location.hash = hashurl;
 	};
 };

@@ -49,6 +49,35 @@ function StockService(){
 		//console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
+	this.getStockDetail = function(stockId){
+		var stock = {
+			_id			: "safdsafdsa0fd",
+			name        :"Bodega ",
+			businessName:"Negocio ",
+			phone      	:"123456",
+			maxSale: 1000,
+			minSale: 50,
+			address: {
+				street: "Calle ",
+				district: "Colonia ",
+				intNum: "",
+				extNum: 10
+			},
+			manager     :{
+				_id	 : "asfdo90qwqewr1",
+				name : "Guy Fawkes",
+				curp : 'PIIG720116BV0',
+				email: "faukes@mail.com"
+			},
+			geoposition: {
+				latitude: "21.8818",
+				longitude: "-102.2913"
+			}
+		};
+		console.log(stock);
+		self.delegate.setDetail(stock);
+	};
+
 	this.searchProducts = function(searchData){
 		console.log(searchData);
 		var products = [];

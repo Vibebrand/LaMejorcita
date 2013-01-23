@@ -30,7 +30,12 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
-		self.navigationController.addLoggedUrl('/Detail/:detailId', loadDetailPage);
+
+		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
+		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
+		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
+		self.navigationController.addLoggedUrl('/Sales/:kind/:id', 	loadSalesPage);
+		self.navigationController.addLoggedUrl('/Products/:kind/:id', loadProductsPage);
 	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
@@ -51,30 +56,30 @@ function MasterControl(){
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadStockPage();
 	};
-	function loadPOSPage(){
+	function loadPOSPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadPOSPage();
 	};
-	function loadSellersPage(){
+	function loadSellersPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadSellersPage();
 	};		
-	function loadSalesPage(){
+	function loadSalesPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadSalesPage();
 	};
-	function loadProductsPage(){
+	function loadProductsPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadProductsPage();
 	};
-	function loadDetailPage(detailId){
+	function loadDetailPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
-		self.mainController.loadDetailPage(detailId);
+		self.mainController.loadDetailPage(data);
 	};
 	//Stock
 	this.searchStocks = function(searchData){
@@ -84,7 +89,7 @@ function MasterControl(){
 		self.mainController.setStocks(stocks);
 	};
 	//POS
-	this.searchPOS = function(searchData){
+	this.searchPOSs = function(searchData){
 		self.posService.searchPOS(searchData);
 	};
 	this.setPOSData = function(posdata){
@@ -110,6 +115,14 @@ function MasterControl(){
 	};
 	this.setProducts = function(products){
 		self.mainController.setProducts(products);
+	};
+	//Detail
+	this.getStockDetail = function(stockId){
+		self.stockService.getStockDetail(stockId);
+	};
+
+	self.setDetail = function(data){
+		self.mainController.setDetail(data);
 	};
 	//Enable Disable
 	this.enableEvents = function(){

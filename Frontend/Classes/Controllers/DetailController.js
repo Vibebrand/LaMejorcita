@@ -34,9 +34,9 @@ function DetailController (argument) {
 		var addressValue      = container.find('.address .value');
 		var nameValue         = container.find('.stockname .value');
 		var phoneValue        = container.find('.phone .value');
-		var manNameValue      = container.find('.manager .name .value');
-		var manEmailValue     = container.find('.manager .email .value');
-		var manCurpValue      = container.find('.manager .curp .value');
+		var manNameValue      = container.find('.manager .name');
+		var manEmailValue     = container.find('.manager .email');
+		var manCurpValue      = container.find('.manager .curp');
 
 		businessnameValue.text(stock.businessName);
 		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));
@@ -60,9 +60,9 @@ function DetailController (argument) {
 		
 		var managerText   = $('<h3 class="text"></h3>');
 
-		var managerName       = $('<div class="name"></div>');
-		var managerCurp       = $('<div class="curp"></div>');
-		var managerEmail      = $('<div class="email"></div>');
+		var managerName       = $('<span class="name"></span>');
+		var managerCurp       = $('<span class="curp"></span>');
+		var managerEmail      = $('<span class="email"></span>');
 		
 		var managerNameText   = $('<h4 class="text"></h4>');
 		var managerEmailText  = $('<h4 class="text"></h4>');
@@ -105,17 +105,6 @@ function DetailController (argument) {
 		manager.append(managerEmail);
 		manager.append(managerCurp);
 
-		managerName.append(managerNameText);
-		managerName.append(managerNameValue);
-		managerEmail.append(managerEmailText);
-		managerEmail.append(managerEmailValue);
-		managerCurp.append(managerCurpText);
-		managerCurp.append(managerCurpValue);
-
-		managerNameText.text('Nombre');
-		managerEmailText.text('Correo electrónico');
-		managerCurpText.text('Curp');
-
 		nameText.text('Nombre');
 		businessnameText.text('Razón social');
 		managerText.text('Responsable');
@@ -124,13 +113,18 @@ function DetailController (argument) {
 	};
 	//POS detail
 	this.loadPOSDetail = function(){
-
+		createPOSView();
+		//self.delegate.getDetail(self.page, self.detailId);
 	};
 	this.setPOSDetail = function(pos){
 		self.detailTitle.text('Información');
 		self.view.container().remove('.info-container');
 	};
 	function createPOSView(){
+		self.detailTitle.text('Información');
+		self.view.container().remove('.info-container');
+		var infoContainer = $('<div class="info-container "></div>');
+	
 
 	};
 	//Seller detail

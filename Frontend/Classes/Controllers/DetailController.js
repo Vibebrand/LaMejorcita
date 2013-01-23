@@ -20,7 +20,6 @@ function DetailController (argument) {
 	this.pagenum = 0;
 	this.page = "Stock"
 	this.viewDidLoad = function(){
-		
 		var loadCall = self['load'+self.page+'Detail'];
 		if(typeof loadCall == "function")loadCall.call(self);
 	};
@@ -29,25 +28,69 @@ function DetailController (argument) {
 		createStockView();
 		self.delegate.getDetail(self.page, self.detailId);
 	};
+	this.setStockDetail = function(stock){
+		var container         = self.view.container();
+		var businessnameValue = container.find('.businessname .value');
+		var addressValue      = container.find('.address .value');
+		var nameValue         = container.find('.stockname .value');
+		var phoneValue        = container.find('.phone .value');
+		var manNameValue      = container.find('.manager .name .value');
+		var manEmailValue     = container.find('.manager .email .value');
+		var manCurpValue      = container.find('.manager .curp .value');
+
+		businessnameValue.text(stock.businessname);
+		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));
+		nameValue.text(stock.name);
+		phoneValue.text(stock.phone);
+		manNameValue.text(stock.manager.name);
+		manEmailValue.text(stock.manager.email);
+		manCurpValue.text(stock.manager.curp);
+
+		/*var container = self.view.container();
+		
+		var businessnameValue = container.find('.businessname .value');
+		var managerValue = container.find('.manager .value');
+		var addressValue = container.find('.address .value');
+		nameValue.text(stock.name);
+		businessnameValue.text(stock.businessName);
+		managerValue.text(stock.manager.name);
+		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));*/
+	};
 	function createStockView(){
 		self.detailTitle.text('Información');
 		self.view.container().remove('.info-container');
-
-		var stockname = $('<div class="name"></div>');
-		var businessname = $('<div class="businessname"></div>');
-		var manager = $('<div class="manager"></div>');
-		var address = $('<div class="address"></div>');
+		
 		var infoContainer = $('<div class="info-container "></div>');
 
-		var nameText = $('<h4 class="text"></h4>');
-		var businessnameText = $('<h4 class="text"></h4>');
-		var managerText = $('<h4 class="text"></h4>');
-		var addressText = $('<h4 class="text"></h4>');
+		var stockname     = $('<div class="stockname"></div>');
+		var businessname  = $('<div class="businessname"></div>');
+		var manager       = $('<div class="manager"></div>');
+		var address       = $('<div class="address"></div>');
+		var phone         = $('<div class="phone"></div>');
+		
+		var managerText   = $('<h4 class="text"></h4>');
 
-		var nameValue = $('<span class="value"></span>');
+		var managerName       = $('<div class="name"></div>');
+		var managerCurp       = $('<div class="curp"></div>');
+		var managerEmail      = $('<div class="email"></div>');
+		
+		var managerNameText   = $('<h5 class="text"></h5>');
+		var managerEmailText  = $('<h5 class="text"></h5>');
+		var managerCurpText   = $('<h5 class="curp"></h5>');
+		
+		var managerNameValue  = $('<span class="value"></span>');
+		var managerEmailValue = $('<span class="value"></span>');
+		var managerCurpValue  = $('<span class="value"></span>');
+		
+		var nameText          = $('<h4 class="text"></h4>');
+		var businessnameText  = $('<h4 class="text"></h4>');
+		var addressText       = $('<h4 class="text"></h4>');
+		var phoneText         = $('<h4 class="text"></h4>');
+		
+		var nameValue         = $('<span class="value"></span>');
 		var businessnameValue = $('<span class="value"></span>');
-		var managerValue = $('<span class="value"></span>');
-		var addressValue = $('<span class="value"></span>');
+		var addressValue      = $('<span class="value"></span>');
+		var phoneValue        = $('<span class="value"></span>');
 
 		self.view.addSubview(infoContainer);
 
@@ -55,34 +98,51 @@ function DetailController (argument) {
 		infoContainer.append(businessname);
 		infoContainer.append(manager);
 		infoContainer.append(address);
+		infoContainer.append(phone);
 
 		stockname.append(nameText);
 		businessname.append(businessnameText);
-		manager.append(managerText);
 		address.append(addressText);
+		phone.append(phoneText);
 
 		stockname.append(nameValue);
 		businessname.append(businessnameValue);
-		manager.append(managerValue);
 		address.append(addressValue);
+		phone.append(phoneValue);
+
+		manager.append(managerText);
+		manager.append(managerName);
+		manager.append(managerEmail);
+		manager.append(managerCurp);
+
+		managerName.append(managerNameText);
+		managerName.append(managerNameValue);
+		managerEmail.append(managerEmailText);
+		managerEmail.append(managerEmailValue);
+		managerCurp.append(managerCurpText);
+		managerCurp.append(managerCurpValue);
+
+		managerNameText.text('Nombre');
+		managerEmailText.text('Correo electrónico');
+		managerCurpText.text('Curp');
 
 		nameText.text('Nombre');
-		businessnameText.text('Razón Social');
+		businessnameText.text('Razón social');
 		managerText.text('Responsable');
+		phoneText.text('Teléfono');
 		addressText.text('Dirección');
 	};
-	this.setStockDetail = function(stock){
-		var container = self.view.container();
-		var nameValue = container.find('.name .value');
-		var businessnameValue = container.find('.businessname .value');
-		var managerValue = container.find('.manager .value');
-		var addressValue = container.find('.address .value');
-		nameValue.text(stock.name);
-		businessnameValue.text(stock.businessName);
-		managerValue.text(stock.manager.name);
-		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));
-	};
 	//POS detail
+	this.loadPOSDetail = function(){
+
+	};
+	this.setPOSDetail = function(pos){
+		self.detailTitle.text('Información');
+		self.view.container().remove('.info-container');
+	};
+	function createPOSView(){
+
+	};
 	//Seller detail
 	//Sale detail
 	//Product detail

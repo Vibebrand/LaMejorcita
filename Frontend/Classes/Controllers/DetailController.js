@@ -45,16 +45,6 @@ function DetailController (argument) {
 		manNameValue.text(stock.manager.name);
 		manEmailValue.text(stock.manager.email);
 		manCurpValue.text(stock.manager.curp);
-
-		/*var container = self.view.container();
-		
-		var businessnameValue = container.find('.businessname .value');
-		var managerValue = container.find('.manager .value');
-		var addressValue = container.find('.address .value');
-		nameValue.text(stock.name);
-		businessnameValue.text(stock.businessName);
-		managerValue.text(stock.manager.name);
-		addressValue.text(stock.address.district+' '+self.delegate.getAddressString(stock.address));*/
 	};
 	function createStockView(){
 		self.detailTitle.text('Información');

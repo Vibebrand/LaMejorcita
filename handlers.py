@@ -1,9 +1,20 @@
 import cyclone.web  
-import json
-from bson import ObjectId
+import cyclone.escape
+import sys
+import os
+import datetime
+import mimetypes
+import email
+import time
+import cyclone.escape
+from urllib2 import HTTPError
+from txmongo._pymongo.objectid import ObjectId
 from Backend.Data.InterfazDB.DBmodule import DBModule
+from time import mktime
+import ast
+from stat import *
+from time import mktime
 
- 
 class GetBodegasHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
@@ -104,3 +115,31 @@ class LoginHandler(cyclone.web.RequestHandler):
         self.write({"result": result})
         self.finish()
 
+class RenderHandler(cyclone.web.StaticFileHandler):
+    def get(self, path, include_body=True):
+        #user logged in validation (different from the one implemented in cyclone)
+        url_parts = path.split('.')
+
+        if os.path.sep != "/":
+            path = path.replace("/", os.path.sep)
+        abspath = os.path.abspath(os.path.join(self.root, path))
+        # os.path.abspath strips a trailing /
+        if not (abspath + os.path.sep).startswith(self.root): # it needs to be temporarily added back for requests to root/
+            raise HTTPError(403, "%s is not in root static directory", path)
+        if os.path.isdir(abspath) and self.default_filename is not None:
+            # need to look at the request.path here for when path is empty
+            # but there is some prefix to the path that was already
+            # trimmed by the routing
+            abspath = os.path.join(abspath, self.default_filename)
+        if not os.path.exists(abspath):
+            raise HTTPError(404)
+        if not os.path.isfile(abspath):
+            raise HTTPError(403, "%s is not a file", path)
+
+        if not include_body:
+            return
+        file = open(abspath, "rb")
+        try:
+            self.write(file.read())
+        finally:
+            file.close()

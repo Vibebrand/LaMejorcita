@@ -129,6 +129,9 @@ function MasterControl(){
 	this.getSaleDetail = function(saleId){
 		self.salesService.getSaleDetail(saleId);
 	};
+	this.getProductDetail = function(productId){
+		self.stockService.getProductDetail(productId);
+	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
 	};

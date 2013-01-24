@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+/*App Fonts*/
+@import 'fonts';
+
+/* html5doctor.com Reset Stylesheet */
+@import 'reset';
+
+/*Formato de estilo de header*/
+@import 'header';
+
+/*Formato de estilo de Menú lateral*/
+@import 'aside';
+
+html{
+	height: 100%;
+	width: 100%;
+}

@@ -162,7 +162,7 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			tableController.view.setClass('products-table');
-			loadTable();
+			loadTableView();
 		};
 		removeVisualizationButtons();
 		prepareTableView();

@@ -19,6 +19,12 @@ function DetailController(){
 		var loadCall = self['load'+self.page+'Detail'];
 		if(typeof loadCall == "function")loadCall.call(self);
 	};
+	this.createDetailMenu = function(){
+		if(self.page == "Sale")
+			self.delegate.createDetailMenu(false);
+		else
+			self.delegate.createDetailMenu(true);
+	};
 	//Stock Detail
 	this.loadStockDetail = function(){
 		createStockView();

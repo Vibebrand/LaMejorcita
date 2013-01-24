@@ -177,8 +177,10 @@ function MainController () {
 		detailController.currentId = data.id;
 		detailController.page = data.kind.toCapitalize();
 		detailController.pagenum = pages.indexOf(data.kind);
+
 		removeVisualizationButtons();
-		self.createDetailMenu();
+		detailController.createDetailMenu();
+
 		detailController.view.removeView();
 		tableController.view.removeView();
 		detailController.view.appendToView(self.view);
@@ -236,19 +238,18 @@ function MainController () {
 		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")
 			buttonsContainer.remove();
 	};
-	this.createDetailMenu = function(){
+	this.createDetailMenu = function(edit){
 		self.removeDetailMenu();
 		var buttonCotnainer = $('<div class="button-container"></div>');
 		var backBtn         = $('<button class="back-button"></button>');
-		var editBtn         = $('<button class="edit-button"></button>');
-
 		self.view.addSubview(buttonCotnainer);
-
 		buttonCotnainer.append(backBtn);
-		buttonCotnainer.append(editBtn);
-
 		backBtn.text('Volver');
-		editBtn.text('Editar');
+		if(edit){
+			var editBtn = $('<button class="edit-button"></button>');
+			buttonCotnainer.append(editBtn);
+			editBtn.text('Editar');
+		};
 	};
 	this.removeDetailMenu = function(){
 		var buttonCotnainer = self.view.container().find('.button-container');
@@ -282,7 +283,7 @@ function MainController () {
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
 		var index = detailController.pagenum;
-		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page'))
+		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);
 		else
 			self.triggerOption(index);

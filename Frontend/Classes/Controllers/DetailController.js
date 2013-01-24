@@ -297,20 +297,37 @@ function DetailController (argument) {
 		var pname           =  container.find('.productInfo-container .name .value');
 		var salePrice       =  container.find('.productInfo-container .salePrice .value');
 		var registationDate =  container.find('.productInfo-container .registationDate .value');
-		var batches = container.find('.batches-list');
+		var batchesList = container.find('.batches-list');
 
 		pname.text(product.name);
 		salePrice.text('$'+product.salePrice.toFixed(2));
 		registationDate.text(product.registationDate);
 
-		for (var i = 0; i < Things.length; i++)
-			createBatchItem.call(batches ,product.batches[i]);
-
+		for(var expiration in product.batches)
+			createBatchItem.call(batchesList, product.batches[expiration], expiration);
 	};
-	function createBatchItem(product){
+	function createBatchItem(count, expiration){
 		var batchItem = $('<li class="batch-item"></li>');
-		var productNumber = $('<span class="count"></span>');
-		var expirationDate  = $('<span class="expirationDate"></span>');
+		var productNumber = $('<div class="count"></div>');
+		var expirationDate  = $('<div class="expirationDate"></div>');
+
+		var productNumberText = $('<span class="text"></span>');
+		var productNumberValue = $('<span class="value"></span>');
+		var expirationDateText = $('<span class="text"></span>');
+		var expirationDateValue = $('<span class="value"></span>');
+
+		this.append(batchItem);
+		batchItem.append(expirationDate);
+		batchItem.append(productNumber);
+		expirationDate.append(productNumberText);
+		productNumber.append(expirationDateText);
+		expirationDate.append(productNumberValue);
+		productNumber.append(expirationDateValue);
+
+		productNumberText.text('Cantidad');
+		expirationDateText.text('Fecha de caducidad ');
+		productNumberValue.text(count);
+		expirationDateValue.text(expiration);
 	};
 	function createProductView(){
 		removeInfoContainer();

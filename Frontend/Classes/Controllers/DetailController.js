@@ -309,8 +309,8 @@ function DetailController (argument) {
 	};
 	function createBatchItem(product){
 		var batchItem = $('<li class="batch-item"></li>');
-		var productNumber = $();
-		var expirationDate  = $();
+		var productNumber = $('<span class="count"></span>');
+		var expirationDate  = $('<span class="expirationDate"></span>');
 	};
 	function createProductView(){
 		removeInfoContainer();

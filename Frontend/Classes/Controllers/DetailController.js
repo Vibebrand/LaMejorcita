@@ -2,28 +2,38 @@ DetailController.prototype = new ViewController();
 DetailController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.pageFunctions = [this.loadStockDetail];
-	var backButton     = $('<button class="back-button"></button>');
-	var buttonCotnainer = $('<div class="button-container"></div>');
 	var title     = $('<h2></h2>');
-	backButton.text('volver');
-	buttonCotnainer.append(backButton);
-	this.view.addSubview(buttonCotnainer);
-	this.view.addSubview(title);
+	var infoContainer = $('<div class="info-container"><div>');
+	var linksContainer= $('<div class="links-container"></div>');
 
+	this.view.addSubview(title);
+	this.view.addSubview(infoContainer);
+	this.view.addSubview(linksContainer);
 	this.view.setClass('detail-container');
-	
-	this.backButton = backButton;
-	this.detailTitle = title;
+
+	this.detailTitle    = title;
+	this.infoContainer  = infoContainer;
+	this.linksContainer = linksContainer;
 };
-function DetailController (argument) {
+function DetailController(){
 	var self = this;
+	var infoContainer = null;
+	var linksContainer = null;
 	this.currentId = null;
 	this.pagenum = 0;
 	this.page = "Stock"
 	this.currentData = {};
 	this.viewDidLoad = function(){
+		infoContainer = self.infoContainer;
+		linksContainer = self.linksContainer;
 		var loadCall = self['load'+self.page+'Detail'];
 		if(typeof loadCall == "function")loadCall.call(self);
+	};
+	this.createDetailMenu = function(){
+		if(self.page == "Sale")
+			self.delegate.createDetailMenu(false);
+		else
+			self.delegate.createDetailMenu(true);
 	};
 	//Stock Detail
 	this.loadStockDetail = function(){
@@ -48,12 +58,31 @@ function DetailController (argument) {
 		manNameValue.text(stock.manager.name);
 		manEmailValue.text(stock.manager.email);
 		manCurpValue.text(stock.manager.curp);
+
+		createLinkBtn({
+			text: 'Puntos de Venta',
+			href: '/POS/stock/'+self.currentData._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Inventario',
+			href: '/Products/stock/'+self.currentData._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Vendedores',
+			href: '/Sellers/stock/'+self.currentData._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Ventas',
+			href: '/Sales/stock/'+self.currentData._id,
+			container: linksContainer
+		});
 	};
 	function createStockView(){
-		removeInfoContainer();
+		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Bodega');
-		var infoContainer = $('<div class="info-container  stockDetail"></div>');
-		self.view.addSubview(infoContainer);
 		createField({
 			field: 'stockname',
 			title:{classname:'title', value: 'Nombre'},
@@ -110,14 +139,28 @@ function DetailController (argument) {
 		rname.text(pos.representative.name);
 		remail.text(pos.representative.email);
 		rcurp.text(pos.representative.curp);
+
+		createLinkBtn({
+			text: 'Vendedores',
+			href: '/Sellers/pos/'+self.currentData._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Ventas',
+			href: '/Sales/pos/'+self.currentData._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Bodega',
+			href: '/Detail/stock/'+self.currentData.stock._id,
+			container: linksContainer
+		});
 	};
 	function createPOSView(){
-		removeInfoContainer();
+		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Punto de venta');
-		var infoContainer = $('<div class="info-container posDetail"></div>');
 		var posInfo       = $('<div class="posInfo-container"></div>');
 		var fridgeInfo    = $('<div class="fridgeInfo-container"></div>');
-		self.view.addSubview(infoContainer);
 		infoContainer.append(fridgeInfo);
 		infoContainer.append(posInfo);
 		createField({
@@ -180,12 +223,21 @@ function DetailController (argument) {
 		email.text(seller.email);
 		phone.text(seller.phone);
 		stock.text(seller.stock.name);
+
+		createLinkBtn({
+			text: 'Bodega',
+			href: '/Detail/stock/'+self.currentData.stock._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Ventas',
+			href: '/Sales/seller/'+self.currentData._id,
+			container: linksContainer
+		});
 	};
 	function createSellerView(){
-		removeInfoContainer();
+		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Vendedor');
-		var infoContainer = $('<div class="info-container sellerDetail"></div>');
-		self.view.addSubview(infoContainer);
 		createField({
 			field: 'name',
 			title:{classname:'title', value: 'Nombre'},
@@ -236,6 +288,18 @@ function DetailController (argument) {
 		observations.text(sale.observations);
 		for (var i = sale.products.length - 1; i >= 0; i--)
 			createProductItem.call(productslist, sale.products[i]);
+
+		createLinkBtn({
+			text: 'Vendedor',
+			href: '/Detail/seller/'+self.currentData.seller._id,
+			container: linksContainer
+		});
+		createLinkBtn({
+			text: 'Punto de venta',
+			href: '/Detail/pos/'+self.currentData.salepoint._id,
+			container: linksContainer
+		});
+		
 	};
 	function createProductItem(product){
 		var productItem = $('<li class="product-item"></li>');
@@ -252,12 +316,10 @@ function DetailController (argument) {
 		pname.text(product.name);
 	};
 	function createSaleView(){
-		removeInfoContainer();
+		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Información');
-		var infoContainer = $('<div class="info-container saleDetail"></div>');
 		var productslist = $('<ul class="products-list"></ul>');
 		var saleinfo = $('<div class="saleinfo-container"></div>');
-		self.view.addSubview(infoContainer);
 		infoContainer.append(saleinfo);
 		infoContainer.append(productslist);
 		createField({
@@ -331,13 +393,12 @@ function DetailController (argument) {
 		expirationDateValue.text(expiration);
 	};
 	function createProductView(){
-		removeInfoContainer();
+		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Producto');
-		var infoContainer = $('<div class="info-container productDetail"></div>');
+		
 		var productInfo = $('<div class="productInfo-container"></div>');
 		var batches = $('<ul class="batches-list"></ul>');
 
-		self.view.addSubview(infoContainer);
 		infoContainer.append(productInfo);
 		infoContainer.append(batches);
 
@@ -363,7 +424,7 @@ function DetailController (argument) {
 		if(typeof setCall =="function") setCall.call(self, data);
 		self.delegate.enableEvents();
 	};
-	function  createField(options){
+	function createField(options){
 		var options = $.extend({},{
 			field: 'field', 
 			title: {classname: 'title', value: ''}, 
@@ -385,26 +446,39 @@ function DetailController (argument) {
 		};
 		options.container.append(field);
 	};
-	function removeInfoContainer(){
-		var container = self.view.container().find('.info-container');
-		container.remove();
+	function createLinkBtn(options){
+		var options = $.extend({},{
+			text: 'Button link',
+			classname: 'link-button',
+			container: ""
+		},options);
+		if(options.container.constructor === $ && typeof options.container.find != "undefined"){
+			var  linkBtn  = $('<button></button>'); 
+			linkBtn.attr('class', options.classname);
+			linkBtn.text(options.text);
+			if(typeof options.href == "string")
+				linkBtn.data('href', options.href);
+			options.container.append(linkBtn);
+		};
 	};
 	//Events
-	function onClickBack(){
-		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
-		var index = self.pagenum;
-		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page'))
-			self.delegate.changePage(prevPage);
-		else
-			self.delegate.triggerOption(index);
+	function onClickLinkBtn(){
+		var linkBtn = $(this);
+		self.delegate.changePage(linkBtn.data('href'));
 	};
 	//Disable Enable
 	this.enableEvents = function(){
-		this.backButton.unbind('click');
-		this.backButton.bind('click', onClickBack);
+		if(linksContainer != null){
+			var linkBtns = linksContainer.find('.link-button');
+			linkBtns.unbind('click');
+			linkBtns.bind('click', onClickLinkBtn);
+		};
 	};
 	this.disableEvents = function(){
-		this.backButton.unbind('click');
+		if(linksContainer != null){
+			var linkBtns = linksContainer.find('.link-button');
+			linkBtns.unbind('click');
+		};
 	};
 	DetailController.prototype._init_.call(this);
 };

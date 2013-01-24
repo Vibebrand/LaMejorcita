@@ -422,7 +422,7 @@ function DetailController(){
 	self.setDetail = function(data){
 		var setCall = self['set'+self.page+'Detail'];
 		if(typeof setCall =="function") setCall.call(self, data);
-		self.delegate.enableEvents();
+		self.delegate.enableAllEvents();
 	};
 	function createField(options){
 		var options = $.extend({},{

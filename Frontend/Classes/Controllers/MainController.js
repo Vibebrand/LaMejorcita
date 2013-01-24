@@ -1,4 +1,3 @@
-Importer.importfile('Classes/Controllers/MenuController.js');
 Importer.importfile('Classes/Controllers/SearchController.js');
 Importer.importfile('Classes/Controllers/TableController.js');
 Importer.importfile('Classes/Controllers/DetailController.js');
@@ -14,15 +13,10 @@ function MainController () {
 	var objects          = 15;
 	var tableController  = null;
 	var detailController = null;
-	var menuController   = null;
 	var searchController = null;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
 	this.viewDidLoad = function(){
-		if(!menuController){
-			menuController          = new MenuController();
-			menuController.delegate = self;
-		};
 		if(!tableController){
 			tableController          = new TableController();
 			tableController.delegate = self;
@@ -35,12 +29,11 @@ function MainController () {
 			detailController = new DetailController();
 			detailController.delegate = self;
 		};
-		menuController.view.appendToView(this.view);
 		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
 	};
 	this.updateMenu = function(index){
-		menuController.changeOption(index);
+		self.delegate.updateMenu(index);
 	};
 	//Stocks
 	this.loadStockPage = function(){
@@ -301,14 +294,11 @@ function MainController () {
 		deleteBtn.bind('click',onClickDelete);
 		backBtn.bind('click', onClickBack);
 		
-		menuController.enableEvents();
 		searchController.enableEvents();
 		detailController.enableEvents();
 	};
 	this.disableEvents = function(){
 		var backBtn = self.view.container().find('.button-container .back-button');
-
-		menuController.disableEvents();
 		searchController.disableEvents();
 		detailController.disableEvents();
 		tableController.view.container().find('button').unbind('click');
@@ -318,9 +308,12 @@ function MainController () {
 	this.changePage = function(hashpage){
 		self.delegate.changePage(hashpage);
 	};
+	this.enableAllEvents = function(){
+		self.delegate.enableEvents();
+	};
 	//options
 	this.triggerOption = function(index){
-		menuController.triggerOption(index);
+		self.delegate.triggerOption(index);
 	};
 	MainController.prototype._init_.call(this);
 };

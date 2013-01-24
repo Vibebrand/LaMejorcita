@@ -1,9 +1,9 @@
-
-
+Importer.importfile('Classes/Controllers/MenuController.js');
 function MasterControl(){
 	var self            = this;
 	var appContainer    = $('.app-container');
 	var headerContainer = $('header');
+	var menuController = null;
 
 	this.navigationController = null;
 	this.headerController     = null;
@@ -17,6 +17,10 @@ function MasterControl(){
 	this.posService = null;
 
 	function _init_() {
+		if(!menuController){
+			menuController          = new MenuController();
+			menuController.delegate = self;
+		};
 		self.navigationController = new NavigationController();
 		self.navigationController.setOptions({
 			cookiePrefix: 'lamejorcita',
@@ -51,34 +55,33 @@ function MasterControl(){
 	this.login = function(userdata) {
 		self.userService.login(userdata);
 	};
-	function loadStockPage(){
+	function loadMainView(){
 		self.headerController.view.appendToView(headerContainer);
+		menuController.view.appendToView(appContainer);
 		self.mainController.view.appendToView(appContainer);
+	};
+	function loadStockPage(){
+		loadMainView();
 		self.mainController.loadStockPage();
 	};
 	function loadPOSPage(data){
-		self.headerController.view.appendToView(headerContainer);
-		self.mainController.view.appendToView(appContainer);
+		loadMainView();
 		self.mainController.loadPOSPage();
 	};
 	function loadSellersPage(data){
-		self.headerController.view.appendToView(headerContainer);
-		self.mainController.view.appendToView(appContainer);
+		loadMainView();
 		self.mainController.loadSellersPage();
 	};		
 	function loadSalesPage(data){
-		self.headerController.view.appendToView(headerContainer);
-		self.mainController.view.appendToView(appContainer);
+		loadMainView();
 		self.mainController.loadSalesPage();
 	};
 	function loadProductsPage(data){
-		self.headerController.view.appendToView(headerContainer);
-		self.mainController.view.appendToView(appContainer);
+		loadMainView();
 		self.mainController.loadProductsPage();
 	};
 	function loadDetailPage(data){
-		self.headerController.view.appendToView(headerContainer);
-		self.mainController.view.appendToView(appContainer);
+		loadMainView();
 		self.mainController.loadDetailPage(data);
 	};
 	//Stock
@@ -135,12 +138,21 @@ function MasterControl(){
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
 	};
+	//menu view
+	this.updateMenu = function(index){
+		menuController.changeOption(index);
+	};
+	this.triggerOption = function(index){
+		menuController.triggerOption(index);
+	};
 	//Enable Disable
 	this.enableEvents = function(){
 		self.mainController.enableEvents();
+		menuController.enableEvents();
 	};
 	this.disableEvents = function(){
 		self.mainController.disableEvents();
+		menuController.disableEvents();
 	};
 	_init_();
 };

@@ -3,10 +3,11 @@ DetailController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.pageFunctions = [this.loadStockDetail];
 	var backButton     = $('<button class="back-button"></button>');
+	var buttonCotnainer = $('<div class="button-container"></div>');
 	var title     = $('<h2></h2>');
 	backButton.text('volver');
-	
-	this.view.addSubview(backButton);
+	buttonCotnainer.append(backButton);
+	this.view.addSubview(buttonCotnainer);
 	this.view.addSubview(title);
 
 	this.view.setClass('detail-container');
@@ -49,9 +50,10 @@ function DetailController (argument) {
 		manCurpValue.text(stock.manager.curp);
 	};
 	function createStockView(){
-		var infoContainer = $('<div class="info-container  stockDetail"></div>');
 		removeInfoContainer();
 		self.detailTitle.text('Información');
+		var infoContainer = $('<div class="info-container  stockDetail"></div>');
+		self.view.addSubview(infoContainer);
 		createField({
 			field: 'stockname',
 			title:{classname:'title', value: 'Nombre'},
@@ -78,7 +80,6 @@ function DetailController (argument) {
 			title:{classname:'title', value: 'Teléfono'},
 			container: infoContainer
 		});
-		self.view.addSubview(infoContainer);
 	};
 	//POS detail
 	this.loadPosDetail = function(){
@@ -86,18 +87,18 @@ function DetailController (argument) {
 		self.delegate.getDetail(self.page, self.detailId);
 	};
 	this.setPosDetail = function(pos){
-		self.currentData = pos;
-		var container    = self.view.container();
+		self.currentData  = pos;
+		var container     = self.view.container();
 		var businessnames = container.find('.posInfo .posname .title');
-		var address = container.find('.address .value');
-		var phone = container.find('.phone .value');
-		var email = container.find('.email .value');
-		var temperature = container.find('.fridgeInfo  .temperature .value');
-		var serial = container.find('.fridgeInfo  .serial .value');
-		var fstatus = container.find('.fridgeInfo  .status .value');
-		var rname = container.find('.representative .name');
-		var remail = container.find('.representative .email');
-		var rcurp = container.find('.representative .curp');
+		var address       = container.find('.address .value');
+		var phone         = container.find('.phone .value');
+		var email         = container.find('.email .value');
+		var temperature   = container.find('.fridgeInfo  .temperature .value');
+		var serial        = container.find('.fridgeInfo  .serial .value');
+		var fstatus       = container.find('.fridgeInfo  .status .value');
+		var rname         = container.find('.representative .name');
+		var remail        = container.find('.representative .email');
+		var rcurp         = container.find('.representative .curp');
 
 		businessnames.text(pos.name);
 		address.text(pos.address.district+' '+self.delegate.getAddressString(pos.address));
@@ -111,15 +112,14 @@ function DetailController (argument) {
 		rcurp.text(pos.representative.curp);
 	};
 	function createPOSView(){
+		removeInfoContainer();
+		self.detailTitle.text('Información');
 		var infoContainer = $('<div class="info-container posDetail"></div>');
 		var posInfo       = $('<div class="posInfo"></div>');
 		var fridgeInfo    = $('<div class="fridgeInfo"></div>');
-		removeInfoContainer();
-		self.detailTitle.text('Información');
 		self.view.addSubview(infoContainer);
 		infoContainer.append(fridgeInfo);
 		infoContainer.append(posInfo);
-
 		createField({
 			field: 'posname',
 			container: posInfo
@@ -163,10 +163,137 @@ function DetailController (argument) {
 		});
 	};
 	//Seller detail
-
+	this.loadSellerDetail = function(){
+		createSellerView();
+		self.delegate.getDetail(self.page, self.detailId);
+	};
+	this.setSellerDetail = function(seller){
+		self.currentData = seller;
+		var container    = self.view.container();
+		var sname        = container.find('.name .value');
+		var curp         = container.find('.curp .value');
+		var email        = container.find('.email .value');
+		var phone        = container.find('.phone .value');
+		var stock        = container.find('.stock .value');
+		sname.text(seller.name);
+		curp.text(seller.curp);
+		email.text(seller.email);
+		phone.text(seller.phone);
+		stock.text(seller.stock.name);
+	};
+	function createSellerView(){
+		removeInfoContainer();
+		self.detailTitle.text('Información');
+		var infoContainer = $('<div class="info-container sellerDetail"></div>');
+		self.view.addSubview(infoContainer);
+		createField({
+			field: 'name',
+			title:{classname:'title', value: 'Nombre'},
+			container: infoContainer
+		});
+		createField({
+			field: 'curp',
+			title:{classname:'title', value: 'CURP'},
+			container: infoContainer
+		});
+		createField({
+			field: 'email',
+			title:{classname:'title', value: 'Correo electrónico'},
+			container: infoContainer
+		});
+		createField({
+			field: 'phone',
+			title:{classname:'title', value: 'Teléfono'},
+			container: infoContainer
+		});
+		createField({
+			field: 'stock',
+			title:{classname:'title', value: 'Bodega'},
+			container: infoContainer
+		});
+	};
 	//Sale detail
+	this.loadSaleDetail = function(){
+		createSaleView();
+		self.delegate.getDetail(self.page, self.detailId);
+	};
+	this.setSaleDetail = function(sale){
+		self.currentData = sale;
+		var container    = self.view.container();
+		var datetime = container.find('.datetime .value');
+		var seller = container.find('.seller .value');
+		var device = container.find('.device .value');
+		var posName = container.find('.pos .name');
+		var posfridge = container.find('.pos .fridge');
+		var observations = container.find('.observations .value');
+		var productslist = container.find('.products-list');
+
+		datetime.text(sale.date+' '+sale.time);
+		seller.text(sale.seller.name);
+		device.text(sale.device);
+		posName.text(sale.salepoint.name);
+		posfridge.text(sale.salepoint.fridge.serial);
+		observations.text(sale.observations);
+		for (var i = sale.products.length - 1; i >= 0; i--)
+			createProductItem.call(productslist, sale.products[i]);
+	};
+	function createProductItem(product){
+		var productItem = $('<li class="product-item"></li>');
+		var count = $('<span class="count"></span>');
+		var price = $('<span class="price"></span>');
+		var pname = $('<span class="name"></span>');
+		this.append(productItem);
+		productItem.append(pname);
+		productItem.append(price);
+		productItem.append(count);
+
+		count.text(product.count);
+		price.text('$ '+product.salePrice.toFixed(2));
+		pname.text(product.name);
+	};
+	function createSaleView(){
+		removeInfoContainer();
+		self.detailTitle.text('Información');
+		var infoContainer = $('<div class="info-container posDetail"></div>');
+		var productslist = $('<ul class="products-list"></ul>');
+		var saleinfo = $('<div class="saleinfo"></div>');
+		self.view.addSubview(infoContainer);
+		infoContainer.append(saleinfo);
+		infoContainer.append(productslist);
+		createField({
+			field: 'datetime',
+			title:{classname:'title', value: 'Fecha'},
+			container: saleinfo
+		});
+		createField({
+			field: 'seller',
+			title:{classname:'title', value: 'Vendedor'},
+			container: saleinfo
+		});
+		createField({
+			field: 'device',
+			title:{classname:'title', value: 'Dispositivo'},
+			container: saleinfo
+		});
+		createField({
+			field: 'pos',
+			title:{classname:'title', value: 'Punto de venta'},
+			value: [{classname:'name', value:''},{classname:'fridge', value:''}],
+			container: saleinfo
+		});
+		createField({
+			field: 'observations',
+			title:{classname:'title', value: 'Observaciones'},
+			container: saleinfo
+		});
+	};
 	//Product detail
 	//General
+	self.setDetail = function(data){
+		var setCall = self['set'+self.page+'Detail'];
+		if(typeof setCall =="function") setCall.call(self, data);
+		self.delegate.enableEvents();
+	};
 	function  createField(options){
 		var options = $.extend({},{
 			field: 'field', 
@@ -188,11 +315,6 @@ function DetailController (argument) {
 			value.text(options.value[i].value);
 		};
 		options.container.append(field);
-	};
-	self.setDetail = function(data){
-		var setCall = self['set'+self.page+'Detail'];
-		if(typeof setCall =="function") setCall.call(self, data);
-		self.delegate.enableEvents();
 	};
 	function removeInfoContainer(){
 		var container = self.view.container().find('.info-container');

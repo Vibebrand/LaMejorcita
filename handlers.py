@@ -1,51 +1,106 @@
 import cyclone.web  
 import json
+from bson import ObjectId
 from Backend.Data.InterfazDB.DBmodule import DBModule
 
-class BodegasHandler(cyclone.web.RequestHandler):
-	@cyclone.web.asynchronous
-	def get(self):
-		def escribe(resultado):
-			self.write(str({"result":(str(resultado))[1:-1]}))
-			self.finish()
+ 
+class GetBodegasHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        result = []
+        for i in range(24):
+            x={"_id":str(ObjectId()),"name":"Bodega"+str(i+1),"status":"Valido","address": {"district":"Colonia","street":"Calle","intNum": None, "extNum": 100} ,"phone":str(9789560+i),"businessName":"Negocio"+str(i+1),"manager":{"_id":str(ObjectId()),"status":"Valido","username":"Manager"+str(i+1),"password":"pass","curp":"89687800"+str(i),"phone":"9781200","email":"manager"+str(i+1)+"@gmail.com","type":"mamanger"},"geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"maxSale":"1500","minSale":"0"}
+            result.append(x)
+        self.write({"result": result})
+        self.finish()
 
-		self.object=int(self.get_argument("objects",None))
-		self.keywords=self.get_argument("keywords",None)
-		self.inicio=(int(self.get_argument("page",None))-1)*(self.object)
+class GetPuntosHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        result = []
+        for i in range(24):
+            x={"_id":str(ObjectId()),"status":"Valido","phone":str(9789560+i),"email":"punto"+str(i+1)+"@gmail.com","joinDate":"15enero2010","fridge":{"serial":"4747464"+str(i),"temperature":"-5","status":"Valido"},"representative":{"name":"representante"+str(i+1),"phone":str(9789560+i),"email":"representante"+str(i+1)+"@gmail.com"},"stock":{"name":"Bodega"+str(i+1)}}
+            result.append(x)
+        self.write({"result": result})
+        self.finish()
 
-		if self.keywords:
-			self.write(str(self.keywords))
-		else:
-			x=DBModule("bodegasinfo")
-			x.getEntities(skip=self.inicio,limit=self.object).addCallback(lambda ign: escribe(x.getResult()))	
+class GetVendedorHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        result = []
+        for i in range(24):
+            x={"_id":str(ObjectId()),"status":"Valido","name":"Vendedor"+str(i+1),"curp":"89687800"+str(i),"email":"vendedor"+str(i+1)+"@gmail.com","device":"74748848"+str(i),"phone":str(9789560+i),"stock":{"name":"Bodega"+str(i+1)}}
+            result.append(x)
+        self.write({"result": result})
+        self.finish()
 
-	@cyclone.web.asynchronous
-	def post(self):
-		pass
+class GetVentasHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        result = []
+        for i in range(24):
+            x={"_id":str(ObjectId()),"date":"15enero2011","time":"11:59pm","observations":"observacion","amount":"4","products":"1500","geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"seller":{"name":"Vendedor"+str(i+1)},"salepoint":{"fridge":{"serial":"4747464"+str(i),"temperature":"-5","status":"Valido"}}}
+            result.append(x)
+        self.write({"result": result})
+        self.finish()
 
-	@cyclone.web.asynchronous
-	def delete(self):
-		pass
+class GetProductosHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        result = []
+        for i in range(24):
+            x={"_id":str(ObjectId()),"status":"Valido","name":"carne1","salePrice":"150","registrationDate":"15enero2011","count":"1500"}
+            result.append(x)
+        self.write({"result": result})
+        self.finish()
 
-		#todas , una ,
+class GetBodegasDetailHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
 
-class PuntosHandler(cyclone.web.RequestHandler):
-	def get(self , punto):
-		self.diccionario={}
-		self.write(self.diccionario[punto])
+    @cyclone.web.asynchronous
+    def post(self):
+        self.finish()
 
-		#por punto , por vendedor , por bodega , por refri
+    @cyclone.web.asynchronous
+    def delete(self):
+        self.finish()
 
-class VendedorHandler(cyclone.web.RequestHandler):
-	def get(self , vendedor):
-		self.diccionario={}
-		self.write(self.diccionario[vendedor])
+class GetPuntosDetailHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
 
+class GetVendedorDetailHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
 
-#por bodega , por punto , por vendedor , todos
-class RefrigeradoresHandler(cyclone.web.RequestHandler):
-	def get(self , punto):
-		self.diccionario={}
-		self.write(self.diccionario[punto])
+class GetVentasDetailHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
 
-#por punto , por refri , por bodega todos
+class GetProductosDetailHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
+
+class LogoutHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
+
+class LoginHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        self.write({"result": result})
+        self.finish()
+

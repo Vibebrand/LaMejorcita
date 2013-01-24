@@ -11,8 +11,10 @@ function MasterControl(){
 	this.messageController    = null;
 	this.mainController       = null;
 
-	this.userService = null;
-	this.stockService = null;
+	this.userService   = null;
+	this.stockService  = null;
+	this.salesService  = null;
+	this.posService = null;
 
 	function _init_() {
 		self.navigationController = new NavigationController();
@@ -23,10 +25,17 @@ function MasterControl(){
 		self.navigationController.addUnloggedUrl('', loadLoginPage);
 		self.navigationController.addLoggedUrl('', self.changePage, '/Stocks');
 
-		self.navigationController.addLoggedUrl('/Stocks', loadStockPage);
-		self.navigationController.addLoggedUrl('/Points', loadPointsPage);
-		self.navigationController.addLoggedUrl('/Sellers', loadSellersPage);
-		self.navigationController.addLoggedUrl('/Sales', loadSalesPage);
+		self.navigationController.addLoggedUrl('/Stocks', 	loadStockPage);
+		self.navigationController.addLoggedUrl('/POS', 		loadPOSPage);
+		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
+		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
+		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
+
+		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
+		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
+		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
+		self.navigationController.addLoggedUrl('/Sales/:kind/:id', 	loadSalesPage);
+		self.navigationController.addLoggedUrl('/Products/:kind/:id', loadProductsPage);
 	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
@@ -47,20 +56,30 @@ function MasterControl(){
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadStockPage();
 	};
-	function loadPointsPage(){
+	function loadPOSPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
-		self.mainController.loadPointsPage();
+		self.mainController.loadPOSPage();
 	};
-	function loadSellersPage(){
+	function loadSellersPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadSellersPage();
 	};		
-	function loadSalesPage(){
+	function loadSalesPage(data){
 		self.headerController.view.appendToView(headerContainer);
 		self.mainController.view.appendToView(appContainer);
 		self.mainController.loadSalesPage();
+	};
+	function loadProductsPage(data){
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadProductsPage();
+	};
+	function loadDetailPage(data){
+		self.headerController.view.appendToView(headerContainer);
+		self.mainController.view.appendToView(appContainer);
+		self.mainController.loadDetailPage(data);
 	};
 	//Stock
 	this.searchStocks = function(searchData){
@@ -68,6 +87,50 @@ function MasterControl(){
 	};
 	this.setStocks = function(stocks){
 		self.mainController.setStocks(stocks);
+	};
+	//POS
+	this.searchPOSs = function(searchData){
+		self.posService.searchPOS(searchData);
+	};
+	this.setPOSData = function(posdata){
+		self.mainController.setPOSData(posdata);
+	};
+	//Sellers
+	this.searchSellers = function(searchData){
+		self.userService.searchSellers(searchData);
+	};
+	this.setSellers = function(sellers) {
+		self.mainController.setSellers(sellers);
+	};
+	//Sales
+	this.searchSales = function(searchData){
+		self.salesService.searchSales(searchData);
+	};
+	this.setSales = function(sales){
+		self.mainController.setSales(sales);
+	};
+	//Products
+	this.searchProducts = function(searchData){
+		self.stockService.searchProducts(searchData);
+	};
+	this.setProducts = function(products){
+		self.mainController.setProducts(products);
+	};
+	//Detail
+	this.getStockDetail = function(stockId){
+		self.stockService.getStockDetail(stockId);
+	};
+	this.getPosDetail = function(posId){
+		self.posService.getPosDetail(posId);
+	};
+	this.getSellerDetail = function(sellerId){
+		self.userService.getSellerDetail(sellerId);
+	};
+	this.getSaleDetail = function(saleId){
+		self.salesService.getSaleDetail(saleId);
+	};
+	this.setDetail = function(data){
+		self.mainController.setDetail(data);
 	};
 	//Enable Disable
 	this.enableEvents = function(){

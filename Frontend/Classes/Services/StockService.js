@@ -50,6 +50,22 @@ function StockService(){
 		console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
+	this.searchProducts = function(searchData){
+		console.log(searchData);
+		var products = [];
+		for (var i = 0; i < 5; i++) {
+			var product = {
+				_id 			: "sadfdsadfprod"+i,
+				name 			: "Producto"+i,
+				salePrice 		: (8/(i+1))*10,
+				count			: 15,
+				registationDate :"2013/01/13"
+			};
+			products.push(product);
+		};
+		console.log(products);
+		self.delegate.setProducts(products);
+	};
 	this.getStockDetail = function(stockId){
 		var date = new Date();
 		var stock = {
@@ -79,21 +95,24 @@ function StockService(){
 		console.log(stock);
 		self.delegate.setDetail(stock);
 	};
-	this.searchProducts = function(searchData){
-		console.log(searchData);
-		var products = [];
-		for (var i = 0; i < 5; i++) {
-			var product = {
-				_id 			: "sadfdsadfprod"+i,
-				name 			: "Producto"+i,
-				salePrice 		: (8/(i+1))*10,
-				count			: 15,
-				registationDate :"2013/13/01"
-			};
-			products.push(product);
+	this.getProductDetail = function(productId){
+		console.log(productId);
+		var date = new Date();
+		var product = {
+			_id 			: "sadfdsadfprod0",
+			name 			: "Producto prueba "+date.getHours() +":"+date.getMinutes()+":"+date.getSeconds(),
+			salePrice 		: 15.0,
+			count			: 15,
+			registationDate :"2013/01/13",
+			batches:{
+				"2013/05/01": 1500,
+				"2013/05/02": 1200,
+				"2013/05/03": 1200,
+				"2013/05/04": 1200
+			}
 		};
-		console.log(products);
-		self.delegate.setProducts(products);
+		console.log(product);
+		self.delegate.setDetail(product);
 	};
 };
 StockService.prototype = new Service();

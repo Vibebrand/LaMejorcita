@@ -18,7 +18,6 @@ function MainController () {
 	var searchController = null;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
-	
 	this.viewDidLoad = function(){
 		if(!menuController){
 			menuController          = new MenuController();
@@ -224,7 +223,7 @@ function MainController () {
 	//creation
 	function createVisualizationButtons(){
 		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find == "undefined"){
-			buttonsContainer  = $('<div class="buttons-container"></div>');
+			buttonsContainer  = $('<div class="visualButtons-container"></div>');
 			var mapBtn = $('<button class="map-button"></button>');
 			var listBtn = $('<button class="list-button"></button>');
 			buttonsContainer.append(mapBtn);
@@ -240,19 +239,19 @@ function MainController () {
 	};
 	this.createDetailMenu = function(edit){
 		self.removeDetailMenu();
-		var buttonCotnainer = $('<div class="button-container"></div>');
+		var buttonCotnainer = $('<div class="detailButton-container"></div>');
 		var backBtn         = $('<button class="back-button"></button>');
 		self.view.addSubview(buttonCotnainer);
 		buttonCotnainer.append(backBtn);
 		backBtn.text('Volver');
-		if(edit){
+		if(edit === true){
 			var editBtn = $('<button class="edit-button"></button>');
 			buttonCotnainer.append(editBtn);
 			editBtn.text('Editar');
 		};
 	};
 	this.removeDetailMenu = function(){
-		var buttonCotnainer = self.view.container().find('.button-container');
+		var buttonCotnainer = self.view.container().find('.detailButton-container');
 		buttonCotnainer.remove();
 	};
 	//Data obtaining
@@ -292,8 +291,7 @@ function MainController () {
 	this.enableEvents = function(){
 		var detailBtn = tableController.view.container().find('.detail-button');
 		var deleteBtn = tableController.view.container().find('.delete-button');
-		var backBtn = self.view.container().find('.button-container .back-button');
-
+		var backBtn = self.view.container().find('.detailButton-container .back-button');
 
 		detailBtn.unbind('click');
 		deleteBtn.unbind('click');

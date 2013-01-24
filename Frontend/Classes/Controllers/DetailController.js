@@ -3,19 +3,27 @@ DetailController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.pageFunctions = [this.loadStockDetail];
 	var title     = $('<h2></h2>');
+	var infoContainer = $('<div class="info-container"><div>');
+	var linksContainer= $('<div class="links-container"></div>');
 
 	this.view.addSubview(title);
 	this.view.setClass('detail-container');
 
-	this.detailTitle = title;
+	this.detailTitle    = title;
+	this.infoContainer  = infoContainer;
+	this.linksContainer = linksContainer;
 };
 function DetailController(){
 	var self = this;
+	var infoContainer = null;
+	var linksContainer = null;
 	this.currentId = null;
 	this.pagenum = 0;
 	this.page = "Stock"
 	this.currentData = {};
 	this.viewDidLoad = function(){
+		infoContainer = self.infoContainer;
+		linksContainer = self.linksContainer;
 		var loadCall = self['load'+self.page+'Detail'];
 		if(typeof loadCall == "function")loadCall.call(self);
 	};
@@ -50,9 +58,8 @@ function DetailController(){
 		manCurpValue.text(stock.manager.curp);
 	};
 	function createStockView(){
-		removeInfoContainer();
 		self.detailTitle.text('Bodega');
-		var infoContainer = $('<div class="info-container  stockDetail"></div>');
+		infoContainer.empty();
 		self.view.addSubview(infoContainer);
 		createField({
 			field: 'stockname',
@@ -112,9 +119,8 @@ function DetailController(){
 		rcurp.text(pos.representative.curp);
 	};
 	function createPOSView(){
-		removeInfoContainer();
 		self.detailTitle.text('Punto de venta');
-		var infoContainer = $('<div class="info-container posDetail"></div>');
+		infoContainer.empty();
 		var posInfo       = $('<div class="posInfo-container"></div>');
 		var fridgeInfo    = $('<div class="fridgeInfo-container"></div>');
 		self.view.addSubview(infoContainer);
@@ -182,9 +188,8 @@ function DetailController(){
 		stock.text(seller.stock.name);
 	};
 	function createSellerView(){
-		removeInfoContainer();
 		self.detailTitle.text('Vendedor');
-		var infoContainer = $('<div class="info-container sellerDetail"></div>');
+		infoContainer.empty();
 		self.view.addSubview(infoContainer);
 		createField({
 			field: 'name',
@@ -252,9 +257,8 @@ function DetailController(){
 		pname.text(product.name);
 	};
 	function createSaleView(){
-		removeInfoContainer();
 		self.detailTitle.text('Información');
-		var infoContainer = $('<div class="info-container saleDetail"></div>');
+		infoContainer.empty();
 		var productslist = $('<ul class="products-list"></ul>');
 		var saleinfo = $('<div class="saleinfo-container"></div>');
 		self.view.addSubview(infoContainer);
@@ -385,12 +389,10 @@ function DetailController(){
 		};
 		options.container.append(field);
 	};
-	function removeInfoContainer(){
-		var container = self.view.container().find('.info-container');
-		container.remove();
+	function createLinksContainer(){
+	
 	};
 	//Events
-	
 	//Disable Enable
 	this.enableEvents = function(){
 		//this.backButton.unbind('click');

@@ -1,5 +1,4 @@
 @charset "utf-8";
-/*App Fonts*/
 @font-face {
   font-family: 'TitilliumText25L800wt';
   src: url("Fonts/TitilliumText25L001-webfont.eot");
@@ -42,7 +41,6 @@
   font-weight: normal;
   font-style: normal; }
 
-/* html5doctor.com Reset Stylesheet */
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code,
@@ -120,7 +118,6 @@ hr {
 input, select {
   vertical-align: middle; }
 
-/*Formato de estilo de header*/
 header {
   width: 100%;
   background: -webkit-linear-gradient(Bottom, #be5f46 50%, #cf743e 100%);
@@ -134,7 +131,6 @@ header {
   position: relative;
   top: 20px; }
 
-/*Formato de estilo de Menú lateral*/
 .menu-list {
   width: 200px;
   height: 100%;
@@ -145,8 +141,21 @@ header {
 .option-item {
   display: block;
   height: 30px;
-  padding: 10px; }
+  padding: 10px;
+  font-family: 'TitilliumText25L600wt'; }
 
 html {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  position: relative;
+  font-family: 'TitilliumText25L400wt';
+  font-size: 0.9rem;
+  overflow: hidden; }
+
+body, .app-container, .main-container {
+  height: 100%;
+  width: 100%;
+  position: relative; }
+
+.main-container {
+  background: #f0f0f0; }

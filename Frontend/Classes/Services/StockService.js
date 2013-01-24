@@ -57,8 +57,8 @@ function StockService(){
 			var product = {
 				_id 			: "sadfdsadfprod"+i,
 				name 			: "Producto"+i,
-				salePrice 		: (8/(i+1))*10,
-				count			: 15,
+				salePrice 		: 15.0,
+				count			: 3900,
 				registationDate :"2013/01/13"
 			};
 			products.push(product);

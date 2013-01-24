@@ -319,13 +319,14 @@ function DetailController (argument) {
 		this.append(batchItem);
 		batchItem.append(expirationDate);
 		batchItem.append(productNumber);
-		expirationDate.append(productNumberText);
-		productNumber.append(expirationDateText);
-		expirationDate.append(productNumberValue);
-		productNumber.append(expirationDateValue);
 
-		productNumberText.text('Cantidad');
-		expirationDateText.text('Fecha de caducidad ');
+		productNumber.append(productNumberText);
+		expirationDate.append(expirationDateText);
+		productNumber.append(productNumberValue);
+		expirationDate.append(expirationDateValue);
+
+		productNumberText.text('Cantidad:');
+		expirationDateText.text('Lote:');
 		productNumberValue.text(count);
 		expirationDateValue.text(expiration);
 	};

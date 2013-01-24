@@ -2,20 +2,14 @@ DetailController.prototype = new ViewController();
 DetailController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.pageFunctions = [this.loadStockDetail];
-	var backButton     = $('<button class="back-button"></button>');
-	var buttonCotnainer = $('<div class="button-container"></div>');
 	var title     = $('<h2></h2>');
-	backButton.text('volver');
-	buttonCotnainer.append(backButton);
-	this.view.addSubview(buttonCotnainer);
-	this.view.addSubview(title);
 
+	this.view.addSubview(title);
 	this.view.setClass('detail-container');
-	
-	this.backButton = backButton;
+
 	this.detailTitle = title;
 };
-function DetailController (argument) {
+function DetailController(){
 	var self = this;
 	this.currentId = null;
 	this.pagenum = 0;
@@ -390,21 +384,14 @@ function DetailController (argument) {
 		container.remove();
 	};
 	//Events
-	function onClickBack(){
-		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
-		var index = self.pagenum;
-		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page'))
-			self.delegate.changePage(prevPage);
-		else
-			self.delegate.triggerOption(index);
-	};
+	
 	//Disable Enable
 	this.enableEvents = function(){
-		this.backButton.unbind('click');
-		this.backButton.bind('click', onClickBack);
+		//this.backButton.unbind('click');
+		//this.backButton.bind('click', onClickBack);
 	};
 	this.disableEvents = function(){
-		this.backButton.unbind('click');
+		//this.backButton.unbind('click');
 	};
 	DetailController.prototype._init_.call(this);
 };

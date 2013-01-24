@@ -45,6 +45,7 @@ function MainController () {
 	};
 	//Stocks
 	this.loadStockPage = function(){
+		self.removeDetailMenu();
 		if(this.page != "Stock"){
 			var detailBtn                = $('<button class="detail-button"></button>');
 			var deleteBtn                = $('<button class="delete-button"></button>');
@@ -74,6 +75,7 @@ function MainController () {
 	};
 	//Sale points
 	this.loadPOSPage = function() {
+		self.removeDetailMenu();
 		if(self.page != "POS"){
 			self.page = "POS";
 			var detailBtn                = $('<button class="detail-button"></button>');
@@ -105,6 +107,7 @@ function MainController () {
 	};
 	//Sellers
 	this.loadSellersPage = function() {
+		self.removeDetailMenu();
 		if(self.page != "Seller"){
 			self.page = "Seller";
 			var detailBtn = $('<button class="detail-button"></button>');
@@ -133,6 +136,7 @@ function MainController () {
 	};
 	//Sales
 	this.loadSalesPage = function() {
+		self.removeDetailMenu();
 		if(self.page != "Sale"){
 			self.page = "Sale";
 			var detailBtn                = $('<button class="detail-button"></button>');
@@ -160,6 +164,7 @@ function MainController () {
 	};
 	//Products
 	this.loadProductsPage = function() {
+		self.removeDetailMenu();
 		if(self.page != "Product"){
 			self.page = "Product";
 			var detailBtn = $('<button class="detail-button"></button>');
@@ -190,7 +195,10 @@ function MainController () {
 		detailController.currentId = data.id;
 		detailController.page = data.kind.toCapitalize();
 		detailController.pagenum = pages.indexOf(data.kind);
+
+
 		removeVisualizationButtons();
+		self.createDetailMenu();
 		detailController.view.removeView();
 		tableController.view.removeView();
 		detailController.view.appendToView(self.view);
@@ -248,6 +256,24 @@ function MainController () {
 		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")
 			buttonsContainer.remove();
 	};
+	this.createDetailMenu = function(){
+		self.removeDetailMenu();
+		var buttonCotnainer = $('<div class="button-container"></div>');
+		var backBtn         = $('<button class="back-button"></button>');
+		var editBtn         = $('<button class="edit-button"></button>');
+
+		self.view.addSubview(buttonCotnainer);
+
+		buttonCotnainer.append(backBtn);
+		buttonCotnainer.append(editBtn);
+
+		backBtn.text('Volver');
+		editBtn.text('Editar');
+	};
+	this.removeDetailMenu = function(){
+		var buttonCotnainer = self.view.container().find('.button-container');
+		buttonCotnainer.remove();
+	};
 	//Data obtaining
 	this.getAddressString = function(address){
 		var addressText = address.street+" #"+address.extNum;
@@ -273,23 +299,41 @@ function MainController () {
  	function onClickDelete(){
  		console.log('delete');
  	};
+ 	function onClickBack(){
+		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
+		var index = detailController.pagenum;
+		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page'))
+			self.changePage(prevPage);
+		else
+			self.triggerOption(index);
+	};
 	//Enable Disable
 	this.enableEvents = function(){
 		var detailBtn = tableController.view.container().find('.detail-button');
 		var deleteBtn = tableController.view.container().find('.delete-button');
+		var backBtn = self.view.container().find('.button-container .back-button');
+
+
 		detailBtn.unbind('click');
 		deleteBtn.unbind('click');
+		backBtn.unbind('click');
+
 		detailBtn.bind('click',onClickDetail);
 		deleteBtn.bind('click',onClickDelete);
+		backBtn.bind('click', onClickBack);
+		
 		menuController.enableEvents();
 		searchController.enableEvents();
 		detailController.enableEvents();
 	};
 	this.disableEvents = function(){
+		var backBtn = self.view.container().find('.button-container .back-button');
+
 		menuController.disableEvents();
 		searchController.disableEvents();
 		detailController.disableEvents();
 		tableController.view.container().find('button').unbind('click');
+		backBtn.unbind('click');
 	};
 	//delegate
 	this.changePage = function(hashpage){

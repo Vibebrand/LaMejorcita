@@ -29,6 +29,7 @@ function MainController () {
 			detailController = new DetailController();
 			detailController.delegate = self;
 		};
+		searchController.view.appendToView(self.view);
 		tableController.view.appendToView(this.view);
 	};
 	this.updateMenu = function(index){
@@ -75,6 +76,8 @@ function MainController () {
 			tableController.view.setClass('pos-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.showAddButton();
 		createVisualizationButtons();
 		prepareTableView();
 	};
@@ -86,7 +89,6 @@ function MainController () {
 	function prepareTableView(){
 		self.removeDetailMenu();
 		detailController.view.removeView();
-		searchController.view.appendToView(self.view);
 		tableController.view.appendToView(self.view);
 		self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 	};
@@ -109,6 +111,8 @@ function MainController () {
 			tableController.view.setClass('sellers-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.showAddButton();
 		removeVisualizationButtons();
 		prepareTableView();
 	};
@@ -132,6 +136,8 @@ function MainController () {
 			tableController.view.setClass('sale-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.hideAddButton();
 		createVisualizationButtons();
 		prepareTableView();
 	};
@@ -153,6 +159,8 @@ function MainController () {
 			tableController.view.setClass('products-table');
 			loadTableView();
 		};
+		searchController.hideSearch();
+		searchController.showAddButton();
 		removeVisualizationButtons();
 		prepareTableView();
 	};
@@ -166,8 +174,14 @@ function MainController () {
 		detailController.page = data.kind.toCapitalize();
 		detailController.pagenum = pages.indexOf(data.kind);
 
+		if(detailController.page == "Product"){
+			searchController.showSearch();
+			searchController.showAddButton();
+		}else{
+			searchController.hideSearch();
+			searchController.hideAddButton();
+		}
 		removeVisualizationButtons();
-		searchController.view.removeView();
 		detailController.createDetailMenu();
 
 		detailController.view.removeView();

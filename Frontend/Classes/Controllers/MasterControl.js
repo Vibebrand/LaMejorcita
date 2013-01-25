@@ -10,7 +10,8 @@ function MasterControl(){
 	this.loginController      = null;
 	this.messageController    = null;
 	this.mainController       = null;
-
+	this.modalBoxController   = null;
+	
 	this.userService   = null;
 	this.stockService  = null;
 	this.salesService  = null;
@@ -34,12 +35,14 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
+		self.navigationController.addLoggedUrl('/Batches/:productId', loadBatchesPage);
 
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales/:kind/:id', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products/:kind/:id', loadProductsPage);
+		self.navigationController.addLoggedUrl('/Batches/:productId/:kind/:id', loadBatchesPage);
 	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
@@ -86,6 +89,11 @@ function MasterControl(){
 		self.mainController.additionalData =  data;
 		self.mainController.loadProductsPage();
 	};
+	function loadBatchesPage(data){
+		loadMainView();
+		self.mainController.additionalData =  typeof data =="object" ? data: {productId: data};
+		self.mainController.loadBatchesPage();
+	};
 	function loadDetailPage(data){
 		loadMainView();
 		self.mainController.additionalData =  data;
@@ -125,6 +133,16 @@ function MasterControl(){
 	};
 	this.setProducts = function(products){
 		self.mainController.setProducts(products);
+	};
+	this.setProductDetail = function(data){
+		self.mainController.setProductDetail(data);
+	};
+	//Batches
+	this.searchBatches = function(searchData){
+		self.stockService.searchBatches(searchData);
+	};
+	this.setBatches = function(batches){
+		self.mainController.setBatches(batches);
 	};
 	//Detail
 	this.getStockDetail = function(stockId){

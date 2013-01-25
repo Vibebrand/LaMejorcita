@@ -169,6 +169,7 @@ function MainController () {
 											{'identifier': 'batch.count','value':'Cantidad'},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			tableController.view.setClass('batches-table');
+			createProductDetail();
 			loadTableView();
 			self.getDetail("Product", self.additionalData);
 		};
@@ -182,37 +183,45 @@ function MainController () {
 			currentDataKeys.push(object);
 	};
 	function createProductDetail(){
-		
-
-		
-	
-		self.view.addSubview(infoContainer);
-
-		self.detailController.createField({
+		var element = self.view.container();
+		var infoContainer = $('<div class="productInfo-container"></div>');
+		element.append(infoContainer);
+		detailController.createField({
 			field: 'name',
 			title:{classname:'title', value: 'Nombre'},
-			container: productInfo
+			container: infoContainer
 		});
-		self.detailController.createField({
+		detailController.createField({
 			field: 'salePrice',
 			title:{classname:'title', value: 'Precio de venta'},
-			container: productInfo
+			container: infoContainer
 		});
-		self.detailController.createField({
+		detailController.createField({
 			field: 'registationDate',
 			title:{classname:'title', value: 'Fecha registro'},
-			container: productInfo
+			container: infoContainer
+		});
+		detailController.createField({
+			field: 'count',
+			title:{classname:'title', value: 'Total'},
+			container: infoContainer
 		});
 	};
 	function createBatchItem(count, expiration){
 	};
 	this.removeBatchView = function(){
-
+		self.view.container().find('productInfo-container').remove();
 	};
-	this.setProductDetail = function(productDetail){
-		var element = tableController.view.container();
-		var infoContainer = $('<div class="productInfo-container"></div>');
-		console.log(element[0]);
+	this.setProductDetail = function(product){
+		var container = self.view.container().find('.productInfo-container');
+		var pname = container.find('.name .value');
+		var salePrice = container.find('.salePrice .value');
+		var registationDate = container.find('.registationDate .value');
+		var total = container.find('.count .value');
+		pname.text(product.name);
+		salePrice.text('$ '+product.salePrice.toFixed(2));
+		registationDate.text(product.registationDate);
+		total.text(product.count);
 	};
 	this.setBatches = function(batches){
 		getObjectKeys(batches);

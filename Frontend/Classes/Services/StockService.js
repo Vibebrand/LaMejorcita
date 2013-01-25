@@ -102,7 +102,7 @@ function StockService(){
 			_id 			: "sadfdsadfprod0",
 			name 			: "Producto prueba "+date.getHours() +":"+date.getMinutes()+":"+date.getSeconds(),
 			salePrice 		: 15.0,
-			count			: 15,
+			count			: 3900,
 			registationDate :"2013/01/13"
 		};
 		console.log(product);

@@ -207,10 +207,12 @@ function MainController () {
 	this.tableLoaded = function() {
 		self.delegate.enableEvents();
 	};
-	this.makeSearch = function(aditional){
-		var searchData  = $.extend({},{}, aditional);
+	this.makeSearch = function(additional){
+		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
+		if(typeof self.additionalData != "undefined")
+			searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
 		self.delegate['search'+self.page+'s'].call(self.delegate, searchData);
 	};
 	//creation

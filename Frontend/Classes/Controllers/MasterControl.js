@@ -61,27 +61,34 @@ function MasterControl(){
 		self.mainController.view.appendToView(appContainer);
 	};
 	function loadStockPage(){
+		var data; 
 		loadMainView();
+		self.mainController.additionalData =data;
 		self.mainController.loadStockPage();
 	};
 	function loadPOSPage(data){
 		loadMainView();
+		self.mainController.additionalData =  data;
 		self.mainController.loadPOSPage();
 	};
 	function loadSellersPage(data){
 		loadMainView();
+		self.mainController.additionalData =  data;
 		self.mainController.loadSellersPage();
 	};		
 	function loadSalesPage(data){
 		loadMainView();
+		self.mainController.additionalData =  data;
 		self.mainController.loadSalesPage();
 	};
 	function loadProductsPage(data){
 		loadMainView();
+		self.mainController.additionalData =  data;
 		self.mainController.loadProductsPage();
 	};
 	function loadDetailPage(data){
 		loadMainView();
+		self.mainController.additionalData =  data;
 		self.mainController.loadDetailPage(data);
 	};
 	//Stock

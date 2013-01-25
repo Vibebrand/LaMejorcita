@@ -7,7 +7,7 @@ function HeaderController(){
 	var self      = this;
 	this.delegate = null;
 	this.viewDidLoad = function(){
-		var logo = $('<div class="logo"></div>');
+		var logo = $('<img class="logo" src="Styles/Images/logo.svg" alt="La Mejorcita" />');
 		var username = $('<span class="username-text"></span>');
 		var logoutBrn  = $('<button class="logout"></button>');
 		logo.text('Logo');

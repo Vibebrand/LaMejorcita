@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+$BlackBackground: rgb(62,59,56);
+
+.menu-list{
+	width: 200px;
+	height: 100%;
+	float: left;
+	position: relative;
+	background: $BlackBackground;
+}
+.option-item{
+	display: block;
+	height: 30px;
+	padding:10px;
+}

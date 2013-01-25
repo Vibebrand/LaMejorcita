@@ -53,9 +53,9 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
+		createVisualizationButtons();
 		searchController.showSearch();
 		searchController.showAddButton();
-		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setStocks = function(stocks){
@@ -81,9 +81,9 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
+		createVisualizationButtons
 		searchController.showSearch();
 		searchController.showAddButton();
-		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setPOSData = function(posdata){
@@ -106,9 +106,9 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
+		removeVisualizationButtons();
 		searchController.showSearch();
 		searchController.showAddButton();
-		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setSellers = function(sellers) {
@@ -132,9 +132,9 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
+		createVisualizationButtons();
 		searchController.showSearch();
 		searchController.hideAddButton();
-		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setSales = function(sales){
@@ -157,9 +157,9 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
+		removeVisualizationButtons();
 		searchController.hideSearch();
 		searchController.showAddButton();
-		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setProducts = function(products){
@@ -181,9 +181,9 @@ function MainController () {
 			self.getDetail("Product", self.additionalData.productId);
 		};
 		prepareTableView();
+		removeVisualizationButtons();
 		searchController.showSearch();
 		searchController.showAddButton();
-		removeVisualizationButtons();
 	};
 	function getObjectKeys(objects){
 		for (var object in objects)

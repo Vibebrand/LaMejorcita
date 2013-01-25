@@ -29,7 +29,7 @@ function MainController () {
 			detailController = new DetailController();
 			detailController.delegate = self;
 		};
-		searchController.view.appendToView(this.view);
+		searchController.view.appendToView(self.view);
 		tableController.view.appendToView(this.view);
 	};
 	this.updateMenu = function(index){
@@ -51,6 +51,8 @@ function MainController () {
 			tableController.view.setClass('stock-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.showAddButton();
 		createVisualizationButtons();
 		prepareTableView();
 	};
@@ -76,6 +78,8 @@ function MainController () {
 			tableController.view.setClass('pos-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.showAddButton();
 		createVisualizationButtons();
 		prepareTableView();
 	};
@@ -107,12 +111,10 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			tableController.view.setClass('sellers-table');
-			detailBtn.text('Detalle');
-			deleteBtn.text('-');
-			tableController.cleanTable();
-			tableController.view.removeView();
-			self.makeSearch({});
+			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.showAddButton();
 		removeVisualizationButtons();
 		prepareTableView();
 	};
@@ -136,6 +138,8 @@ function MainController () {
 			tableController.view.setClass('sale-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.hideAddButton();
 		createVisualizationButtons();
 		prepareTableView();
 	};
@@ -157,6 +161,8 @@ function MainController () {
 			tableController.view.setClass('products-table');
 			loadTableView();
 		};
+		searchController.hideSearch();
+		searchController.showAddButton();
 		removeVisualizationButtons();
 		prepareTableView();
 	};
@@ -170,6 +176,13 @@ function MainController () {
 		detailController.page = data.kind.toCapitalize();
 		detailController.pagenum = pages.indexOf(data.kind);
 
+		if(detailController.page == "Product"){
+			searchController.showSearch();
+			searchController.showAddButton();
+		}else{
+			searchController.hideSearch();
+			searchController.hideAddButton();
+		}
 		removeVisualizationButtons();
 		detailController.createDetailMenu();
 
@@ -207,10 +220,12 @@ function MainController () {
 	this.tableLoaded = function() {
 		self.delegate.enableEvents();
 	};
-	this.makeSearch = function(aditional){
-		var searchData  = $.extend({},{}, aditional);
+	this.makeSearch = function(additional){
+		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
+		if(typeof self.additionalData != "undefined")
+			searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
 		self.delegate['search'+self.page+'s'].call(self.delegate, searchData);
 	};
 	//creation

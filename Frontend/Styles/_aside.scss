@@ -1,6 +1,3 @@
-@import 'header';
-
-
 $BlackBackground: rgb(62,59,56);
 
 .menu-list{
@@ -28,7 +25,7 @@ $BlackBackground: rgb(62,59,56);
 
 .option-item.selected{
 	@include inset-shadow;
-	
+
 	border: 1px solid rgba(0,0,0,0.4);
 	background: rgba(80,75,70,.95);
 

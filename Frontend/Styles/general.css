@@ -131,18 +131,8 @@ header {
   position: relative;
   top: 20px; }
 
-header {
-  width: 100%;
-  background: -webkit-linear-gradient(Bottom, #be5f46 50%, #cf743e 100%);
-  height: 70px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 0px 1px rgba(255, 255, 255, 0.2) inset; }
-
-.logo {
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  top: 20px; }
+header span, header button {
+  display: none; }
 
 .menu-list {
   -webkkit-box-sizing: border-box;
@@ -183,8 +173,51 @@ header {
   border-left: 10px;
   position: absolute; }
 
-.stock-table {
-  width: 100%; }
+thead tr td {
+  display: inline-block;
+  width: 120px;
+  position: relative;
+  height: 35px;
+  line-height: 1rem;
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  background: -webkit-linear-gradient(bottom, #bebec3 50%, #dcdce1 100%);
+  background: -moz-linear-gradient(bottom, #bebec3 50%, #dcdce1 100%);
+  background: -o-linear-gradient(bottom, #bebec3 50%, #dcdce1 100%);
+  background: -ms-linear-gradient(bottom, #bebec3 50%, #dcdce1 100%);
+  background: linear-gradient(bottom, #bebec3 50%, #dcdce1 100%);
+  -webkit-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  text-align: center;
+  cursor: default;
+  -webkkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
+
+tbody tr {
+  display: block;
+  height: 40px;
+  line-height: 3rem; }
+
+tbody tr td {
+  display: inline-block;
+  width: 120px;
+  color: #847a7a;
+  padding: 5px;
+  -webkkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
+
+tbody tr:nth-child(2n+2) {
+  background: rgba(0, 0, 0, 0.1); }
 
 html {
   height: 100%;
@@ -194,15 +227,17 @@ html {
   font-size: 0.9rem;
   overflow: hidden; }
 
-body, .app-container, .main-container {
+body, .app-container {
   height: 100%;
   width: 100%;
   position: relative; }
 
 .main-container {
-  background: #f0f0f0; }
+  height: 100%;
+  background: #f0f0f0;
+  overflow: auto; }
 
-.buttons-container {
+.visualButtons-container {
   width: 100px;
   position: fixed;
   bottom: 10px;

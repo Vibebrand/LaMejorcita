@@ -102,17 +102,21 @@ function StockService(){
 			_id 			: "sadfdsadfprod0",
 			name 			: "Producto prueba "+date.getHours() +":"+date.getMinutes()+":"+date.getSeconds(),
 			salePrice 		: 15.0,
-			count			: 15,
-			registationDate :"2013/01/13",
-			batches:{
-				"2013/05/01": 1500,
-				"2013/05/02": 1200,
-				"2013/05/03": 1200,
-				"2013/05/04": 1200
-			}
+			count			: 3900,
+			registationDate :"2013/01/13"
 		};
 		console.log(product);
-		self.delegate.setDetail(product);
+		self.delegate.setProductDetail(product);
+	};
+	this.searchBatches = function(searchData){
+		console.log(searchData);
+		var braches = {
+			"2013/05/01": 1500,
+			"2013/05/02": 1200,
+			"2013/05/03": 1200,
+			"2013/05/04": 1200
+		};
+		self.delegate.setBatches(braches);
 	};
 };
 StockService.prototype = new Service();

@@ -59,7 +59,7 @@ function TableController (argument) {
 			return itemPrototype.clone(true);
 	};
 	this.getStringData = function(identifier, dataobject) {
-		if(typeof identifier != "undefined"){
+		if(typeof identifier != "undefined" && typeof dataobject != "undefined"){
 			var keys = identifier.split('.');
 			identifier = keys[1];
 			if(identifier != "undefined" && keys.length >= 2){

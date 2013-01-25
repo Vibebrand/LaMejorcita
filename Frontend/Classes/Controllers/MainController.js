@@ -16,6 +16,7 @@ function MainController () {
 	var searchController = null;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
+	currentDataKeys = [];
 	this.viewDidLoad = function(){
 		if(!tableController){
 			tableController          = new TableController();
@@ -51,9 +52,10 @@ function MainController () {
 			tableController.view.setClass('stock-table');
 			loadTableView();
 		};
+		removeBatchView();
 		searchController.showSearch();
 		searchController.showAddButton();
-		createVisualizationButtons();
+		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setStocks = function(stocks){
@@ -78,21 +80,11 @@ function MainController () {
 			tableController.view.setClass('pos-table');
 			loadTableView();
 		};
+		removeBatchView();
 		searchController.showSearch();
 		searchController.showAddButton();
-		createVisualizationButtons();
+		removeVisualizationButtons();
 		prepareTableView();
-	};
-	function loadTableView(){
-		tableController.cleanTable();
-		tableController.view.removeView();
-		self.makeSearch({});
-	};
-	function prepareTableView(){
-		self.removeDetailMenu();
-		detailController.view.removeView();
-		tableController.view.appendToView(self.view);
-		self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 	};
 	this.setPOSData = function(posdata){
 		self.currentData = posdata;
@@ -113,6 +105,7 @@ function MainController () {
 			tableController.view.setClass('sellers-table');
 			loadTableView();
 		};
+		removeBatchView();
 		searchController.showSearch();
 		searchController.showAddButton();
 		removeVisualizationButtons();
@@ -138,9 +131,10 @@ function MainController () {
 			tableController.view.setClass('sale-table');
 			loadTableView();
 		};
+		removeBatchView();
 		searchController.showSearch();
 		searchController.hideAddButton();
-		createVisualizationButtons();
+		removeVisualizationButtons();
 		prepareTableView();
 	};
 	this.setSales = function(sales){
@@ -161,6 +155,7 @@ function MainController () {
 			tableController.view.setClass('products-table');
 			loadTableView();
 		};
+		removeBatchView();
 		searchController.hideSearch();
 		searchController.showAddButton();
 		removeVisualizationButtons();
@@ -170,19 +165,84 @@ function MainController () {
 		self.currentData = products;
 		tableController.loadTable(true);
 	};
+	//Batches
+	this.loadBatchesPage = function(){
+		if(self.page != "Batch"){
+			self.page = "Batch";
+			var deleteBtn = $('<button class="delete-button">-</button>');
+			tableController.tableHeaders = [{'identifier': 'batch.expiration','value':'Lote'},
+											{'identifier': 'batch.count','value':'Cantidad'},
+											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.view.setClass('batches-table');
+			self.createDetailMenu(true);
+			createProductDetail();
+			loadTableView();
+			self.getDetail("Product", self.additionalData);
+		};
+		prepareTableView();
+		searchController.showSearch();
+		searchController.showAddButton();
+		removeVisualizationButtons();
+		
+	};
+	function getObjectKeys(objects){
+		for (var object in objects)
+			currentDataKeys.push(object);
+	};
+	function createProductDetail(){
+		var element = self.view.container();
+		var infoContainer = $('<div class="productInfo-container"></div>');
+		element.append(infoContainer);
+		detailController.createField({
+			field: 'name',
+			title:{classname:'title', value: 'Nombre'},
+			container: infoContainer
+		});
+		detailController.createField({
+			field: 'salePrice',
+			title:{classname:'title', value: 'Precio de venta'},
+			container: infoContainer
+		});
+		detailController.createField({
+			field: 'registationDate',
+			title:{classname:'title', value: 'Fecha registro'},
+			container: infoContainer
+		});
+		detailController.createField({
+			field: 'count',
+			title:{classname:'title', value: 'Total'},
+			container: infoContainer
+		});
+	};
+	function createBatchItem(count, expiration){
+	};
+	function removeBatchView(){
+		self.view.container().find('.productInfo-container').remove();
+	};
+	this.setProductDetail = function(product){
+		var container = self.view.container().find('.productInfo-container');
+		var pname = container.find('.name .value');
+		var salePrice = container.find('.salePrice .value');
+		var registationDate = container.find('.registationDate .value');
+		var total = container.find('.count .value');
+		pname.text(product.name);
+		salePrice.text('$ '+product.salePrice.toFixed(2));
+		registationDate.text(product.registationDate);
+		total.text(product.count);
+	};
+	this.setBatches = function(batches){
+		getObjectKeys(batches);
+		self.currentData = batches;
+		tableController.loadTable(true);
+	};
 	//Detail
 	this.loadDetailPage = function(data){
 		detailController.currentId = data.id;
 		detailController.page = data.kind.toCapitalize();
 		detailController.pagenum = pages.indexOf(data.kind);
 
-		if(detailController.page == "Product"){
-			searchController.showSearch();
-			searchController.showAddButton();
-		}else{
-			searchController.hideSearch();
-			searchController.hideAddButton();
-		}
+		searchController.hideSearch();
+		searchController.hideAddButton();
 		removeVisualizationButtons();
 		detailController.createDetailMenu();
 
@@ -199,19 +259,29 @@ function MainController () {
 	};
 	//table methods
 	this.rowsNumber = function(){
-		return this.currentData.length;
+		if(self.currentData.constructor === Array)
+			return self.currentData.length;
+		if(self.currentData.constructor === Object)
+			return Object.keys(self.currentData).length;
 	};
 	this.getCellData = function(index, identifier, row){
 		var celldata = self.currentData[index];
 		var stringValue = tableController.getStringData(identifier, celldata);
-		if(typeof row.data('id') === "undefined")row.data('id',celldata._id);
+
+		if(typeof row.data('id') === "undefined" && identifier.indexOf('batch') == -1)
+			row.data('id',celldata._id);
+		else
+			row.data('id',currentDataKeys[index]);
+
+		if(identifier == "batch.expiration")
+			stringValue = self.currentData[currentDataKeys[index]];
+		if(identifier == "batch.count")
+			stringValue = currentDataKeys[index];
 
 		if(identifier === "address")
 			stringValue =  self.getAddressString(celldata[identifier]);
-
 		if(identifier.indexOf("fridge.status") != -1)
 			stringValue =  getFridgeStatus(stringValue);
-
 		if(identifier.indexOf("salePrice") != -1 || identifier.indexOf("amount") != -1 )
 			stringValue = getPrice(stringValue);
 
@@ -224,9 +294,28 @@ function MainController () {
 		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
-		if(typeof self.additionalData != "undefined")
+		if(typeof self.additionalData != "undefined" && typeof self.additionalData.id != "undefined")
 			searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
-		self.delegate['search'+self.page+'s'].call(self.delegate, searchData);
+		if(self.page != "Batch")
+			self.delegate['search'+self.page+'s'].call(self.delegate, searchData);
+		else
+			self.delegate['search'+self.page+'es'].call(self.delegate, searchData);
+	};
+	function loadTableView(){
+		tableController.cleanTable();
+		tableController.view.removeView();
+		self.makeSearch({});
+		currentDataKeys = [];
+	};
+	function prepareTableView(){
+		if(self.page != "Batch")
+			self.removeDetailMenu();
+		detailController.view.removeView();
+		tableController.view.appendToView(self.view);
+		if(self.page != "Batch")
+			self.updateMenu(pages.indexOf(self.page.toLowerCase()));
+		else
+			self.updateMenu(pages.length-1);
 	};
 	//creation
 	function createVisualizationButtons(){
@@ -282,14 +371,17 @@ function MainController () {
 	function onClickDetail(){
 		detailId = $(this).parents('tr').data('id');
 		self.delegate.disableEvents();
-		self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
+		if(self.page == "Product")
+			self.changePage('/Batches/'+detailId);
+		else
+			self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
 	};
  	function onClickDelete(){
  		console.log('delete');
  	};
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
-		var index = detailController.pagenum;
+		var index = self.page != "Batch"? detailController.pagenum: pages.length-1;
 		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);
 		else

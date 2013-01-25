@@ -38,9 +38,9 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Batches/:productId', loadBatchesPage);
 
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
-		self.navigationController.addLoggedUrl('/Insert/:kind', loadAdditionPage);
-		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadAdditionPage);
-		self.navigationController.addLoggedUrl('/Insert/:kind/:stockId', loadAdditionPage);
+		self.navigationController.addLoggedUrl('/Insert/:kind', loadInsertionPage);
+		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadEditionPage);
+		self.navigationController.addLoggedUrl('/Insert/:kind/:stockId', loadInsertionPage);
 
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
@@ -103,8 +103,16 @@ function MasterControl(){
 		self.mainController.additionalData =  data;
 		self.mainController.loadDetailPage(data);
 	};
-	function loadAdditionPage(data) {
+	function loadInsertionPage(data) {
 		loadMainView();
+		var data = typeof data == "string"? {kind: data}: data;
+		data['method'] = 'insert'
+		self.mainController.loadAdditionPage(data);
+	};
+	function loadEditionPage(data){
+		loadMainView();
+		var data = typeof data == "string"? {kind: data}: data;
+		data['method'] = 'edit'
 		self.mainController.loadAdditionPage(data);
 	};
 	//Stock

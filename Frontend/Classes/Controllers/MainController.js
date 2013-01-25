@@ -264,6 +264,7 @@ function MainController () {
 		removeVisualizationButtons();
 		detailController.view.removeView();
 		tableController.view.removeView();
+		additionController.view.removeView();
 
 		detailController.createDetailMenu();
 		detailController.view.appendToView(self.view);
@@ -349,6 +350,7 @@ function MainController () {
 			self.removeDetailMenu();
 		detailController.view.removeView();
 		tableController.view.appendToView(self.view);
+		additionController.view.removeView();
 		if(self.page != "Batch")
 			self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 		else

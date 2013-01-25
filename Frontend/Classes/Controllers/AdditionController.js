@@ -9,18 +9,21 @@ function  AdditionController(){
 	this.viewDidLoad = function(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		if(typeof viewCall == "function") viewCall.call(self);
+		self.delegate.getStocksforAddition();
+		self.delegate.getProductsforAddition();
 	};
 	this.loadBatchView = function(){
 		var batchContainer = self.view.container();
+		batchContainer.empty();
 		createField({
-			field: 'stock',
+			field: 'stock-input',
 			title: {classname: 'title', value: 'Bodega'}, 
 			value: [{classname: 'selector', value:''}],
 			container: batchContainer,
 			tagname: 'div'
 		});
 		createField({
-			field: 'notes',
+			field: 'notes-input',
 			title: {classname: 'title', value: 'Notas'}, 
 			value: [{classname: 'value', value:''}],
 			container: batchContainer,
@@ -48,8 +51,35 @@ function  AdditionController(){
 			value.attr('class', options.value[i].classname);
 			value.text(options.value[i].value);
 		};
-		console.log(options.container);
-		
+	};
+	this.setStocksforAddition = function(stocks){
+		var stocksData      = [];
+		var container = self.view.container();
+		var selector  = container.find('.stock-input .selector');
+		for (var i = 0; i < stocks.length; i++) {
+			stocksData.push({
+				id		: stocks[i]._id,
+				value 	: stocks[i].businessName,
+				data	: stocks[i]._id
+			});
+		};
+		selector.customDropdown({
+			placeholder : 'Elegir Bodega',
+			options 	: stocksData,
+			optionList	: 'selector-options',
+			optionItem	: 'selector-option',
+		});
+	};
+	this.setProductsforAddition = function(products){
+		var data  = [];
+		for (var i = 0; i < products.length; i++) {
+			data.push({
+				id		: products[i]._id,
+				value 	: products[i].name,
+				data	: products[i]._id
+			});
+		};
+		self.products = data;
 	};
 	AdditionController.prototype._init_.call(this);
 };

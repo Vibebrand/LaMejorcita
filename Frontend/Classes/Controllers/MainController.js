@@ -287,6 +287,18 @@ function MainController () {
 
 		additionController.view.appendToView(self.view);
 	};
+	this.getStocksforAddition= function(){
+		self.delegate.getStocksforAddition();
+	};
+	this.getProductsforAddition= function(){
+		self.delegate.getProductsforAddition();
+	};
+	this.setStocksforAddition = function(data){
+		additionController.setStocksforAddition(data);
+	};
+	this.setProductsforAddition = function(data){
+		additionController.setProductsforAddition(data);
+	};
 	//table methods
 	this.rowsNumber = function(){
 		if(self.currentData.constructor === Array)

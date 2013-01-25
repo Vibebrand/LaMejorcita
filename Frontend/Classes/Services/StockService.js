@@ -1,23 +1,6 @@
 function StockService(){
 	var self = this;
 	this.searchStocks = function(searchData){
-		/*$.ajax({
-		  url: 'Mocks/Stocks.json',
-		  type: 'GET',
-		  dataType: 'json',
-		  data: searchData,
-		  timeout: self.timelimit,
-		  complete: function(xhr, textStatus) {
-		    //called when complete
-		  },
-		  success: function(data, textStatus, xhr) {
-		    self.delegate.setStocks(data);
-		  },
-		  error: function(xhr, textStatus, errorThrown) {
-		    //called when there is an error
-		  }
-		});*/
-		console.log(searchData);
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {
 
@@ -117,6 +100,22 @@ function StockService(){
 			"2013/05/04": 1200
 		};
 		self.delegate.setBatches(braches);
+	};
+	this.getStocksforAddition= function(){
+		var stocks = [];
+		for (var i = 0; i < 15; i++) {
+			var stock = {_id: "safdsafdsa0fd"+i, name:"Bodega "+i, businessName:"Negocio "+i};
+			stocks.push(stock)
+		};
+		self.delegate.setStocksforAddition(stocks);
+	};
+	this.getProductsforAddition= function(){
+		var products = [];
+		for (var i = 0; i < 5; i++) {
+			var product = {_id: "sadfdsadfprod"+i, name: "Producto"+i};
+			products.push(product);
+		};
+		self.delegate.setProductsforAddition(products);
 	};
 };
 StockService.prototype = new Service();

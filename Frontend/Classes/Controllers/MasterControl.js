@@ -178,6 +178,19 @@ function MasterControl(){
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
 	};
+	//Addition
+	this.getStocksforAddition= function(){
+		self.stockService.getStocksforAddition();
+	};
+	this.getProductsforAddition= function(){
+		self.stockService.getProductsforAddition();
+	};
+	this.setStocksforAddition = function(data){
+		self.mainController.setStocksforAddition(data);
+	};
+	this.setProductsforAddition = function(data){
+		self.mainController.setProductsforAddition(data);
+	};
 	//menu view
 	this.updateMenu = function(index){
 		menuController.changeOption(index);

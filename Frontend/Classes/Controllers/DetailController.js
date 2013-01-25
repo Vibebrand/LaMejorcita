@@ -349,82 +349,13 @@ function DetailController(){
 			container: saleinfo
 		});
 	};
-	//Product detail
-	this.loadProductDetail = function(){
-		createProductView();
-		self.delegate.getDetail(self.page, self.currentId);
-	};
-	this.setProductDetail = function(product){
-		var container    = self.view.container();
-		var pname           =  container.find('.productInfo-container .name .value');
-		var salePrice       =  container.find('.productInfo-container .salePrice .value');
-		var registationDate =  container.find('.productInfo-container .registationDate .value');
-		var batchesList = container.find('.batches-list');
-
-		pname.text(product.name);
-		salePrice.text('$'+product.salePrice.toFixed(2));
-		registationDate.text(product.registationDate);
-
-		for(var expiration in product.batches)
-			createBatchItem.call(batchesList, product.batches[expiration], expiration);
-	};
-	function createBatchItem(count, expiration){
-		var batchItem = $('<li class="batch-item"></li>');
-		var productNumber = $('<div class="count"></div>');
-		var expirationDate  = $('<div class="expirationDate"></div>');
-
-		var productNumberText = $('<span class="text"></span>');
-		var productNumberValue = $('<span class="value"></span>');
-		var expirationDateText = $('<span class="text"></span>');
-		var expirationDateValue = $('<span class="value"></span>');
-
-		this.append(batchItem);
-		batchItem.append(expirationDate);
-		batchItem.append(productNumber);
-
-		productNumber.append(productNumberText);
-		expirationDate.append(expirationDateText);
-		productNumber.append(productNumberValue);
-		expirationDate.append(expirationDateValue);
-
-		productNumberText.text('Cantidad:');
-		expirationDateText.text('Lote:');
-		productNumberValue.text(count);
-		expirationDateValue.text(expiration);
-	};
-	function createProductView(){
-		infoContainer.empty(); linksContainer.empty();
-		self.detailTitle.text('Producto');
-		
-		var productInfo = $('<div class="productInfo-container"></div>');
-		var batches = $('<ul class="batches-list"></ul>');
-
-		infoContainer.append(productInfo);
-		infoContainer.append(batches);
-
-		createField({
-			field: 'name',
-			title:{classname:'title', value: 'Nombre'},
-			container: productInfo
-		});
-		createField({
-			field: 'salePrice',
-			title:{classname:'title', value: 'Precio de venta'},
-			container: productInfo
-		});
-		createField({
-			field: 'registationDate',
-			title:{classname:'title', value: 'Fecha registro'},
-			container: productInfo
-		});
-	};
 	//General
 	self.setDetail = function(data){
 		var setCall = self['set'+self.page+'Detail'];
 		if(typeof setCall =="function") setCall.call(self, data);
 		self.delegate.enableAllEvents();
 	};
-	function createField(options){
+	this.createField = function createField(options){
 		var options = $.extend({},{
 			field: 'field', 
 			title: {classname: 'title', value: ''}, 

@@ -242,6 +242,7 @@ function MainController () {
 			}else
 				setTimeout(arguments.callee, 50);
 		},50);
+		self.enableAllEvents();
 	};
 	this.setBatches = function(batches){
 		getObjectKeys(batches);
@@ -316,6 +317,7 @@ function MainController () {
 		self.enableAllEvents();
 	};
 	this.makeSearch = function(additional){
+		self.delegate.disableEvents();
 		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;

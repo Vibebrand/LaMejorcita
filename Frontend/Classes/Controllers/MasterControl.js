@@ -179,10 +179,12 @@ function MasterControl(){
 	};
 	//Enable Disable
 	this.enableEvents = function(){
+		console.log('enable');
 		self.mainController.enableEvents();
 		menuController.enableEvents();
 	};
 	this.disableEvents = function(){
+		console.log('disable');
 		self.mainController.disableEvents();
 		menuController.disableEvents();
 	};

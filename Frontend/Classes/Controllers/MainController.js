@@ -51,6 +51,8 @@ function MainController () {
 			tableController.view.setClass('stock-table');
 			loadTableView();
 		};
+		searchController.showSearch();
+		searchController.showAddButton();
 		createVisualizationButtons();
 		prepareTableView();
 	};

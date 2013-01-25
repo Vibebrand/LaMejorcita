@@ -21,6 +21,7 @@ function SearchController () {
 	this.hideAddButton = function(){
 		var container = self.view.container();
 		var addBtn = container.find('.add-button');
+		addBtn.removeData('click', true);
 		addBtn.hide();
 	};
 	this.hideSearch = function(){
@@ -31,6 +32,7 @@ function SearchController () {
 	this.showAddButton = function(){
 		var container = self.view.container();
 		var addBtn = container.find('.add-button');
+		addBtn.data('click', true);
 		addBtn.show();
 	};
 	this.showSearch = function(){
@@ -39,10 +41,16 @@ function SearchController () {
 		searchWrap.show();
 	};
 	this.enableEvents = function() {
-		
+		var container = self.view.container();
+		var addBtn = container.find('.add-button');
+		addBtn.unbind('click');
+		if(addBtn.data('click') == true)
+			addBtn.bind('click', self.delegate.onClickAdd);
 	};
 	this.disableEvents = function() {
-		
+		var container = self.view.container();
+		var addBtn = container.find('.add-button');
+		addBtn.unbind('click');
 	};
 	SearchController.prototype._init_.call(this);
 };

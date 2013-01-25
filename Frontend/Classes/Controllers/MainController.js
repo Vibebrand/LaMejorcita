@@ -1,6 +1,7 @@
 Importer.importfile('Classes/Controllers/SearchController.js');
 Importer.importfile('Classes/Controllers/TableController.js');
 Importer.importfile('Classes/Controllers/DetailController.js');
+Importer.importfile('Classes/Controllers/AdditionController.js');
 MainController.prototype = new ViewController();
 MainController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
@@ -14,6 +15,8 @@ function MainController () {
 	var tableController  = null;
 	var detailController = null;
 	var searchController = null;
+	var additionController = null;
+	var infoContainer;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
 	currentDataKeys = [];
@@ -30,6 +33,10 @@ function MainController () {
 			detailController = new DetailController();
 			detailController.delegate = self;
 		};
+		if(!additionController){
+			additionController = new AdditionController();
+			additionController.delegate = self;
+		};
 		searchController.view.appendToView(self.view);
 		tableController.view.appendToView(this.view);
 	};
@@ -38,6 +45,8 @@ function MainController () {
 	};
 	//Stocks
 	this.loadStockPage = function(){
+		searchController.showSearch();
+		searchController.showAddButton();
 		if(this.page != "Stock"){
 			this.page     = "Stock";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
@@ -54,8 +63,6 @@ function MainController () {
 		};
 		removeBatchView();
 		createVisualizationButtons();
-		searchController.showSearch();
-		searchController.showAddButton();
 		prepareTableView();
 	};
 	this.setStocks = function(stocks){
@@ -64,6 +71,8 @@ function MainController () {
 	};
 	//Sale points
 	this.loadPOSPage = function() {
+		searchController.showSearch();
+		searchController.showAddButton();
 		if(self.page != "POS"){
 			self.page = "POS";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
@@ -82,8 +91,6 @@ function MainController () {
 		};
 		removeBatchView();
 		createVisualizationButtons
-		searchController.showSearch();
-		searchController.showAddButton();
 		prepareTableView();
 	};
 	this.setPOSData = function(posdata){
@@ -92,6 +99,8 @@ function MainController () {
 	};
 	//Sellers
 	this.loadSellersPage = function() {
+		removeVisualizationButtons();
+		searchController.showSearch();
 		if(self.page != "Seller"){
 			self.page = "Seller";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
@@ -106,8 +115,6 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
-		removeVisualizationButtons();
-		searchController.showSearch();
 		searchController.showAddButton();
 		prepareTableView();
 	};
@@ -117,6 +124,8 @@ function MainController () {
 	};
 	//Sales
 	this.loadSalesPage = function() {
+		searchController.showSearch();
+		searchController.hideAddButton();
 		if(self.page != "Sale"){
 			self.page = "Sale";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
@@ -133,8 +142,6 @@ function MainController () {
 		};
 		removeBatchView();
 		createVisualizationButtons();
-		searchController.showSearch();
-		searchController.hideAddButton();
 		prepareTableView();
 	};
 	this.setSales = function(sales){
@@ -143,6 +150,8 @@ function MainController () {
 	};
 	//Products
 	this.loadProductsPage = function() {
+		searchController.hideSearch();
+		searchController.showAddButton();
 		if(self.page != "Product"){
 			self.page = "Product";
 			var detailBtn = $('<button class="detail-button">Ver lotes</button>');
@@ -158,8 +167,6 @@ function MainController () {
 		};
 		removeBatchView();
 		removeVisualizationButtons();
-		searchController.hideSearch();
-		searchController.showAddButton();
 		prepareTableView();
 	};
 	this.setProducts = function(products){
@@ -168,6 +175,8 @@ function MainController () {
 	};
 	//Batches
 	this.loadBatchesPage = function(){
+		searchController.showSearch();
+		searchController.showAddButton();
 		if(self.page != "Batch"){
 			self.page = "Batch";
 			var deleteBtn = $('<button class="delete-button">-</button>');
@@ -176,59 +185,63 @@ function MainController () {
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			tableController.view.setClass('batches-table');
 			self.createDetailMenu(true);
-			createProductDetail();
 			loadTableView();
 			self.getDetail("Product", self.additionalData.productId);
 		};
+		createProductDetail();
 		prepareTableView();
 		removeVisualizationButtons();
-		searchController.showSearch();
-		searchController.showAddButton();
 	};
 	function getObjectKeys(objects){
 		for (var object in objects)
 			currentDataKeys.push(object);
 	};
 	function createProductDetail(){
-		var element = self.view.container();
-		var infoContainer = $('<div class="productInfo-container"></div>');
-		element.append(infoContainer);
-		detailController.createField({
-			field: 'name',
-			title:{classname:'title', value: 'Nombre'},
-			container: infoContainer
-		});
-		detailController.createField({
-			field: 'salePrice',
-			title:{classname:'title', value: 'Precio de venta'},
-			container: infoContainer
-		});
-		detailController.createField({
-			field: 'registationDate',
-			title:{classname:'title', value: 'Fecha registro'},
-			container: infoContainer
-		});
-		detailController.createField({
-			field: 'count',
-			title:{classname:'title', value: 'Total'},
-			container: infoContainer
-		});
+		if(typeof infoContainer == "undefined"){
+			infoContainer = $('<div class="productInfo-container"></div>');
+			detailController.createField({
+				field: 'name',
+				title:{classname:'title', value: 'Nombre'},
+				container: infoContainer
+			});
+			detailController.createField({
+				field: 'salePrice',
+				title:{classname:'title', value: 'Precio de venta'},
+				container: infoContainer
+			});
+			detailController.createField({
+				field: 'registationDate',
+				title:{classname:'title', value: 'Fecha registro'},
+				container: infoContainer
+			});
+			detailController.createField({
+				field: 'count',
+				title:{classname:'title', value: 'Total'},
+				container: infoContainer
+			});
+		};
+		self.view.addSubview(infoContainer);
 	};
 	function createBatchItem(count, expiration){
 	};
 	function removeBatchView(){
-		self.view.container().find('.productInfo-container').remove();
+		if(typeof infoContainer != "undefined")
+			infoContainer.detach();
 	};
 	this.setProductDetail = function(product){
-		var container = self.view.container().find('.productInfo-container');
-		var pname = container.find('.name .value');
-		var salePrice = container.find('.salePrice .value');
-		var registationDate = container.find('.registationDate .value');
-		var total = container.find('.count .value');
-		pname.text(product.name);
-		salePrice.text('$ '+product.salePrice.toFixed(2));
-		registationDate.text(product.registationDate);
-		total.text(product.count);
+		setTimeout(function(){
+			if(typeof infoContainer != "undefined"){
+				var pname = infoContainer.find('.name .value');
+				var salePrice = infoContainer.find('.salePrice .value');
+				var registationDate = infoContainer.find('.registationDate .value');
+				var total = infoContainer.find('.count .value');
+				pname.text(product.name);
+				salePrice.text('$ '+product.salePrice.toFixed(2));
+				registationDate.text(product.registationDate);
+				total.text(product.count);
+			}else
+				setTimeout(arguments.callee, 50);
+		},50);
 	};
 	this.setBatches = function(batches){
 		getObjectKeys(batches);
@@ -241,21 +254,33 @@ function MainController () {
 		detailController.page = data.kind.toCapitalize();
 		detailController.pagenum = pages.indexOf(data.kind);
 
+		removeBatchView();
 		searchController.hideSearch();
 		searchController.hideAddButton();
 		removeVisualizationButtons();
-		detailController.createDetailMenu();
-
 		detailController.view.removeView();
 		tableController.view.removeView();
+
+		detailController.createDetailMenu();
 		detailController.view.appendToView(self.view);
 	};
 	this.getDetail = function(page, id){
 		var getCall = self.delegate["get"+page+"Detail"];
 		if(typeof getCall == "function") getCall.call(self.delegate, id);
 	};
-	self.setDetail = function(data){
+	this.setDetail = function(data){
 		detailController.setDetail(data);
+	};
+	//Addition
+	this.loadAdditionPage = function(data){
+		removeBatchView();
+		removeVisualizationButtons();
+		searchController.hideSearch();
+		searchController.hideAddButton();
+		detailController.view.removeView();
+		tableController.view.removeView();
+
+		additionController.view.appendToView(self.view);
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -288,7 +313,7 @@ function MainController () {
 		return stringValue;
 	};
 	this.tableLoaded = function() {
-		self.delegate.enableEvents();
+		self.enableAllEvents();
 	};
 	this.makeSearch = function(additional){
 		var searchData  = $.extend({},{}, additional);
@@ -393,11 +418,16 @@ function MainController () {
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
 		var index = self.page != "Batch"? detailController.pagenum: pages.length-1;
+		self.delegate.disableEvents();
 		
 		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);
 		else
 			self.triggerOption(index);
+	};
+	this.onClickAdd = function(){
+		self.delegate.disableEvents();
+		self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	//Enable Disable
 	this.enableEvents = function(){

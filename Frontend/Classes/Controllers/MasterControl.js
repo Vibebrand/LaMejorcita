@@ -38,6 +38,9 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Batches/:productId', loadBatchesPage);
 
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
+		self.navigationController.addLoggedUrl('/Insert/:kind', loadAdditionPage);
+		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadAdditionPage);
+
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales/:kind/:id', 	loadSalesPage);
@@ -98,6 +101,10 @@ function MasterControl(){
 		loadMainView();
 		self.mainController.additionalData =  data;
 		self.mainController.loadDetailPage(data);
+	};
+	function loadAdditionPage(data) {
+		loadMainView();
+		self.mainController.loadAdditionPage(data);
 	};
 	//Stock
 	this.searchStocks = function(searchData){

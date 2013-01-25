@@ -122,8 +122,21 @@ header {
   width: 100%;
   background: -webkit-linear-gradient(Bottom, #be5f46 50%, #cf743e 100%);
   height: 70px;
-  box-shadow: 0 0 0px 1px rgba(255, 255, 255, 0.2) inset;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4); }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0px 1px rgba(255, 255, 255, 0.2) inset; }
+
+.logo {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 20px; }
+
+header {
+  width: 100%;
+  background: -webkit-linear-gradient(Bottom, #be5f46 50%, #cf743e 100%);
+  height: 70px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0px 1px rgba(255, 255, 255, 0.2) inset; }
 
 .logo {
   display: block;
@@ -132,6 +145,10 @@ header {
   top: 20px; }
 
 .menu-list {
+  -webkkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
   width: 200px;
   height: 100%;
   float: left;
@@ -139,10 +156,35 @@ header {
   background: #3e3b38; }
 
 .option-item {
+  -webkkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
   display: block;
-  height: 30px;
-  padding: 10px;
-  font-family: 'TitilliumText25L600wt'; }
+  height: 50px;
+  padding: 10px 15px 5px;
+  font-family: 'TitilliumText25L400wt';
+  line-height: 3rem;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #fafafa; }
+
+.option-item.selected {
+  box-shadow: 0 0 0px 1px rgba(255, 255, 255, 0.2) inset;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: rgba(80, 75, 70, 0.95); }
+
+.option-item.selected:after {
+  content: '';
+  border-right: transparent;
+  border-bottom: 10px;
+  border-top: 10px;
+  border-left: 10px;
+  position: absolute; }
+
+.stock-table {
+  width: 100%; }
 
 html {
   height: 100%;
@@ -159,3 +201,9 @@ body, .app-container, .main-container {
 
 .main-container {
   background: #f0f0f0; }
+
+.buttons-container {
+  width: 100px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px; }

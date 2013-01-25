@@ -40,7 +40,6 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
 		self.navigationController.addLoggedUrl('/Insert/:kind', loadInsertionPage);
 		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadEditionPage);
-		self.navigationController.addLoggedUrl('/Insert/:kind/:stockId', loadInsertionPage);
 
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);

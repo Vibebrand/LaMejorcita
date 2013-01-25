@@ -176,10 +176,7 @@ function MainController () {
 	//Batches
 	this.loadBatchesPage = function(){
 		searchController.showSearch();
-		if(typeof self.additionalData.kind === "undefined")
-			searchController.hideAddButton();
-		else
-			searchController.showAddButton();
+		searchController.showAddButton();
 		if(self.page != "Batch"){
 			self.page = "Batch";
 			var deleteBtn = $('<button class="delete-button">-</button>');
@@ -435,10 +432,7 @@ function MainController () {
 	};
 	this.onClickAdd = function(){
 		self.delegate.disableEvents();
-		if(self.page == "Batch")
-			self.changePage('/Insert/batch/'+self.additionalData.id);
-		else
-			self.changePage('/Insert/'+self.page.toLowerCase());
+		self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	//Enable Disable
 	this.enableEvents = function(){

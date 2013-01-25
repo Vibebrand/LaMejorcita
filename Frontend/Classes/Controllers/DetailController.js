@@ -299,7 +299,6 @@ function DetailController(){
 			href: '/Detail/pos/'+self.currentData.salepoint._id,
 			container: linksContainer
 		});
-		
 	};
 	function createProductItem(product){
 		var productItem = $('<li class="product-item"></li>');

@@ -420,7 +420,6 @@ function MainController () {
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
 		var index = self.page != "Batch"? detailController.pagenum: pages.length-1;
-		self.delegate.disableEvents();
 		
 		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);

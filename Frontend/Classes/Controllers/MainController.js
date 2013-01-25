@@ -29,7 +29,6 @@ function MainController () {
 			detailController = new DetailController();
 			detailController.delegate = self;
 		};
-		searchController.view.appendToView(this.view);
 		tableController.view.appendToView(this.view);
 	};
 	this.updateMenu = function(index){
@@ -87,6 +86,7 @@ function MainController () {
 	function prepareTableView(){
 		self.removeDetailMenu();
 		detailController.view.removeView();
+		searchController.view.appendToView(self.view);
 		tableController.view.appendToView(self.view);
 		self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 	};
@@ -107,11 +107,7 @@ function MainController () {
 											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
 											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
 			tableController.view.setClass('sellers-table');
-			detailBtn.text('Detalle');
-			deleteBtn.text('-');
-			tableController.cleanTable();
-			tableController.view.removeView();
-			self.makeSearch({});
+			loadTableView();
 		};
 		removeVisualizationButtons();
 		prepareTableView();
@@ -171,6 +167,7 @@ function MainController () {
 		detailController.pagenum = pages.indexOf(data.kind);
 
 		removeVisualizationButtons();
+		searchController.view.removeView();
 		detailController.createDetailMenu();
 
 		detailController.view.removeView();

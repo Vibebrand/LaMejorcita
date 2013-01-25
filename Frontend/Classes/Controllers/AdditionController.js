@@ -7,6 +7,9 @@ function  AdditionController(){
 	var self = this;
 	self.page = "Stock"
 	this.viewDidLoad = function(){
+		
+	};
+	function createBatchView(){
 
 	};
 	AdditionController.prototype._init_.call(this);

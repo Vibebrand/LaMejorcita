@@ -176,7 +176,10 @@ function MainController () {
 	//Batches
 	this.loadBatchesPage = function(){
 		searchController.showSearch();
-		searchController.showAddButton();
+		if(typeof self.additionalData.kind === "undefined")
+			searchController.hideAddButton();
+		else
+			searchController.showAddButton();
 		if(self.page != "Batch"){
 			self.page = "Batch";
 			var deleteBtn = $('<button class="delete-button">-</button>');
@@ -276,6 +279,9 @@ function MainController () {
 	this.loadAdditionPage = function(data){
 		removeBatchView();
 		removeVisualizationButtons();
+
+		additionController.data = data;
+		self.removeDetailMenu();
 		searchController.hideSearch();
 		searchController.hideAddButton();
 		detailController.view.removeView();
@@ -420,7 +426,6 @@ function MainController () {
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
 		var index = self.page != "Batch"? detailController.pagenum: pages.length-1;
-		
 		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);
 		else
@@ -428,7 +433,10 @@ function MainController () {
 	};
 	this.onClickAdd = function(){
 		self.delegate.disableEvents();
-		self.changePage('/Insert/'+self.page.toLowerCase());
+		if(self.page == "Batch")
+			self.changePage('/Insert/batch/'+self.additionalData.id);
+		else
+			self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	//Enable Disable
 	this.enableEvents = function(){

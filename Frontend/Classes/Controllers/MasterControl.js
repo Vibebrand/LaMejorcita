@@ -40,6 +40,7 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
 		self.navigationController.addLoggedUrl('/Insert/:kind', loadAdditionPage);
 		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadAdditionPage);
+		self.navigationController.addLoggedUrl('/Insert/:kind/:stockId', loadAdditionPage);
 
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
@@ -179,12 +180,10 @@ function MasterControl(){
 	};
 	//Enable Disable
 	this.enableEvents = function(){
-		console.log('enable');
 		self.mainController.enableEvents();
 		menuController.enableEvents();
 	};
 	this.disableEvents = function(){
-		console.log('disable');
 		self.mainController.disableEvents();
 		menuController.disableEvents();
 	};

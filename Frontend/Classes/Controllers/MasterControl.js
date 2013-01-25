@@ -90,7 +90,7 @@ function MasterControl(){
 	};
 	function loadBatchesPage(data){
 		loadMainView();
-		self.mainController.additionalData =  data;
+		self.mainController.additionalData =  typeof data =="object" ? data: {productId: data};
 		self.mainController.loadBatchesPage();
 	};
 	function loadDetailPage(data){

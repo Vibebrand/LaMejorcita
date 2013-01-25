@@ -145,13 +145,14 @@ function MainController () {
 	this.loadProductsPage = function() {
 		if(self.page != "Product"){
 			self.page = "Product";
-			var detailBtn = $('<button class="detail-button">Ver mas</button>');
+			var detailBtn = $('<button class="detail-button">Ver lotes</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
 			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
 											{'identifier': 'salePrice','value':'Precio'},
 											{'identifier': 'count','value':'Cantidad'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
+			if(typeof self.additionalData == "undefined")					
+				tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('products-table');
 			loadTableView();
 		};
@@ -177,13 +178,12 @@ function MainController () {
 			self.createDetailMenu(true);
 			createProductDetail();
 			loadTableView();
-			self.getDetail("Product", self.additionalData);
+			self.getDetail("Product", self.additionalData.productId);
 		};
 		prepareTableView();
 		searchController.showSearch();
 		searchController.showAddButton();
 		removeVisualizationButtons();
-		
 	};
 	function getObjectKeys(objects){
 		for (var object in objects)
@@ -294,8 +294,12 @@ function MainController () {
 		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
-		if(typeof self.additionalData != "undefined" && typeof self.additionalData.id != "undefined")
-			searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
+		if(typeof self.additionalData == "object"){
+			if(self.additionalData.id != "undefined")
+				searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
+			if(typeof self.additionalData.productId != "undefined")
+				searchData['productId']= self.additionalData.productId;
+		};
 		if(self.page != "Batch")
 			self.delegate['search'+self.page+'s'].call(self.delegate, searchData);
 		else
@@ -371,10 +375,17 @@ function MainController () {
 	function onClickDetail(){
 		detailId = $(this).parents('tr').data('id');
 		self.delegate.disableEvents();
-		if(self.page == "Product")
+
+		if(self.page == "Product"  && typeof self.additionalData == "undefined" ){
 			self.changePage('/Batches/'+detailId);
-		else
-			self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
+			return;
+		};
+		if(self.page == "Product"  && typeof self.additionalData == "object" && typeof self.additionalData.id != "undefined"){
+			self.changePage('/Batches/'+detailId+'/'+self.additionalData.kind.toLowerCase()+'/'+self.additionalData.id);
+			return;
+		};
+		self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
+		return;
 	};
  	function onClickDelete(){
  		console.log('delete');
@@ -382,6 +393,7 @@ function MainController () {
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
 		var index = self.page != "Batch"? detailController.pagenum: pages.length-1;
+		
 		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);
 		else

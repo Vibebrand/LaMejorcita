@@ -1,19 +1,10 @@
 import cyclone.web  
 import cyclone.escape
-import sys
 import os
-import datetime
-import mimetypes
-import email
-import time
-import cyclone.escape
 from urllib2 import HTTPError
 from txmongo._pymongo.objectid import ObjectId
 from Backend.Data.InterfazDB.DBmodule import DBModule
-from time import mktime
-import ast
-from stat import *
-from time import mktime
+
 
 class GetBodegasHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous

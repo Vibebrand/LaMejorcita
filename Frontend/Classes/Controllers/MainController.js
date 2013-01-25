@@ -295,7 +295,7 @@ function MainController () {
 		searchData.objects = objects;
 		searchData.page = pagecount;
 		if(typeof self.additionalData == "object"){
-			if(self.additionalData.id != "undefined")
+			if(typeof self.additionalData.id != "undefined")
 				searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
 			if(typeof self.additionalData.productId != "undefined")
 				searchData['productId']= self.additionalData.productId;

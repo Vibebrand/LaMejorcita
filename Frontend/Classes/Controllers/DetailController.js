@@ -83,28 +83,28 @@ function DetailController(){
 	function createStockView(){
 		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Bodega');
-		createField({
+		self.createField({
 			field: 'stockname',
 			title:{classname:'title', value: 'Nombre'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'businessName',
 			title:{classname:'title', value: 'Razón social'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'manager',
 			title:{classname:'title', value: 'Responsable'},
 			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}],
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'address',
 			title:{classname:'title', value: 'Dirección'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'phone',
 			title:{classname:'title', value: 'Teléfono'},
 			container: infoContainer
@@ -163,43 +163,43 @@ function DetailController(){
 		var fridgeInfo    = $('<div class="fridgeInfo-container"></div>');
 		infoContainer.append(fridgeInfo);
 		infoContainer.append(posInfo);
-		createField({
+		self.createField({
 			field: 'posname',
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'representative',
 			title:{classname:'title', value: 'Representante'},
 			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}],
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'address',
 			title:{classname:'title', value: 'Dirección'},
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'email',
 			title:{classname:'title', value: 'Correo electrónico'},
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'phone',
 			title:{classname:'title', value: 'Teléfono'},
 			container: posInfo
 		});
 
-		createField({
+		self.createField({
 			field: 'serial',
 			title:{classname:'title', value: 'Refrigerador'},
 			container: fridgeInfo
 		});
-		createField({
+		self.createField({
 			field: 'status',
 			title:{classname:'title', value: 'Estado'},
 			container: fridgeInfo
 		});
-		createField({
+		self.createField({
 			field: 'temperature',
 			title:{classname:'title', value: 'Temperatura'},
 			container: fridgeInfo
@@ -238,27 +238,27 @@ function DetailController(){
 	function createSellerView(){
 		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Vendedor');
-		createField({
+		self.createField({
 			field: 'name',
 			title:{classname:'title', value: 'Nombre'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'curp',
 			title:{classname:'title', value: 'CURP'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'email',
 			title:{classname:'title', value: 'Correo electrónico'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'phone',
 			title:{classname:'title', value: 'Teléfono'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'stock',
 			title:{classname:'title', value: 'Bodega'},
 			container: infoContainer
@@ -322,28 +322,28 @@ function DetailController(){
 		var saleinfo = $('<div class="saleinfo-container"></div>');
 		infoContainer.append(saleinfo);
 		infoContainer.append(productslist);
-		createField({
+		self.createField({
 			field: 'datetime',
 			title:{classname:'title', value: 'Fecha'},
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'seller',
 			title:{classname:'title', value: 'Vendedor'},
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'device',
 			title:{classname:'title', value: 'Dispositivo'},
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'pos',
 			title:{classname:'title', value: 'Punto de venta'},
 			value: [{classname:'name', value:''},{classname:'fridge', value:''}],
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'observations',
 			title:{classname:'title', value: 'Observaciones'},
 			container: saleinfo
@@ -355,7 +355,7 @@ function DetailController(){
 		if(typeof setCall =="function") setCall.call(self, data);
 		self.delegate.enableAllEvents();
 	};
-	this.createField = function createField(options){
+	this.createField = function(options){
 		var options = $.extend({},{
 			field: 'field', 
 			title: {classname: 'title', value: ''}, 

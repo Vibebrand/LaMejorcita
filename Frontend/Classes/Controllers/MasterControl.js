@@ -10,7 +10,8 @@ function MasterControl(){
 	this.loginController      = null;
 	this.messageController    = null;
 	this.mainController       = null;
-
+	this.modalBoxController   = null;
+	
 	this.userService   = null;
 	this.stockService  = null;
 	this.salesService  = null;

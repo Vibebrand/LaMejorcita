@@ -464,13 +464,15 @@ function MainController () {
 		
 		searchController.enableEvents();
 		detailController.enableEvents();
+		additionController.enableEvents();
 	};
 	this.disableEvents = function(){
 		var backBtn = self.view.container().find('.button-container .back-button');
-		searchController.disableEvents();
-		detailController.disableEvents();
 		tableController.view.container().find('button').unbind('click');
 		backBtn.unbind('click');
+		searchController.disableEvents();
+		detailController.disableEvents();
+		additionController.disableEvents();
 	};
 	//delegate
 	this.changePage = function(hashpage){

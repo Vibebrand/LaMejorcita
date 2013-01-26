@@ -11,6 +11,8 @@ function  AdditionController(){
 		if(typeof viewCall == "function") viewCall.call(self);
 		self.delegate.getStocksforAddition();
 		self.delegate.getProductsforAddition();
+		self.delegate.enableAllEvents();
+		
 	};
 	this.loadBatchView = function(){
 		var batchContainer = self.view.container();

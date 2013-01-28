@@ -229,16 +229,16 @@ function  AdditionController(){
 		var submitBtn = container.find('.send-button');
 		var inputs = container.find('input, textarea');
 		submitBtn.unbind('click');
-		inputs.unbind('lamejorcita.focusin');
+		inputs.unbind('focusin.lamejorcita');
 		submitBtn.bind('click', onClickSend);
-		inputs.bind('lamejorcita.focusin', onFocusIn);
+		inputs.bind('focusin.lamejorcita', onFocusIn);
 	};
 	this.disableEvents = function(){
 		var container = self.view.container();
 		var submitBtn = container.find('.send-button');
 		var inputs = container.find('inpus, textarea');
 		submitBtn.unbind('click');
-		inputs.unbind('lamejorcita.focusin');
+		inputs.unbind('focusin.lamejorcita');
 	};
 	AdditionController.prototype._init_.call(this);
 };

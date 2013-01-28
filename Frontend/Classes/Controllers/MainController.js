@@ -446,7 +446,18 @@ function MainController () {
 		return;
 	};
  	function onClickDelete(){
- 		console.log('delete');
+ 		var id = $(this).parents('tr').data('id');
+ 		var deleteCall = self.delegate['delete'+self.page];
+ 		var deleteData = {};
+ 		if(self.page.toLowerCase() == "batch"){
+ 			deleteData.expirationDate = id;
+ 			deleteData.productId = self.additionalData.productId
+ 			if(typeof self.additionalData.kind != "undefined" && typeof self.additionalData.id != "undefined")
+ 				deleteData[self.additionalData.kind+'Id'] = self.additionalData.id;
+ 		}else
+ 			deleteData.id = id;
+ 		if (typeof deleteCall == "function")
+ 			deleteCall.call(self.delegate, deleteData);
  	};
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';

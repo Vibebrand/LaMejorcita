@@ -196,6 +196,10 @@ function MasterControl(){
 	this.successfulAddition = function(){
 		self.mainController.successfulAddition();
 	};
+	//Deletion
+	this.deleteBatch = function(deleteData){
+		self.stockService.deleteBatch(deleteData);
+	};
 	//menu view
 	this.updateMenu = function(index){
 		menuController.changeOption(index);

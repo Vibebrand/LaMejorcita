@@ -101,6 +101,12 @@ function StockService(){
 		};
 		self.delegate.setBatches(braches);
 	};
+	//Edition Insertio
+	this.addBatch = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
+	};
+	//Additional data
 	this.getStocksforAddition= function(){
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {

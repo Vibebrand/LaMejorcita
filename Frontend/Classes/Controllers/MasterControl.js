@@ -10,7 +10,6 @@ function MasterControl(){
 	this.loginController      = null;
 	this.messageController    = null;
 	this.mainController       = null;
-	this.modalBoxController   = null;
 	
 	this.userService   = null;
 	this.stockService  = null;
@@ -190,6 +189,12 @@ function MasterControl(){
 	};
 	this.setProductsforAddition = function(data){
 		self.mainController.setProductsforAddition(data);
+	};
+	this.addBatch = function(dataToSend){
+		self.stockService.addBatch(dataToSend);
+	};
+	this.successfulAddition = function(){
+		self.mainController.successfulAddition();
 	};
 	//menu view
 	this.updateMenu = function(index){

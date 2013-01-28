@@ -30,12 +30,13 @@ function MainController () {
 			searchController.delegate = self;
 		};
 		if(!detailController){
-			detailController = new DetailController();
+			detailController          = new DetailController();
 			detailController.delegate = self;
 		};
 		if(!additionController){
-			additionController = new AdditionController();
+			additionController          = new AdditionController();
 			additionController.delegate = self;
+			additionController.messages = self.delegate.messageController;
 		};
 		searchController.view.appendToView(self.view);
 		tableController.view.appendToView(this.view);
@@ -279,12 +280,14 @@ function MainController () {
 		removeBatchView();
 		removeVisualizationButtons();
 
+		self.page = data.kind.toCapitalize();
 		additionController.data = data;
 		self.removeDetailMenu();
 		searchController.hideSearch();
 		searchController.hideAddButton();
 		detailController.view.removeView();
 		tableController.view.removeView();
+		detailController.createDetailMenu();
 
 		self.updateMenu($.cookie('lamejorcita.option'));
 		additionController.view.appendToView(self.view);
@@ -367,7 +370,7 @@ function MainController () {
 		else
 			self.updateMenu(pages.length-1);
 	};
-	//creation
+	//Creation
 	function createVisualizationButtons(){
 		if(typeof buttonsContainer == "undefined" || typeof buttonsContainer.find == "undefined"){
 			buttonsContainer  = $('<div class="visualButtons-container"></div>');
@@ -416,7 +419,16 @@ function MainController () {
 	};
 	function getPrice(stringValue){
 		return "$ "+Number(stringValue).toFixed(2);
-	}; 
+	};
+	//Edition Addition
+	self.addData = function(kind, data){
+		var addCall = self.delegate['add'+kind];
+		if(typeof addCall == "function")
+			addCall.call(self.delegate, data);
+	};
+	this.successfulAddition = function(){
+		onClickBack();
+	};
 	//Events
 	function onClickDetail(){
 		detailId = $(this).parents('tr').data('id');

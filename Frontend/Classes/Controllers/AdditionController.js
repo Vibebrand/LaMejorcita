@@ -9,7 +9,8 @@ function  AdditionController(){
 	var products;
 	var self        = this;
 	var validations = new TextValidationService();
-	self.page       = "Stock"
+	self.data;
+	this.messages = null;
 	this.viewDidLoad = function(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		var methodCall = self['prepare'+self.data.method.toCapitalize()+self.data.kind.toCapitalize()];
@@ -106,6 +107,8 @@ function  AdditionController(){
 				optionItem	: 'selector-option',
 			});
 			deleteBtn.bind('click', deleteBatchList);
+
+			batchItem.find('input, textarea').bind('lamejorcita.focusin', onFocusIn);
 		};
 	};
 	function deleteBatchList(){
@@ -141,29 +144,60 @@ function  AdditionController(){
 			});
 		};
 	};
-	function createBatchJson(){
-
-		/*var batchData = {
-			productId:
-			count:
-		};*/
+	this.createBatchJson = function(){
+		var container    = self.view.container();
+		var batchItems = container.find('.batch-list .batch-item');
+		var batchData ={
+			"stockId"	  : container.find('.stock-input .selected-item').data('customdropdown.data'),
+			"observations": $.trim(container.find('.notes-input .value').val()),
+			"batches"	  : []
+		};
+		for (var i = 0; i < batchItems.length; i++) {
+			var batchItem  =  $(batchItems[i]);
+			var batch = {
+				productId	  : batchItem.find('.product-selector .selected-item').data('customdropdown.data'),
+				expirationDate: $.trim(batchItem.find('.expiration').val()),
+				count		  : $.trim(batchItem.find('.quantity').val())
+			};
+			batchData.batches.push(batch);
+		};
+		return JSON.stringify(batchData);
 	};
 	//Events
 	function onClickSend(){
-		console.log(validateBatch());
+		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
+		if(validateBatch()){
+			var jsonData ="";
+			if(typeof jsonCall == "function")
+				jsonData = jsonCall.call(self);
+			self.delegate.addData(self.data.kind.toCapitalize(), {data: jsonData});
+		};
+	};
+	function onFocusIn(){
+		var input = $(this);
+		var container = $(this).parents('*[class$="-input"]');
+		container.find('.error-message').remove();
 	};
 	//Validation
 	function validateBatch(){
 		var count = 0;
 		var container = self.view.container();
-		var stockInput = container.find('.stock-input .selected-item');
+		var stockItem = container.find('.stock-input .selected-item');
 		var notesInput = container.find('.notes-input .value');
 		if(!validateBatchList())
 			count++;
-		if(typeof stockInput.data('customdropdown.data') == "undefined"){
+		if(typeof stockItem.data('customdropdown.data') == "undefined"){
+			self.messages.createMessage.call(container.find('.stock-input'), {
+				message:'Por favor seleccione una bodega.',
+				className: 'error-message'
+			});
 			count++;
 		};
 		if(!validations.validateWithPattern(notesInput.val(), null, false)){
+			self.messages.createMessage.call(notesInput.parents('.notes-input'), {
+				message:'Por favor ingrese una nota.',
+				className: 'error-message'
+			});
 			count++;
 		};
 		return count < 1;
@@ -180,6 +214,10 @@ function  AdditionController(){
 			var test1 = validations.validateDate(expiration, false);
 			var test2 = validations.validateWithPattern(quantity, new RegExp("^[0-9]+$"), false);
 			if(!test1 || !test2 || typeof product == "undefined"){
+				self.messages.createMessage.call(batchItem , {
+					message:'Datos no validos, por favor ingrese los datos correctos del lote.',
+					className: 'error-message'
+				});
 				valid = false;
 			};
 		};
@@ -189,13 +227,18 @@ function  AdditionController(){
 	this.enableEvents = function(){
 		var container = self.view.container();
 		var submitBtn = container.find('.send-button');
+		var inputs = container.find('input, textarea');
 		submitBtn.unbind('click');
+		inputs.unbind('lamejorcita.focusin');
 		submitBtn.bind('click', onClickSend);
+		inputs.bind('lamejorcita.focusin', onFocusIn);
 	};
 	this.disableEvents = function(){
 		var container = self.view.container();
 		var submitBtn = container.find('.send-button');
+		var inputs = container.find('inpus, textarea');
 		submitBtn.unbind('click');
+		inputs.unbind('lamejorcita.focusin');
 	};
 	AdditionController.prototype._init_.call(this);
 };

@@ -321,9 +321,9 @@ function MainController () {
 			row.data('id',currentDataKeys[index]);
 
 		if(identifier == "batch.expiration")
-			stringValue = self.currentData[currentDataKeys[index]];
-		if(identifier == "batch.count")
 			stringValue = currentDataKeys[index];
+		if(identifier == "batch.count")
+			stringValue = self.currentData[currentDataKeys[index]];
 
 		if(identifier === "address")
 			stringValue =  self.getAddressString(celldata[identifier]);
@@ -449,12 +449,12 @@ function MainController () {
  		console.log('delete');
  	};
  	function onClickBack(){
-		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
+		/*var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
 		var index = self.page != "Batch"? detailController.pagenum: pages.length-1;
 		if($.trim(prevPage) != "" && prevPage != $.cookie('lamejorcita.page') && prevPage.indexOf('Detail') == -1)
 			self.changePage(prevPage);
 		else
-			self.triggerOption(index);
+			self.triggerOption(index);*/
 	};
 	this.onClickAdd = function(){
 		self.delegate.disableEvents();

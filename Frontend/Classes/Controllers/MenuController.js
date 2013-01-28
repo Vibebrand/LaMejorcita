@@ -2,7 +2,7 @@ function MenuController (argument) {
 	var self = this;
 	var pageHashs = ['/Stocks', '/POS' , '/Sellers', '/Sales', '/Products'];
 	this.viewDidLoad = function(){
-		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas', 'Products'];
+		var options = ['Bodegas', 'Puntos de venta', 'Vendedores','Ventas', 'Productos'];
 		for (var i = 0; i < options.length; i++)
 			createOptionItem.call(self,options[i], i);
 		self.enableEvents();

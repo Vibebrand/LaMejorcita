@@ -83,28 +83,28 @@ function DetailController(){
 	function createStockView(){
 		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Bodega');
-		createField({
+		self.createField({
 			field: 'stockname',
 			title:{classname:'title', value: 'Nombre'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'businessName',
 			title:{classname:'title', value: 'Razón social'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'manager',
 			title:{classname:'title', value: 'Responsable'},
 			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}],
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'address',
 			title:{classname:'title', value: 'Dirección'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'phone',
 			title:{classname:'title', value: 'Teléfono'},
 			container: infoContainer
@@ -163,43 +163,43 @@ function DetailController(){
 		var fridgeInfo    = $('<div class="fridgeInfo-container"></div>');
 		infoContainer.append(fridgeInfo);
 		infoContainer.append(posInfo);
-		createField({
+		self.createField({
 			field: 'posname',
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'representative',
 			title:{classname:'title', value: 'Representante'},
 			value: [{classname:'name', value:''},{classname:'curp', value:''},{classname:'email', value:''}],
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'address',
 			title:{classname:'title', value: 'Dirección'},
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'email',
 			title:{classname:'title', value: 'Correo electrónico'},
 			container: posInfo
 		});
-		createField({
+		self.createField({
 			field: 'phone',
 			title:{classname:'title', value: 'Teléfono'},
 			container: posInfo
 		});
 
-		createField({
+		self.createField({
 			field: 'serial',
 			title:{classname:'title', value: 'Refrigerador'},
 			container: fridgeInfo
 		});
-		createField({
+		self.createField({
 			field: 'status',
 			title:{classname:'title', value: 'Estado'},
 			container: fridgeInfo
 		});
-		createField({
+		self.createField({
 			field: 'temperature',
 			title:{classname:'title', value: 'Temperatura'},
 			container: fridgeInfo
@@ -238,27 +238,27 @@ function DetailController(){
 	function createSellerView(){
 		infoContainer.empty(); linksContainer.empty();
 		self.detailTitle.text('Vendedor');
-		createField({
+		self.createField({
 			field: 'name',
 			title:{classname:'title', value: 'Nombre'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'curp',
 			title:{classname:'title', value: 'CURP'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'email',
 			title:{classname:'title', value: 'Correo electrónico'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'phone',
 			title:{classname:'title', value: 'Teléfono'},
 			container: infoContainer
 		});
-		createField({
+		self.createField({
 			field: 'stock',
 			title:{classname:'title', value: 'Bodega'},
 			container: infoContainer
@@ -299,7 +299,6 @@ function DetailController(){
 			href: '/Detail/pos/'+self.currentData.salepoint._id,
 			container: linksContainer
 		});
-		
 	};
 	function createProductItem(product){
 		var productItem = $('<li class="product-item"></li>');
@@ -322,100 +321,31 @@ function DetailController(){
 		var saleinfo = $('<div class="saleinfo-container"></div>');
 		infoContainer.append(saleinfo);
 		infoContainer.append(productslist);
-		createField({
+		self.createField({
 			field: 'datetime',
 			title:{classname:'title', value: 'Fecha'},
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'seller',
 			title:{classname:'title', value: 'Vendedor'},
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'device',
 			title:{classname:'title', value: 'Dispositivo'},
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'pos',
 			title:{classname:'title', value: 'Punto de venta'},
 			value: [{classname:'name', value:''},{classname:'fridge', value:''}],
 			container: saleinfo
 		});
-		createField({
+		self.createField({
 			field: 'observations',
 			title:{classname:'title', value: 'Observaciones'},
 			container: saleinfo
-		});
-	};
-	//Product detail
-	this.loadProductDetail = function(){
-		createProductView();
-		self.delegate.getDetail(self.page, self.currentId);
-	};
-	this.setProductDetail = function(product){
-		var container    = self.view.container();
-		var pname           =  container.find('.productInfo-container .name .value');
-		var salePrice       =  container.find('.productInfo-container .salePrice .value');
-		var registationDate =  container.find('.productInfo-container .registationDate .value');
-		var batchesList = container.find('.batches-list');
-
-		pname.text(product.name);
-		salePrice.text('$'+product.salePrice.toFixed(2));
-		registationDate.text(product.registationDate);
-
-		for(var expiration in product.batches)
-			createBatchItem.call(batchesList, product.batches[expiration], expiration);
-	};
-	function createBatchItem(count, expiration){
-		var batchItem = $('<li class="batch-item"></li>');
-		var productNumber = $('<div class="count"></div>');
-		var expirationDate  = $('<div class="expirationDate"></div>');
-
-		var productNumberText = $('<span class="text"></span>');
-		var productNumberValue = $('<span class="value"></span>');
-		var expirationDateText = $('<span class="text"></span>');
-		var expirationDateValue = $('<span class="value"></span>');
-
-		this.append(batchItem);
-		batchItem.append(expirationDate);
-		batchItem.append(productNumber);
-
-		productNumber.append(productNumberText);
-		expirationDate.append(expirationDateText);
-		productNumber.append(productNumberValue);
-		expirationDate.append(expirationDateValue);
-
-		productNumberText.text('Cantidad:');
-		expirationDateText.text('Lote:');
-		productNumberValue.text(count);
-		expirationDateValue.text(expiration);
-	};
-	function createProductView(){
-		infoContainer.empty(); linksContainer.empty();
-		self.detailTitle.text('Producto');
-		
-		var productInfo = $('<div class="productInfo-container"></div>');
-		var batches = $('<ul class="batches-list"></ul>');
-
-		infoContainer.append(productInfo);
-		infoContainer.append(batches);
-
-		createField({
-			field: 'name',
-			title:{classname:'title', value: 'Nombre'},
-			container: productInfo
-		});
-		createField({
-			field: 'salePrice',
-			title:{classname:'title', value: 'Precio de venta'},
-			container: productInfo
-		});
-		createField({
-			field: 'registationDate',
-			title:{classname:'title', value: 'Fecha registro'},
-			container: productInfo
 		});
 	};
 	//General
@@ -424,7 +354,7 @@ function DetailController(){
 		if(typeof setCall =="function") setCall.call(self, data);
 		self.delegate.enableAllEvents();
 	};
-	function createField(options){
+	this.createField = function(options){
 		var options = $.extend({},{
 			field: 'field', 
 			title: {classname: 'title', value: ''}, 

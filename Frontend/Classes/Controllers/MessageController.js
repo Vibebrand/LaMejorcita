@@ -19,8 +19,8 @@ function MessageController () {
 			speed		: 'fast'
 		},options);
 
-		container.find('*[class$="-message"]').remove();
-		var messageContainer = $('<div class="'+options.className+'"></div>');
+		container.find('*[class$="message"]').remove();
+		var messageContainer = $('<div class="'+options.className+' message"></div>');
 		var messageSpan = $('<span class="text"></span>');
 		messageContainer.hide();
 		container.find('*:first').before(messageContainer);
@@ -47,7 +47,7 @@ function MessageController () {
 			animation	: 'slideUp',
 			speed		: 'fast'
 		},options);
-		var messages = container.find('*[class$="-message"]');
+		var messages = container.find('*[class$="message"]');
 		if(typeof messages[options.animation] === "function")
 			messages[options.animation].call(messages, options.speed, function(){
 				messages.remove();

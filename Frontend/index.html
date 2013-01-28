@@ -8,12 +8,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<!--Styles-->
 		<link rel="stylesheet" type="text/css" href="Styles/general.css">
+		<link rel="stylesheet" type="text/css" href="Styles/datepicker.css">
 
 		<!--Scripts-->
 		<script type="text/javascript" src="Libraries/importer.js"></script>
 		<script type="text/javascript" src="Libraries/jquery.js"></script>
 		<script type="text/javascript" src="Libraries/cookies.js"></script>
 		<script type="text/javascript" src="Libraries/jquery.scrollbar.js"></script>
+		<script type="text/javascript" src="Libraries/jquery.ui.custom.min.js"></script>
+		<script type="text/javascript" src="Libraries/jquery.customdropdown.js"></script>
+		<script type="text/javascript" src="Libraries/jquery.customselect.js"></script>
 		<script type="text/javascript" src="main.js"></script>
 
 		<!--[if lt IE 9]>
@@ -30,6 +34,21 @@
 		<div class ="app-container"></div>
 
 		<footer></footer>
+
+<script>
+//	$(document).ready(function (){
+//		var winWidth = $(window).width();
+//		$('.app-container').css('width',winWidth);
+//		$('.main-container').css('width',winWidth-200);
+//		console.log($('.app-container').width());
+//	});
+
+	$(window).resize(function() {
+		var winWidth = $(window).width();
+		$('.app-container').css('width',winWidth);
+		$('.main-container').css({'width':winWidth-200,'float':'left'});
+	});
+</script>
 
 	</body>
 

@@ -10,7 +10,7 @@ function MasterControl(){
 	this.loginController      = null;
 	this.messageController    = null;
 	this.mainController       = null;
-
+	
 	this.userService   = null;
 	this.stockService  = null;
 	this.salesService  = null;
@@ -34,12 +34,17 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
+		self.navigationController.addLoggedUrl('/Batches/:productId', loadBatchesPage);
 
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
+		self.navigationController.addLoggedUrl('/Insert/:kind', loadInsertionPage);
+		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadEditionPage);
+
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales/:kind/:id', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products/:kind/:id', loadProductsPage);
+		self.navigationController.addLoggedUrl('/Batches/:productId/:kind/:id', loadBatchesPage);
 	};
 	function validationRule(){
 		return $.cookie('lamejorcita.login')? true: false;
@@ -86,10 +91,27 @@ function MasterControl(){
 		self.mainController.additionalData =  data;
 		self.mainController.loadProductsPage();
 	};
+	function loadBatchesPage(data){
+		loadMainView();
+		self.mainController.additionalData =  typeof data =="object" ? data: {productId: data};
+		self.mainController.loadBatchesPage();
+	};
 	function loadDetailPage(data){
 		loadMainView();
 		self.mainController.additionalData =  data;
 		self.mainController.loadDetailPage(data);
+	};
+	function loadInsertionPage(data) {
+		loadMainView();
+		var data = typeof data == "string"? {kind: data}: data;
+		data['method'] = 'insert'
+		self.mainController.loadAdditionPage(data);
+	};
+	function loadEditionPage(data){
+		loadMainView();
+		var data = typeof data == "string"? {kind: data}: data;
+		data['method'] = 'edit'
+		self.mainController.loadAdditionPage(data);
 	};
 	//Stock
 	this.searchStocks = function(searchData){
@@ -126,6 +148,20 @@ function MasterControl(){
 	this.setProducts = function(products){
 		self.mainController.setProducts(products);
 	};
+	this.setProductDetail = function(data){
+		self.mainController.setProductDetail(data);
+	};
+	//Batches
+	this.searchBatches = function(searchData){
+		self.stockService.searchBatches(searchData);
+	};
+	this.setBatches = function(batches){
+		self.mainController.setBatches(batches);
+	};
+	//General
+	this.createGlobalMessage = function(options){
+		self.messageController.createMessage.call($('body'), options);
+	};
 	//Detail
 	this.getStockDetail = function(stockId){
 		self.stockService.getStockDetail(stockId);
@@ -144,6 +180,32 @@ function MasterControl(){
 	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
+	};
+	//Addition
+	this.getStocksforAddition= function(){
+		self.stockService.getStocksforAddition();
+	};
+	this.getProductsforAddition= function(){
+		self.stockService.getProductsforAddition();
+	};
+	this.setStocksforAddition = function(data){
+		self.mainController.setStocksforAddition(data);
+	};
+	this.setProductsforAddition = function(data){
+		self.mainController.setProductsforAddition(data);
+	};
+	this.addBatch = function(dataToSend){
+		self.stockService.addBatch(dataToSend);
+	};
+	this.successfulAddition = function(){
+		self.mainController.successfulAddition();
+	};
+	//Deletion
+	this.deleteBatch = function(deleteData){
+		self.stockService.deleteBatch(deleteData);
+	};
+	this.successfulRemoval = function(){
+		self.mainController.successfulRemoval();
 	};
 	//menu view
 	this.updateMenu = function(index){

@@ -101,10 +101,21 @@ function StockService(){
 		};
 		self.delegate.setBatches(braches);
 	};
-	//Edition Insertio
+	//Edition Insertion
 	this.addBatch = function(dataToSend){
 		console.log(dataToSend);
 		self.delegate.successfulAddition();
+	};
+	//Deletion
+	this.deleteBatch = function(deleteData){
+		console.log(deleteData);
+		self.delegate.createGlobalMessage({
+			message: 'Se borro exitosamente el lote.',
+			delay: 1500,
+			classname: 'success-modalbox'
+		});
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
 	};
 	//Additional data
 	this.getStocksforAddition= function(){

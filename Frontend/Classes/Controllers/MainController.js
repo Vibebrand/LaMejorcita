@@ -17,6 +17,7 @@ function MainController () {
 	var searchController = null;
 	var additionController = null;
 	var infoContainer;
+	var current;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
 	currentDataKeys = [];
@@ -429,6 +430,13 @@ function MainController () {
 	this.successfulAddition = function(){
 		onClickBack();
 	};
+	this.successfulRemoval = function(){
+		if(typeof current.find != "undefined"){
+			current.slideUp('fast', function(){
+				$(this).remove();
+			});
+		};
+	};
 	//Events
 	function onClickDetail(){
 		detailId = $(this).parents('tr').data('id');
@@ -446,7 +454,21 @@ function MainController () {
 		return;
 	};
  	function onClickDelete(){
- 		console.log('delete');
+ 		current = $(this).parents('tr');
+ 		var id = $(this).parents('tr').data('id');
+ 		var deleteCall = self.delegate['delete'+self.page];
+ 		var deleteData = {};
+ 		if(self.page.toLowerCase() == "batch"){
+ 			deleteData.expirationDate = id;
+ 			deleteData.productId = self.additionalData.productId
+ 			if(typeof self.additionalData.kind != "undefined" && typeof self.additionalData.id != "undefined")
+ 				deleteData[self.additionalData.kind+'Id'] = self.additionalData.id;
+ 		}else
+ 			deleteData.id = id;
+ 		if (typeof deleteCall == "function"){
+ 			self.delegate.disableEvents();
+ 			deleteCall.call(self.delegate, deleteData);
+ 		};
  	};
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';

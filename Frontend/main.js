@@ -10,7 +10,6 @@ Importer.importfile('Classes/Controllers/LoginController.js');
 Importer.importfile('Classes/Controllers/HeaderController.js');
 Importer.importfile('Classes/Controllers/MainController.js');
 Importer.importfile('Classes/Controllers/MessageController.js');
-Importer.importfile('Classes/Controllers/ModalBoxController.js');
 
 Importer.importfile('Classes/Services/UserService.js');
 Importer.importfile('Classes/Services/StockService.js');
@@ -28,7 +27,6 @@ function main(){
 	var mainController    = new MainController();
 	var posService        = new POSService();
 	var salesService      = new SalesService();
-	var modalBoxController = new ModalBoxController();
 
 	loginController.delegate  = masterControl;
 	headerController.delegate = masterControl;
@@ -39,13 +37,12 @@ function main(){
 	salesService.delegate = masterControl;
 	posService.delegate   = masterControl;
 
-	loginController.messageController = messageController;
-
 	masterControl.loginController    = loginController;
 	masterControl.mainController     = mainController;
 	masterControl.headerController   = headerController;
 	masterControl.messageController  = messageController;
-	masterControl.modalBoxController = modalBoxController;
+
+	loginController.messageController = masterControl.messageController;
 
 	masterControl.userService   = userService;
 	masterControl.stockService  = stockService;

@@ -10,7 +10,6 @@ function MasterControl(){
 	this.loginController      = null;
 	this.messageController    = null;
 	this.mainController       = null;
-	this.modalBoxController   = null;
 	
 	this.userService   = null;
 	this.stockService  = null;
@@ -38,6 +37,9 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Batches/:productId', loadBatchesPage);
 
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
+		self.navigationController.addLoggedUrl('/Insert/:kind', loadInsertionPage);
+		self.navigationController.addLoggedUrl('/Edit/:kind/:id', loadEditionPage);
+
 		self.navigationController.addLoggedUrl('/POS/:kind/:id', 		loadPOSPage);
 		self.navigationController.addLoggedUrl('/Sellers/:kind/:id', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales/:kind/:id', 	loadSalesPage);
@@ -98,6 +100,18 @@ function MasterControl(){
 		loadMainView();
 		self.mainController.additionalData =  data;
 		self.mainController.loadDetailPage(data);
+	};
+	function loadInsertionPage(data) {
+		loadMainView();
+		var data = typeof data == "string"? {kind: data}: data;
+		data['method'] = 'insert'
+		self.mainController.loadAdditionPage(data);
+	};
+	function loadEditionPage(data){
+		loadMainView();
+		var data = typeof data == "string"? {kind: data}: data;
+		data['method'] = 'edit'
+		self.mainController.loadAdditionPage(data);
 	};
 	//Stock
 	this.searchStocks = function(searchData){
@@ -162,6 +176,25 @@ function MasterControl(){
 	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
+	};
+	//Addition
+	this.getStocksforAddition= function(){
+		self.stockService.getStocksforAddition();
+	};
+	this.getProductsforAddition= function(){
+		self.stockService.getProductsforAddition();
+	};
+	this.setStocksforAddition = function(data){
+		self.mainController.setStocksforAddition(data);
+	};
+	this.setProductsforAddition = function(data){
+		self.mainController.setProductsforAddition(data);
+	};
+	this.addBatch = function(dataToSend){
+		self.stockService.addBatch(dataToSend);
+	};
+	this.successfulAddition = function(){
+		self.mainController.successfulAddition();
 	};
 	//menu view
 	this.updateMenu = function(index){

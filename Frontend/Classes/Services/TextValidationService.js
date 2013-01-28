@@ -12,7 +12,7 @@ function TextValidationService(){
 		@param {String} pattern Regular expresion.
 		@param {Boolean} allowEmpty If its value is true allows empty string values.
 	*/
-	this.validateText = function (textValue, pattern, allowEmpty) {
+	this.validateWithPattern = function (textValue, pattern, allowEmpty) {
 		textValue = $.trim(textValue);
 		allowEmpty = typeof allowEmpty == 'boolean'? allowEmpty: false;
 		if(textValue == "")
@@ -21,6 +21,14 @@ function TextValidationService(){
 			if(!pattern.test(textValue))
 				return false;
 		};
+		return true;
+	};
+	this.validateDate = function(textValue, allowEmpty){
+		textValue = $.trim(textValue);
+		if(textValue == "")
+			return allowEmpty;
+		if(new Date(textValue) == "Invalid Date")
+			return false;
 		return true;
 	};
 };

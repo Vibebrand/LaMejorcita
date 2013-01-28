@@ -158,6 +158,10 @@ function MasterControl(){
 	this.setBatches = function(batches){
 		self.mainController.setBatches(batches);
 	};
+	//General
+	this.createGlobalMessage = function(options){
+		self.messageController.createMessage.call($('body'), options);
+	};
 	//Detail
 	this.getStockDetail = function(stockId){
 		self.stockService.getStockDetail(stockId);
@@ -199,6 +203,9 @@ function MasterControl(){
 	//Deletion
 	this.deleteBatch = function(deleteData){
 		self.stockService.deleteBatch(deleteData);
+	};
+	this.successfulRemoval = function(){
+		self.mainController.successfulRemoval();
 	};
 	//menu view
 	this.updateMenu = function(index){

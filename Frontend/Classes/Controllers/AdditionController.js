@@ -1,22 +1,22 @@
+Importer.importfile('Classes/Services/TextValidationService.js');
 AdditionController.prototype = new ViewController();
 AdditionController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	this.view.setClass('addition-container');
 };
 function  AdditionController(){
-	var self = this;
 	var stocksData;
 	var products;
-	self.page = "Stock"
+	var self        = this;
+	var validations = new TextValidationService();
+	self.page       = "Stock"
 	this.viewDidLoad = function(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		var methodCall = self['prepare'+self.data.method.toCapitalize()+self.data.kind.toCapitalize()];
-		
 		if(typeof viewCall == "function") viewCall.call(self);
 		if(typeof methodCall == "function")setTimeout(methodCall, 50);
-		self.delegate.getStocksforAddition();
-		self.delegate.getProductsforAddition();
 	};
+	//Batch
 	this.prepareInsertBatch = function(){
 		if(typeof stocksData  != "undefined" && typeof productsData != "undefined" ){
 			createBatchItem();
@@ -29,7 +29,7 @@ function  AdditionController(){
 		var addBatchBtn  = $('<button class="addBatch-button">+</button>');
 		var batchesInput = $('<div class="batches-input"></div>');
 		var batchlist = $('<ul class="batch-list"></ul>');
-		var submitBtn = $('<button class="send">Enviar</button>');
+		var submitBtn = $('<button class="send-button">Enviar</button>');
 		batchContainer.empty();
 		createField({
 			field: 'stock-input',
@@ -50,6 +50,8 @@ function  AdditionController(){
 		batchesInput.append(addBatchBtn);
 		batchContainer.append(submitBtn);
 		addBatchBtn.bind('click', createBatchItem);
+		self.delegate.getStocksforAddition();
+		self.delegate.getProductsforAddition();
 	};
 	//Creation
 	function createField(options){
@@ -79,7 +81,7 @@ function  AdditionController(){
 		var batchlist = batchContainer.find('.batch-list');
 		if(batchlist.find('li .product-selector').length  < productsData.length){
 			var today = new Date();
-			var batchItem = $('<li></li>');
+			var batchItem = $('<li class="batch-item"></li>');
 			var productSelector = $('<div class="product-selector"></div>');
 			var quantity = $('<input class="quantity" placeholder="Cantidad"/>');
 			var expirationDate = $('<input placeholder="Fecha de caducidad" class="expiration"/>');
@@ -139,11 +141,61 @@ function  AdditionController(){
 			});
 		};
 	};
+	function createBatchJson(){
+
+		/*var batchData = {
+			productId:
+			count:
+		};*/
+	};
+	//Events
+	function onClickSend(){
+		console.log(validateBatch());
+	};
+	//Validation
+	function validateBatch(){
+		var count = 0;
+		var container = self.view.container();
+		var stockInput = container.find('.stock-input .selected-item');
+		var notesInput = container.find('.notes-input .value');
+		if(!validateBatchList())
+			count++;
+		if(typeof stockInput.data('customdropdown.data') == "undefined"){
+			count++;
+		};
+		if(!validations.validateWithPattern(notesInput.val(), null, false)){
+			count++;
+		};
+		return count < 1;
+	};
+	function validateBatchList(){
+		var container = self.view.container();
+		var batchItems = container.find('.batch-list .batch-item');
+		var valid = true;
+		for (var i = 0; i < batchItems.length; i++) {
+			var batchItem  =  $(batchItems[i]);
+			var product    = batchItem.find('.product-selector .selected-item').data('customdropdown.data')
+			var expiration = batchItem.find('.expiration').attr('value');
+			var quantity = batchItem.find('.quantity').attr('value');
+			var test1 = validations.validateDate(expiration, false);
+			var test2 = validations.validateWithPattern(quantity, new RegExp("^[0-9]+$"), false);
+			if(!test1 || !test2 || typeof product == "undefined"){
+				valid = false;
+			};
+		};
+		return valid;
+	};
+	//Enable Disable
 	this.enableEvents = function(){
 		var container = self.view.container();
+		var submitBtn = container.find('.send-button');
+		submitBtn.unbind('click');
+		submitBtn.bind('click', onClickSend);
 	};
 	this.disableEvents = function(){
 		var container = self.view.container();
+		var submitBtn = container.find('.send-button');
+		submitBtn.unbind('click');
 	};
 	AdditionController.prototype._init_.call(this);
 };

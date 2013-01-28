@@ -3,7 +3,6 @@ import cyclone.escape
 import os
 from urllib2 import HTTPError
 from Backend import MasterController
-"""from txmongo._pymongo.objectid import ObjectId"""
 
 class GetBodegasHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -83,40 +82,88 @@ class GetProductosHandler(cyclone.web.RequestHandler):
 class GetBodegasDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
-        self.finish()
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
 
-    @cyclone.web.asynchronous
-    def post(self):
-        self.finish()
+        Dictparam={"_id":self.get_argument("_id",None)}
+        MasterController.obtenerbodegas(param=Dictparam,accion=muestra)
 
-    @cyclone.web.asynchronous
+    """@cyclone.web.asynchronous
     def delete(self):
-        self.finish()
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+        parametro=self.get_argument("_id",None)
+        MasterController.eliminarbodegas(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)"""
 
 class GetPuntosDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
-        self.finish()
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        Dictparam={"_id":self.get_argument("_id",None)}
+        MasterController.obtenerpuntos(param=Dictparam,accion=muestra)
+
+    @cyclone.web.asynchronous
+    def delete(self):
+        def muestra(result):
+            self.write()
+            self.finish()
+        pass
 
 class GetVendedorDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
-        self.finish()
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        Dictparam={"_id":self.get_argument("_id",None)}
+        MasterController.obtenervedendores(param=Dictparam,accion=muestra)
+
+    @cyclone.web.asynchronous
+    def delete(self):
+        def muestra(result):
+            self.write()
+            self.finish()
+        pass
 
 class GetVentasDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
-        self.finish()
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        Dictparam={"_id":self.get_argument("_id",None)}
+        MasterController.obtenerventas(param=Dictparam,accion=muestra)
+
+    @cyclone.web.asynchronous
+    def delete(self):
+        def muestra(result):
+            self.write()
+            self.finish()
+        pass
 
 class GetProductosDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
-        self.finish()
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        Dictparam={"_id":self.get_argument("_id",None)}
+        MasterController.obtenerproductos(param=Dictparam,accion=muestra)
+
+    @cyclone.web.asynchronous
+    def delete(self):
+        def muestra(result):
+            self.write()
+            self.finish()
+        pass
 
 class LogoutHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous

@@ -1,22 +1,26 @@
 from Backend.Data.InterfazDB.DBmodule import DBModule
 
-def obtenerbodegas(skip,limit, accion):
+def obtenerbodegas(accion,param={},skip=0,limit=0):
 	db=DBModule("bodegasinfo")
-	db.getEntities(skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
 
-def obtenerpuntos(skip,limit, accion):
+def obtenerpuntos(accion,param={},skip=0,limit=0):
 	db=DBModule("puntosinfo")
-	db.getEntities(skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
 
-def obtenervendedores(skip,limit, accion):
+def obtenervendedores(accion,param={},skip=0,limit=0):
 	db=DBModule("vendedoresinfo")
-	db.getEntities(skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
 
-def obtenerventas(skip,limit, accion):
+def obtenerventas(accion,param={},skip=0,limit=0):
 	db=DBModule("ventasinfo")
-	db.getEntities(skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
 
-def obtenerproductos(skip,limit, accion):
+def obtenerproductos(accion,param={},skip=0,limit=0):
 	db=DBModule("productosinfo")
-	db.getEntities(skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+
+def eliminarbodegas(accion,entityId, valuesToUpdate):
+	db=DBModule("bodegasinfo")
+	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
 

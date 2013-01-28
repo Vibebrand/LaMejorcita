@@ -42,12 +42,14 @@ class DBModule:
                 if "_id" in item:
                     if isinstance(item["_id"], str):
                         item["_id"] = ObjectId(item["_id"])
+                item["status":"1"]
                 ent = yield entityCollection.find(item, fields=args, limit=limit, skip=skip, filter=filter)
                 self.result.append(ent)
         else:
             if "_id" in param:
                 if isinstance(param["_id"], str):
                     param["_id"] = ObjectId(param["_id"])
+            item["status":"1"]
             self.result = yield entityCollection.find(param, fields=args, limit=limit, skip=skip, filter=filter)
         mongo.disconnect()
 

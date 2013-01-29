@@ -9,19 +9,20 @@ MainController.prototype._init_= function(){
 };
 function MainController () {
 	var buttonsContainer;
-	var self             = this;
-	var pagecount        = 0;
-	var objects          = 15;
-	var tableController  = null;
-	var detailController = null;
-	var searchController = null;
-	var additionController = null;
 	var infoContainer;
 	var current;
 	var editionId;
-	var pages = ["stock","pos","seller","sale","product"];
-	this.currentData = [];
-	currentDataKeys = [];
+	var self               = this;
+	var pagecount          = 0;
+	var objects            = 15;
+	var tableController    = null;
+	var detailController   = null;
+	var searchController   = null;
+	var additionController = null;
+	var pages              = ["stock","pos","seller","sale","product"];
+	var currentDataKeys    = [];
+	this.currentData       = [];
+	this.messageController = null;
 	this.viewDidLoad = function(){
 		if(!tableController){
 			tableController          = new TableController();
@@ -407,6 +408,28 @@ function MainController () {
 		var buttonCotnainer = self.view.container().find('.detailButton-container');
 		buttonCotnainer.remove();
 	};
+	function createDeleteModalbox(){
+		$('#mask').show();
+		var deleteForm = $('<div class="delete-form"></div>');
+		var message    = $('<span class="message"></span>');
+		var acceptBtn  = $('<button class="accept"></button>');
+		var cancelBtn  = $('<button class="cancel"></button>');
+		deleteForm.append(message);
+		deleteForm.append(acceptBtn);
+		deleteForm.append(cancelBtn);
+		self.messageController.addViewAsMessage.call($('body'),{
+			view 		: deleteForm,
+			className	: 'delete-modalbox',
+			animation	: 'fadeIn',
+			speed		: 'fast'
+		});
+
+		message.text('¿Esta seguro de querer borrar este dato.?');
+		acceptBtn.text('Aceptar');
+		cancelBtn.text('Cancelar');
+		cancelBtn.bind('click', onClickCancel);
+		acceptBtn.bind('click', deleteRow);
+	};
 	//Data obtaining
 	this.getAddressString = function(address){
 		var addressText = address.street+" #"+address.extNum;
@@ -433,10 +456,12 @@ function MainController () {
 		onClickBack();
 	};
 	this.successfulRemoval = function(){
-		if(typeof current.find != "undefined"){
-			current.slideUp('fast', function(){
-				$(this).remove();
-			});
+		if(typeof current == "object" && typeof current.find != "undefined"){
+			var cancelBtn = $('.delete-modalbox button.cancel');
+			cancelBtn.trigger('click');
+			setTimeout(function(){
+				current.slideUp('fast', current.remove);
+			},300);
 		};
 	};
 	this.successfulProductAddition = function(){
@@ -466,21 +491,9 @@ function MainController () {
 		return;
 	};
  	function onClickDelete(){
+ 		self.delegate.disableEvents();
  		current = $(this).parents('tr');
- 		var id = $(this).parents('tr').data('id');
- 		var deleteCall = self.delegate['delete'+self.page];
- 		var deleteData = {};
- 		if(self.page.toLowerCase() == "batch"){
- 			deleteData.expirationDate = id;
- 			deleteData.productId = self.additionalData.productId
- 			if(typeof self.additionalData.kind != "undefined" && typeof self.additionalData.id != "undefined")
- 				deleteData[self.additionalData.kind+'Id'] = self.additionalData.id;
- 		}else
- 			deleteData.id = id;
- 		if (typeof deleteCall == "function"){
- 			self.delegate.disableEvents();
- 			deleteCall.call(self.delegate, deleteData);
- 		};
+ 		createDeleteModalbox();
  	};
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';
@@ -500,6 +513,30 @@ function MainController () {
 	};
 	function onClickEdit(){
 		console.log($(this));
+	};
+	function onClickCancel(){
+		var element = $(this).parents('.delete-modalbox')
+		element.fadeOut('fast', element.remove);
+		$('#mask').hide();
+		self.enableAllEvents();
+	};
+	function deleteRow(){
+		if(typeof current == "object" && typeof current.find != "undefined"){
+			$(this).unbind('click');
+			var id         = current.data('id')
+			var deleteCall = self.delegate['delete'+self.page];
+			var deleteData = {};
+			if(self.page.toLowerCase() == "batch"){
+	 			deleteData.expirationDate = id;
+	 			deleteData.productId = self.additionalData.productId
+	 			if(typeof self.additionalData.kind != "undefined" && typeof self.additionalData.id != "undefined")
+	 				deleteData[self.additionalData.kind+'Id'] = self.additionalData.id;
+	 		}else
+	 			deleteData.id = id;
+
+	 		if (typeof deleteCall == "function")
+	 			deleteCall.call(self.delegate, deleteData);
+		};
 	};
 	//Enable Disable
 	this.enableEvents = function(){

@@ -43,6 +43,7 @@ function main(){
 	masterControl.messageController  = messageController;
 
 	loginController.messageController = masterControl.messageController;
+	mainController.messageController = masterControl.messageController;
 
 	masterControl.userService   = userService;
 	masterControl.stockService  = stockService;

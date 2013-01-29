@@ -120,11 +120,6 @@ function StockService(){
 	//Deletion
 	this.deleteBatch = function(deleteData){
 		console.log(deleteData);
-		self.delegate.createGlobalMessage({
-			message: 'Se borro exitosamente el lote.',
-			delay: 1500,
-			classname: 'success-modalbox'
-		});
 		self.delegate.successfulRemoval();
 		self.delegate.enableEvents();
 	};

@@ -276,15 +276,16 @@ function MainController () {
 	this.loadAdditionPage = function(data){
 		removeBatchView();
 		removeVisualizationButtons();
+		self.removeDetailMenu();
+		self.createDetailMenu();
 
 		self.page = "Addition";
 		additionController.data = data;
-		self.removeDetailMenu();
 		searchController.hideSearch();
 		searchController.hideAddButton();
 		detailController.view.removeView();
 		tableController.view.removeView();
-		detailController.createDetailMenu();
+		
 
 		self.updateMenu($.cookie('lamejorcita.option'));
 		additionController.view.appendToView(self.view);
@@ -389,14 +390,14 @@ function MainController () {
 		if(typeof buttonsContainer != "undefined"  && typeof buttonsContainer.remove != "undefined")
 			buttonsContainer.remove();
 	};
-	this.createDetailMenu = function(edit){
+	this.createDetailMenu = function(addEdition){
 		self.removeDetailMenu();
 		var buttonCotnainer = $('<div class="detailButton-container"></div>');
 		var backBtn         = $('<button class="back-button"></button>');
 		self.view.addSubview(buttonCotnainer);
 		buttonCotnainer.append(backBtn);
 		backBtn.text('Volver');
-		if(edit === true){
+		if(addEdition === true){
 			var editBtn = $('<button class="edit-button"></button>');
 			buttonCotnainer.append(editBtn);
 			editBtn.text('Editar');

@@ -49,6 +49,7 @@ function  AdditionController(){
 
 		acceptBtn.bind('click', onClickSend);
 		cancelBtn.bind('click', onClickCancel);
+		productForm.find('input').bind('focusin', onFocusIn);
 	};
 	//Batch
 	this.prepareInsertBatch = function(){
@@ -196,7 +197,9 @@ function  AdditionController(){
 		};
 		return JSON.stringify(batchData);
 	};
-	function createProductJson(){};
+	function createProductJson(){
+
+	};
 	//Events
 	function onClickSend(){
 		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
@@ -221,6 +224,25 @@ function  AdditionController(){
 	};
 	//Validation
 	function validateProduct(){
+		var count = 0;
+		var form  = $('.product-form');
+		var pname = form.find('.name-input .value');
+		var salePrice = form.find('.salePrice-input .value');
+		if(!validations.validateWithPattern(pname.val(), null, false)){
+			self.messages.createMessage.call(pname.parents('.name-input'), {
+				message:'Nombre de producto no válido.',
+				className: 'error-message'
+			});
+			count++;
+		};
+		if(!validations.validateWithPattern(salePrice.val(), new RegExp("^\\$?[0-9]+(\\.([0-9]{1})?[1-9]{1})?$"), false)){
+			self.messages.createMessage.call(salePrice.parents('.salePrice-input'), {
+				message:'Precio de producto no válido.',
+				className: 'error-message'
+			});
+			count++;
+		};
+		return count < 1;
 	};
 	function validateBatch(){
 		var count = 0;
@@ -263,6 +285,7 @@ function  AdditionController(){
 				});
 				valid = false;
 			};
+		
 		};
 		return valid;
 	};
@@ -283,7 +306,6 @@ function  AdditionController(){
 		submitBtn.unbind('click');
 		inputs.unbind('focusin.lamejorcita');
 	};
-
 	this.createProductJson = createProductJson;
 	this.validateProduct   = validateProduct;
 	this.validateBatch     = validateBatch;

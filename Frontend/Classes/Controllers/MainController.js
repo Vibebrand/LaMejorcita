@@ -355,10 +355,10 @@ function MainController () {
 			self.delegate['search'+self.page+'es'].call(self.delegate, searchData);
 	};
 	function loadTableView(){
+		currentDataKeys = [];
 		tableController.cleanTable();
 		tableController.view.removeView();
 		self.makeSearch({});
-		currentDataKeys = [];
 	};
 	function prepareTableView(){
 		if(self.page != "Batch")
@@ -370,6 +370,11 @@ function MainController () {
 			self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 		else
 			self.updateMenu(pages.length-1);
+	};
+	this.reloadTable = function(){
+		currentDataKeys = [];
+		tableController.cleanTable();
+		self.makeSearch({});
 	};
 	//Creation
 	function createVisualizationButtons(){
@@ -436,6 +441,12 @@ function MainController () {
 				$(this).remove();
 			});
 		};
+	};
+	this.successfulProductAddition = function(){
+		additionController.successfulProductAddition();
+	};
+	this.failedProductAddition = function(){
+		additionController.failedProductAddition();
 	};
 	//Events
 	function onClickDetail(){

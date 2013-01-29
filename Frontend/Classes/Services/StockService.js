@@ -106,6 +106,10 @@ function StockService(){
 		console.log(dataToSend);
 		self.delegate.successfulAddition();
 	};
+	this.addProduct = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulProductAddition();
+	};
 	//Deletion
 	this.deleteBatch = function(deleteData){
 		console.log(deleteData);

@@ -51,6 +51,28 @@ function  AdditionController(){
 		cancelBtn.bind('click', onClickCancel);
 		productForm.find('input').bind('focusin', onFocusIn);
 	};
+	this.successfulProductAddition = function(){
+		var form  = $('.product-form');
+		var cancelBtn = form.find('button.cancel');
+		self.messages.createMessage.call(form, {
+			message:'El producto se guardo correctamente.',
+			className: 'success-message'
+		});
+		setTimeout(function(){
+			cancelBtn.trigger('click');
+			setTimeout(self.delegate.reloadTable,50);
+		},1500);
+	};
+	this.failedProductAddition = function(){
+		var form  = $('.product-form');
+		var acceptBtn = form.find('button.accept');
+		self.messages.createMessage.call(form, {
+			message:'El producto se guardo correctamente.',
+			className: 'success-message',
+			delay:1500
+		});
+		acceptBtn.bind('click', onClickSend);
+	};
 	//Batch
 	this.prepareInsertBatch = function(){
 		if(typeof stocksData  != "undefined" && typeof productsData != "undefined" ){
@@ -198,7 +220,14 @@ function  AdditionController(){
 		return JSON.stringify(batchData);
 	};
 	function createProductJson(){
-
+		var form      = $('.product-form');
+		var pname     = $.trim(form.find('.name-input .value').val());
+		var salePrice = $.trim(form.find('.salePrice-input .value').val());
+		var productData = {
+			name 	 : pname,
+			salePrice: salePrice
+		};
+		return JSON.stringify(productData);
 	};
 	//Events
 	function onClickSend(){
@@ -235,12 +264,16 @@ function  AdditionController(){
 			});
 			count++;
 		};
-		if(!validations.validateWithPattern(salePrice.val(), new RegExp("^\\$?[0-9]+(\\.([0-9]{1})?[1-9]{1})?$"), false)){
+		if(!validations.validateWithPattern(salePrice.val(), new RegExp("^\\$?[0-9]+(\\.([0-9]{1})?[0-9]{1})?$"), false)){
 			self.messages.createMessage.call(salePrice.parents('.salePrice-input'), {
 				message:'Precio de producto no válido.',
 				className: 'error-message'
 			});
 			count++;
+		};
+		if(count < 1){
+			var acceptBtn = form.find('button.accept');
+			acceptBtn.unbind('click');
 		};
 		return count < 1;
 	};

@@ -3,7 +3,6 @@ import txmongo
 from txmongo._pymongo.objectid import ObjectId
 from twisted.internet import defer
 
-
 class DBModule:
 
     def __init__(self, collection):
@@ -16,7 +15,7 @@ class DBModule:
         """
         Inserts or updates a new enterprise entity in the db
         """
-        mongo = yield txmongo.MongoConnection("localhost",27017)
+        mongo = yield txmongo.MongoConnection()
         mejorcita = mongo.Mejorcita
         entityCollection = mejorcita[self.collectionName]
         #if hasattr(entity, "type"):
@@ -33,7 +32,7 @@ class DBModule:
         If there are no parameters, it searches for all
         the objects in the db.
         """
-        mongo = yield txmongo.MongoConnection("localhost",27017)
+        mongo = yield txmongo.MongoConnection()
         mejorcita = mongo.Mejorcita
         entityCollection = mejorcita[self.collectionName]
         if isinstance(param, list):
@@ -42,14 +41,11 @@ class DBModule:
                 if "_id" in item:
                     if isinstance(item["_id"], str):
                         item["_id"] = ObjectId(item["_id"])
-                item["status":"1"]
                 ent = yield entityCollection.find(item, fields=args, limit=limit, skip=skip, filter=filter)
                 self.result.append(ent)
         else:
             if "_id" in param:
-                if isinstance(param["_id"], str):
-                    param["_id"] = ObjectId(param["_id"])
-            item["status":"1"]
+                param["_id"] = ObjectId(param["_id"])
             self.result = yield entityCollection.find(param, fields=args, limit=limit, skip=skip, filter=filter)
         mongo.disconnect()
 
@@ -70,9 +66,9 @@ class DBModule:
             param = extraParameters
             ent = yield entityCollection.update(param, {"$set": valuesToUpdate}, safe=True, multi=multi)
         if not ent["err"]:
-            self.result = "saved"
+            self.result = "True"
         else:
-            self.result = "error"
+            self.result = "False"
         mongo.disconnect()
 
     @defer.inlineCallbacks
@@ -95,8 +91,11 @@ class DBModule:
             if isinstance(item, ObjectId):
                 return unicode(str(item))
             elif isinstance(item, dict):
-                if "_id" in item and parseObjectId:
-                    item["_id"] = unicode(str(item["_id"]))
+                for v in item.values():
+                    if "_id" in item and parseObjectId and not isinstance(v,dict):
+                        item["_id"] = unicode(str(item["_id"]))
+                    else:
+                        changeId(v)
                 return item
             else:
                 return item

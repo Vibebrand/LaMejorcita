@@ -2,13 +2,20 @@ TableController.prototype = new ViewController();
 TableController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);
 	var table = $('<table></table>');
-	this.container = $('<tbody></tbody>');
-	this.header = $('<thead></thead>');
-	this.footer = $('<tfoot></tfoot>');
+	var colgroup = $('<colgroup></colgroup>');
+	var container = $('<tbody></tbody>');
+	var header = $('<thead></thead>');
+	var footer = $('<tfoot></tfoot>');
 	this.view.replaceContainerWith(table);
-	this.view.addSubview(this.header);
-	this.view.addSubview(this.container);
-	this.view.addSubview(this.footer);
+	this.view.addSubview(colgroup);
+	this.view.addSubview(header);
+	this.view.addSubview(container);
+	this.view.addSubview(footer);
+
+	this.colgroup  = colgroup;
+	this.container = container;
+	this.header    = header;
+	this.footer    = footer;
 };
 function TableController (argument) {
 	var self = this;
@@ -25,11 +32,18 @@ function TableController (argument) {
 		self.header.empty();
 		self.header.append(rowheader);
 		for (var i = 0; i < self.tableHeaders.length; i++){
-			if(self.tableHeaders[i].constructor === Object &&typeof self.tableHeaders[i].identifier != "undefined")
+			if(self.tableHeaders[i].constructor === Object &&typeof self.tableHeaders[i].identifier != "undefined"){
 				createCellItem.call(rowheader, self.tableHeaders[i].value);
-			else if(typeof self.tableHeaders[i] == "string")
+				createCollItem.call(self, self.tableHeaders[i].className);
+			}else if(typeof self.tableHeaders[i] == "string")
 				createCellItem.call(rowheader, self.tableHeaders[i]);
 		};
+	};
+	function createCollItem(classname){
+		var classname = typeof classname =="string"? classname: '';
+		var col = $('<col>');
+		col.attr('class', classname);
+		self.colgroup.append(col);
 	};
 	function createCellItem(value){
 		var cell = $('<td></td>');
@@ -55,7 +69,6 @@ function TableController (argument) {
 	function getCellData( index, identifier, itemPrototype, row){
 		if(typeof itemPrototype === "undefined")
 			return self.delegate.getCellData(index, identifier, row);
-		
 		if(typeof itemPrototype === "object" && typeof itemPrototype.clone === "function")
 			return itemPrototype.clone(true);
 	};

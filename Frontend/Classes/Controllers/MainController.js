@@ -18,6 +18,7 @@ function MainController () {
 	var additionController = null;
 	var infoContainer;
 	var current;
+	var editionId;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
 	currentDataKeys = [];
@@ -53,13 +54,14 @@ function MainController () {
 			this.page     = "Stock";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'address','value':'Dirección'},
-											{'identifier': 'address.district','value':'Colonia'},
-											{'identifier': 'manager.name','value':'Responsable'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name','value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'address','value':'Dirección'});
+			tableController.tableHeaders.push({'identifier': 'address.district','value':'Colonia'});
+			tableController.tableHeaders.push({'identifier': 'manager.name','value':'Responsable'});
+			tableController.tableHeaders.push({'identifier': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('stock-table');
 			loadTableView();
 		};
@@ -79,15 +81,16 @@ function MainController () {
 			self.page = "POS";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'fridge.serial','value':'Serial'},
-											{'identifier': 'fridge.status','value':'Estado'},
-											{'identifier': 'address','value':'Dirección'},
-											{'identifier': 'address.district','value':'Colonia'},
-											{'identifier': 'representative.name','value':'Representante'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'email','value':'Correo electrónico'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'fridge.serial','value':'Serial'});
+			tableController.tableHeaders.push({'identifier': 'fridge.status','value':'Estado'});
+			tableController.tableHeaders.push({'identifier': 'address','value':'Dirección'});
+			tableController.tableHeaders.push({'identifier': 'address.district','value':'Colonia'});
+			tableController.tableHeaders.push({'identifier': 'representative.name','value':'Representante'});
+			tableController.tableHeaders.push({'identifier': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'email','value':'Correo electrónico'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('pos-table');
 			loadTableView();
 		};
@@ -107,12 +110,13 @@ function MainController () {
 			self.page = "Seller";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'email','value':'Correo electrónico'},
-											{'identifier': 'stock.name','value':'Bodega'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name','value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'email','value':'Correo electrónico'});
+			tableController.tableHeaders.push({'identifier': 'stock.name','value':'Bodega'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('sellers-table');
 			loadTableView();
 		};
@@ -132,13 +136,14 @@ function MainController () {
 			self.page = "Sale";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			tableController.view.setClass('sales-table');
-			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
-											{'identifier': 'time','value':'Hora'},
-											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
-											{'identifier': 'salepoint.fridge.status','value':'Estado'},
-											{'identifier': 'products.count','value':'Cantidad'},
-											{'identifier': 'products.amount','value':'Monto'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'date','value':'Fecha'});
+			tableController.tableHeaders.push({'identifier': 'time','value':'Hora'});
+			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.serial','value':'Punto de venta'});
+			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.status','value':'Estado'});
+			tableController.tableHeaders.push({'identifier': 'products.count','value':'Cantidad'});
+			tableController.tableHeaders.push({'identifier': 'products.amount','value':'Monto'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
 			tableController.view.setClass('sale-table');
 			loadTableView();
 		};
@@ -156,14 +161,19 @@ function MainController () {
 		searchController.showAddButton();
 		if(self.page != "Product"){
 			self.page = "Product";
-			var detailBtn = $('<button class="detail-button">Ver lotes</button>');
+			var batchBtn = $('<button class="batch-button">Lotes</button>');
+			var editBtn = $('<button class="edit-button">Editar</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'salePrice','value':'Precio'},
-											{'identifier': 'count','value':'Cantidad'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
-			if(typeof self.additionalData == "undefined")					
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name','value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'salePrice','value':'Precio'});
+			tableController.tableHeaders.push({'identifier': 'registationDate', 'value':'Fecha de registro'});
+			tableController.tableHeaders.push({'identifier': 'count','value':'Cantidad'});
+			tableController.tableHeaders.push({'identifier': 'batch','value':'', 'itemPrototype': batchBtn});
+			if(typeof self.additionalData == "undefined"){
+				tableController.tableHeaders.push({'identifier': 'edit','value':'', 'itemPrototype': editBtn});
 				tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
+			};
 			tableController.view.setClass('products-table');
 			loadTableView();
 		};
@@ -182,13 +192,13 @@ function MainController () {
 		if(self.page != "Batch"){
 			self.page = "Batch";
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'batch.expiration','value':'Lote'},
-											{'identifier': 'batch.count','value':'Cantidad'},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'batch.expiration','value':'Lote'});
+			tableController.tableHeaders.push({'identifier': 'batch.count','value':'Cantidad'});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('batches-table');
-			self.createDetailMenu(true);
+			self.createDetailMenu();
 			loadTableView();
-			self.getDetail("Product", self.additionalData.productId);
 		};
 		createProductDetail();
 		prepareTableView();
@@ -211,16 +221,6 @@ function MainController () {
 				title:{classname:'title', value: 'Precio de venta'},
 				container: infoContainer
 			});
-			detailController.createField({
-				field: 'registationDate',
-				title:{classname:'title', value: 'Fecha registro'},
-				container: infoContainer
-			});
-			detailController.createField({
-				field: 'count',
-				title:{classname:'title', value: 'Total'},
-				container: infoContainer
-			});
 		};
 		self.view.addSubview(infoContainer);
 	};
@@ -235,12 +235,8 @@ function MainController () {
 			if(typeof infoContainer != "undefined"){
 				var pname = infoContainer.find('.name .value');
 				var salePrice = infoContainer.find('.salePrice .value');
-				var registationDate = infoContainer.find('.registationDate .value');
-				var total = infoContainer.find('.count .value');
 				pname.text(product.name);
 				salePrice.text('$ '+product.salePrice.toFixed(2));
-				registationDate.text(product.registationDate);
-				total.text(product.count);
 			}else
 				setTimeout(arguments.callee, 50);
 		},50);
@@ -281,7 +277,7 @@ function MainController () {
 		removeBatchView();
 		removeVisualizationButtons();
 
-		self.page = data.kind.toCapitalize();
+		self.page = "Addition";
 		additionController.data = data;
 		self.removeDetailMenu();
 		searchController.hideSearch();
@@ -355,10 +351,10 @@ function MainController () {
 			self.delegate['search'+self.page+'es'].call(self.delegate, searchData);
 	};
 	function loadTableView(){
+		currentDataKeys = [];
 		tableController.cleanTable();
 		tableController.view.removeView();
 		self.makeSearch({});
-		currentDataKeys = [];
 	};
 	function prepareTableView(){
 		if(self.page != "Batch")
@@ -370,6 +366,11 @@ function MainController () {
 			self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 		else
 			self.updateMenu(pages.length-1);
+	};
+	this.reloadTable = function(){
+		currentDataKeys = [];
+		tableController.cleanTable();
+		self.makeSearch({});
 	};
 	//Creation
 	function createVisualizationButtons(){
@@ -437,20 +438,30 @@ function MainController () {
 			});
 		};
 	};
+	this.successfulProductAddition = function(){
+		additionController.successfulProductAddition();
+	};
+	this.failedProductAddition = function(){
+		additionController.failedProductAddition();
+	};
 	//Events
 	function onClickDetail(){
-		detailId = $(this).parents('tr').data('id');
+		var detailId = $(this).parents('tr').data('id');
 		self.delegate.disableEvents();
-
-		if(self.page == "Product"  && typeof self.additionalData == "undefined" ){
+		self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
+		return;
+	};
+	function onClickBatch(){
+		var detailId = $(this).parents('tr').data('id');
+		self.delegate.disableEvents();
+		if(typeof self.additionalData == "undefined" ){
 			self.changePage('/Batches/'+detailId);
 			return;
 		};
-		if(self.page == "Product"  && typeof self.additionalData == "object" && typeof self.additionalData.id != "undefined"){
+		if(typeof self.additionalData == "object" && typeof self.additionalData.id != "undefined"){
 			self.changePage('/Batches/'+detailId+'/'+self.additionalData.kind.toLowerCase()+'/'+self.additionalData.id);
 			return;
 		};
-		self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
 		return;
 	};
  	function onClickDelete(){
@@ -480,21 +491,31 @@ function MainController () {
 	};
 	this.onClickAdd = function(){
 		self.delegate.disableEvents();
-		self.changePage('/Insert/'+self.page.toLowerCase());
+		if(self.page == "Product"){
+			additionController.data = {kind: 'product'}
+			additionController.loadProductsView();
+		}else
+			self.changePage('/Insert/'+self.page.toLowerCase());
+	};
+	function onClickEdit(){
+		console.log($(this));
 	};
 	//Enable Disable
 	this.enableEvents = function(){
 		var detailBtn = tableController.view.container().find('.detail-button');
 		var deleteBtn = tableController.view.container().find('.delete-button');
-		var backBtn = self.view.container().find('.detailButton-container .back-button');
+		var backBtn   = self.view.container().find('.detailButton-container .back-button');
+		var batchBtn  = tableController.view.container().find('.batch-button');
 
 		detailBtn.unbind('click');
 		deleteBtn.unbind('click');
 		backBtn.unbind('click');
+		batchBtn.unbind('click');
 
 		detailBtn.bind('click',onClickDetail);
 		deleteBtn.bind('click',onClickDelete);
 		backBtn.bind('click', onClickBack);
+		batchBtn.bind('click', onClickBatch);
 		
 		searchController.enableEvents();
 		detailController.enableEvents();
@@ -503,7 +524,9 @@ function MainController () {
 	this.disableEvents = function(){
 		var backBtn = self.view.container().find('.button-container .back-button');
 		tableController.view.container().find('button').unbind('click');
+
 		backBtn.unbind('click');
+
 		searchController.disableEvents();
 		detailController.disableEvents();
 		additionController.disableEvents();

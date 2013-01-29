@@ -194,11 +194,22 @@ function MasterControl(){
 	this.setProductsforAddition = function(data){
 		self.mainController.setProductsforAddition(data);
 	};
+	this.successfulAddition = function(){
+		self.mainController.successfulAddition();
+	};
+	//Addition Batch
 	this.addBatch = function(dataToSend){
 		self.stockService.addBatch(dataToSend);
 	};
-	this.successfulAddition = function(){
-		self.mainController.successfulAddition();
+	//Addition Product
+	this.addProduct = function(data){
+		self.stockService.addProduct(data);
+	};
+	this.successfulProductAddition = function(){
+		self.mainController.successfulProductAddition();
+	};
+	this.failedProductAddition = function(){
+		self.mainController.failedProductAddition();
 	};
 	//Deletion
 	this.deleteBatch = function(deleteData){

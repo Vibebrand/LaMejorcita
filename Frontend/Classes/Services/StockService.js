@@ -49,7 +49,7 @@ function StockService(){
 		console.log(products);
 		self.delegate.setProducts(products);
 	};
-	this.getStockDetail = function(stockId){
+	this.getStockDetail = function(stockId, callbacks){
 		var date = new Date();
 		var stock = {
 			_id			: "safdsafdsa0fd",
@@ -76,9 +76,13 @@ function StockService(){
 			}
 		};
 		console.log(stock);
-		self.delegate.setDetail(stock);
+		self.callsHandler.makeCallbacks({
+						calls: callbacks.successCall, 
+						params: stock , 
+						handlers: [self, self.delegate]
+					});
 	};
-	this.getProductDetail = function(productId){
+	this.getProductDetail = function(productId, callbacks){
 		console.log(productId);
 		var date = new Date();
 		var product = {
@@ -89,9 +93,13 @@ function StockService(){
 			registationDate :"2013/01/13"
 		};
 		console.log(product);
-		self.delegate.setDetail(product);
+		self.callsHandler.makeCallbacks({
+						calls: callbacks.successCall, 
+						params: product , 
+						handlers: [self, self.delegate]
+					});
 	};
-	this.searchBatches = function(searchData){
+	this.searchBatches = function(searchData, callbacks){
 		console.log(searchData);
 		var date = new Date();
 		var product = {

@@ -42,7 +42,7 @@ function UserService(){
 		console.log(sellers);
 		self.delegate.setSellers(sellers);
 	};
-	this.getSellerDetail = function(sellerId){
+	this.getSellerDetail = function(sellerId, callbacks){
 		var seller = {
 			_id:"asfdo90qwqewr0",
 			name: "Sales Guy",

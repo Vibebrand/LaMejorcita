@@ -266,9 +266,9 @@ function MainController () {
 		detailController.createDetailMenu();
 		detailController.view.appendToView(self.view);
 	};
-	this.getDetail = function(page, id){
+	this.getDetail = function(page, id, callbacks){
 		var getCall = self.delegate["get"+page+"Detail"];
-		if(typeof getCall == "function") getCall.call(self.delegate, id);
+		if(typeof getCall == "function") getCall.call(self.delegate, id, callbacks);
 	};
 	this.setDetail = function(data){
 		detailController.setDetail(data);
@@ -491,9 +491,12 @@ function MainController () {
 		return;
 	};
  	function onClickDelete(){
- 		self.delegate.disableEvents();
- 		current = $(this).parents('tr');
- 		createDeleteModalbox();
+ 		var deleteCall = self.delegate['delete'+self.page];
+ 		if(typeof deleteCall == "function"){
+ 			self.delegate.disableEvents();
+	 		current = $(this).parents('tr');
+	 		createDeleteModalbox();
+ 		};
  	};
  	function onClickBack(){
 		var prevPage = $.cookie('lamejorcita.prevPage')?  $.cookie('lamejorcita.prevPage'): '';

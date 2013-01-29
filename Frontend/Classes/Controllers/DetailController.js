@@ -348,8 +348,15 @@ function DetailController(){
 			container: saleinfo
 		});
 	};
+	//Product
+	this.loadProductDetail = function(){
+
+	};
+	this.setProductDetail = function(){
+
+	};
 	//General
-	self.setDetail = function(data){
+	this.setDetail = function(data){
 		var setCall = self['set'+self.page+'Detail'];
 		if(typeof setCall =="function") setCall.call(self, data);
 		self.delegate.enableAllEvents();

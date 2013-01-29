@@ -26,8 +26,7 @@ function  AdditionController(){
 		var acceptBtn 	= $('<button class="accept">Aceptar</button>');
 		var cancelBtn 	= $('<button class="cancel">Cancelar</button>');
 		$('#mask').show();
-		self.messages.addViewAsMessage.call($('body'), 
-		{
+		self.messages.addViewAsMessage.call($('body'),{
 			view 		: productForm,
 			className	: 'product-modalbox',
 			animation	: 'fadeIn',

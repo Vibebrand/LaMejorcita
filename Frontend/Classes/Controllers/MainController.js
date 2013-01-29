@@ -281,7 +281,7 @@ function MainController () {
 		removeBatchView();
 		removeVisualizationButtons();
 
-		self.page = data.kind.toCapitalize();
+		self.page = "Addition";
 		additionController.data = data;
 		self.removeDetailMenu();
 		searchController.hideSearch();
@@ -480,7 +480,11 @@ function MainController () {
 	};
 	this.onClickAdd = function(){
 		self.delegate.disableEvents();
-		self.changePage('/Insert/'+self.page.toLowerCase());
+		if(self.page == "Product"){
+			additionController.data = {kind: 'product'}
+			additionController.loadProductsView();
+		}else
+			self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	//Enable Disable
 	this.enableEvents = function(){

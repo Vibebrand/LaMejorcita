@@ -15,7 +15,40 @@ function  AdditionController(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		var methodCall = self['prepare'+self.data.method.toCapitalize()+self.data.kind.toCapitalize()];
 		if(typeof viewCall == "function") viewCall.call(self);
-		if(typeof methodCall == "function")setTimeout(methodCall, 50);
+		if(typeof methodCall == "function")setTimeout(methodCall, 0);
+	};
+	//Products
+	function loadProductsView(){
+		var productForm = $('<div class="product-form"></div>');
+		var acceptBtn 	= $('<button class="accept">Aceptar</button>');
+		var cancelBtn 	= $('<button class="cancel">Cancelar</button>');
+		$('#mask').show();
+		self.messages.addViewAsMessage.call($('body'), 
+		{
+			view 		: productForm,
+			className	: 'product-modalbox',
+			animation	: 'fadeIn',
+			speed		: 'fast'
+		});
+		createField({
+			field: 'name-input',
+			title: {classname: 'title', value: 'Nombre'}, 
+			value: [{classname: 'value', value:''}],
+			tagname: 'input',
+			container: productForm
+		});
+		createField({
+			field: 'salePrice-input',
+			title: {classname: 'title', value: 'Precio de venta'}, 
+			value: [{classname: 'value', value:''}],
+			tagname: 'input',
+			container: productForm
+		});
+		productForm.append(acceptBtn);
+		productForm.append(cancelBtn);
+
+		acceptBtn.bind('click', onClickSend);
+		cancelBtn.bind('click', onClickCancel);
 	};
 	//Batch
 	this.prepareInsertBatch = function(){
@@ -163,10 +196,12 @@ function  AdditionController(){
 		};
 		return JSON.stringify(batchData);
 	};
+	function createProductJson(){};
 	//Events
 	function onClickSend(){
 		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
-		if(validateBatch()){
+		var validationCall = self['validate'+self.data.kind.toCapitalize()]
+		if(typeof validationCall != "undefined" && validationCall.call(self)){
 			var jsonData ="";
 			if(typeof jsonCall == "function")
 				jsonData = jsonCall.call(self);
@@ -178,7 +213,15 @@ function  AdditionController(){
 		var container = $(this).parents('*[class$="-input"]');
 		container.find('.error-message').remove();
 	};
+	function onClickCancel(){
+		var element = $(this).parents('.product-modalbox');
+		element.fadeOut('fast', element.remove);
+		$('#mask').hide();
+		self.delegate.enableAllEvents();
+	};
 	//Validation
+	function validateProduct(){
+	};
 	function validateBatch(){
 		var count = 0;
 		var container = self.view.container();
@@ -240,5 +283,10 @@ function  AdditionController(){
 		submitBtn.unbind('click');
 		inputs.unbind('focusin.lamejorcita');
 	};
+
+	this.createProductJson = createProductJson;
+	this.validateProduct   = validateProduct;
+	this.validateBatch     = validateBatch;
+	this.loadProductsView  = loadProductsView;
 	AdditionController.prototype._init_.call(this);
 };

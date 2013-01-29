@@ -7,10 +7,13 @@ AdditionController.prototype._init_= function(){
 function  AdditionController(){
 	var stocksData;
 	var products;
+	var editionData;
+	this.data;
+	this.messages = null;
+
 	var self        = this;
 	var validations = new TextValidationService();
-	self.data;
-	this.messages = null;
+	
 	this.viewDidLoad = function(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		var methodCall = self['prepare'+self.data.method.toCapitalize()+self.data.kind.toCapitalize()];

@@ -18,6 +18,7 @@ function MainController () {
 	var additionController = null;
 	var infoContainer;
 	var current;
+	var editionId;
 	var pages = ["stock","pos","seller","sale","product"];
 	this.currentData = [];
 	currentDataKeys = [];
@@ -496,6 +497,9 @@ function MainController () {
 			additionController.loadProductsView();
 		}else
 			self.changePage('/Insert/'+self.page.toLowerCase());
+	};
+	function onClickEdit(){
+		console.log($(this));
 	};
 	//Enable Disable
 	this.enableEvents = function(){

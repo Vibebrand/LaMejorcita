@@ -15,7 +15,7 @@ class GetBodegasHandler(cyclone.web.RequestHandler):
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
 
-        MasterController.obtenerbodegas(skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerbodegas(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"name":"Bodega"+str(i+1),"status":"Valido","address": {"district":"Colonia","street":"Calle","intNum": None, "extNum": 100} ,"phone":str(9789560+i),"businessName":"Negocio"+str(i+1),"manager":{"_id":str(ObjectId()),"status":"Valido","username":"Manager"+str(i+1),"password":"pass","curp":"89687800"+str(i),"phone":"9781200","email":"manager"+str(i+1)+"@gmail.com","type":"mamanger"},"geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"maxSale":"1500","minSale":"0","products":{"_id":str(ObjectId()),"2013/01/01": "1500","2013/01/02": "1200"}}
 
@@ -30,7 +30,7 @@ class GetPuntosHandler(cyclone.web.RequestHandler):
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
 
-        MasterController.obtenerpuntos(skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerpuntos(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"name":"Punto"+str(1+1) ,"status":"Valido","phone":str(9789560+i),"email":"punto"+str(i+1)+"@gmail.com","joinDate":"15enero2010","fridge":{"serial":"4747464"+str(i),"temperature":"-5","status":"Valido"},"representative":{"name":"representante"+str(i+1),"phone":str(9789560+i),"email":"representante"+str(i+1)+"@gmail.com"},"stock":{"name":"Bodega"+str(i+1)}}
 
@@ -45,7 +45,7 @@ class GetVendedorHandler(cyclone.web.RequestHandler):
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
 
-        MasterController.obtenervendedores(skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenervendedores(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"status":"Valido","name":"Vendedor"+str(i+1),"curp":"89687800"+str(i),"email":"vendedor"+str(i+1)+"@gmail.com","device":"74748848"+str(i),"phone":str(9789560+i),"stock":{"name":"Bodega"+str(i+1)}}
 
@@ -60,7 +60,7 @@ class GetVentasHandler(cyclone.web.RequestHandler):
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
 
-        MasterController.obtenerventas(skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerventas(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"date":"15enero2011","time":"11:59pm","observations":"observacion","amount":"4","products":"1500","geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"seller":{"name":"Vendedor"+str(i+1)},"salepoint":{"fridge":{"serial":"4747464"+str(i),"temperature":"-5","status":"Valido"}}}
 
@@ -75,7 +75,22 @@ class GetProductosHandler(cyclone.web.RequestHandler):
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
 
-        MasterController.obtenerproductos(skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerproductos(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+
+    #x={"_id":str(ObjectId()),"status":"Valido","name":"carne1","salePrice":"150","registrationDate":"15enero2011","count":"1500"}
+
+class GetLotesHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        self.object=int(self.get_argument("objects",None))
+        self.keywords=self.get_argument("keywords",None)
+        self.inicio=(int(self.get_argument("page",None))-1)*self.object
+
+        MasterController.obtenerlotes(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"status":"Valido","name":"carne1","salePrice":"150","registrationDate":"15enero2011","count":"1500"}
 
@@ -86,16 +101,16 @@ class GetBodegasDetailHandler(cyclone.web.RequestHandler):
             self.write({"result": result})
             self.finish()
 
-        Dictparam={"_id":self.get_argument("_id",None)}
+        Dictparam={"_id":self.get_argument("_id",None), "status":"1"}
         MasterController.obtenerbodegas(param=Dictparam,accion=muestra)
 
-    """@cyclone.web.asynchronous
+    @cyclone.web.asynchronous
     def delete(self):
         def muestra(result):
             self.write({"result": result})
             self.finish()
         parametro=self.get_argument("_id",None)
-        MasterController.eliminarbodegas(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)"""
+        MasterController.eliminarbodegas(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)
 
 class GetPuntosDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -104,15 +119,16 @@ class GetPuntosDetailHandler(cyclone.web.RequestHandler):
             self.write({"result": result})
             self.finish()
 
-        Dictparam={"_id":self.get_argument("_id",None)}
+        Dictparam=[{"_id":self.get_argument("_id",None)},{"status":"1"}]
         MasterController.obtenerpuntos(param=Dictparam,accion=muestra)
 
     @cyclone.web.asynchronous
     def delete(self):
         def muestra(result):
-            self.write()
+            self.write({"result": result})
             self.finish()
-        pass
+        parametro=self.get_argument("_id",None)
+        MasterController.eliminarpuntos(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)
 
 class GetVendedorDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -121,15 +137,16 @@ class GetVendedorDetailHandler(cyclone.web.RequestHandler):
             self.write({"result": result})
             self.finish()
 
-        Dictparam={"_id":self.get_argument("_id",None)}
-        MasterController.obtenervedendores(param=Dictparam,accion=muestra)
+        Dictparam=[{"_id":self.get_argument("_id",None)},{"status":"1"}]
+        MasterController.obtenervendedores(param=Dictparam,accion=muestra)
 
     @cyclone.web.asynchronous
     def delete(self):
         def muestra(result):
-            self.write()
+            self.write({"result": result})
             self.finish()
-        pass
+        parametro=self.get_argument("_id",None)
+        MasterController.eliminarvendedores(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)
 
 class GetVentasDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -138,15 +155,16 @@ class GetVentasDetailHandler(cyclone.web.RequestHandler):
             self.write({"result": result})
             self.finish()
 
-        Dictparam={"_id":self.get_argument("_id",None)}
+        DDictparam=[{"_id":self.get_argument("_id",None)},{"status":"1"}]
         MasterController.obtenerventas(param=Dictparam,accion=muestra)
 
     @cyclone.web.asynchronous
     def delete(self):
         def muestra(result):
-            self.write()
+            self.write({"result": result})
             self.finish()
-        pass
+        parametro=self.get_argument("_id",None)
+        MasterController.eliminarventas(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)
 
 class GetProductosDetailHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -155,27 +173,37 @@ class GetProductosDetailHandler(cyclone.web.RequestHandler):
             self.write({"result": result})
             self.finish()
 
-        Dictparam={"_id":self.get_argument("_id",None)}
+        Dictparam=[{"_id":self.get_argument("_id",None)},{"status":"1"}]
         MasterController.obtenerproductos(param=Dictparam,accion=muestra)
 
     @cyclone.web.asynchronous
     def delete(self):
         def muestra(result):
-            self.write()
+            self.write({"result": result})
             self.finish()
-        pass
+        parametro=self.get_argument("_id",None)
+        MasterController.eliminarproductos(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)
 
 class LogoutHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
+        #self.write({"result": result})
         self.finish()
 
 class LoginHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def get(self):
-        self.write({"result": result})
+        #self.write({"result": result})
         self.finish()
+
+class LlenarHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        def muestra():
+            self.write("llenado")
+            self.finish()
+        
+        MasterController.llena(self.get_argument("categoria",None),muestra)
 
 class RenderHandler(cyclone.web.StaticFileHandler):
     def get(self, path, include_body=True):

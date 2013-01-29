@@ -19,6 +19,7 @@ class Application(cyclone.web.Application):
         (r"/productsdetail",GetProductosDetailHandler),
         (r"/logout",LogoutHandler),
         (r"/login",LoginHandler),
+        (r"/agregar",LlenarHandler),
         (r"/(.*)",RenderHandler, {"path": "Frontend"})
         ]
        

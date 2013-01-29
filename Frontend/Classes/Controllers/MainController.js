@@ -54,13 +54,14 @@ function MainController () {
 			this.page     = "Stock";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'address','value':'Dirección'},
-											{'identifier': 'address.district','value':'Colonia'},
-											{'identifier': 'manager.name','value':'Responsable'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name','value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'address','value':'Dirección'});
+			tableController.tableHeaders.push({'identifier': 'address.district','value':'Colonia'});
+			tableController.tableHeaders.push({'identifier': 'manager.name','value':'Responsable'});
+			tableController.tableHeaders.push({'identifier': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('stock-table');
 			loadTableView();
 		};
@@ -80,15 +81,16 @@ function MainController () {
 			self.page = "POS";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'fridge.serial','value':'Serial'},
-											{'identifier': 'fridge.status','value':'Estado'},
-											{'identifier': 'address','value':'Dirección'},
-											{'identifier': 'address.district','value':'Colonia'},
-											{'identifier': 'representative.name','value':'Representante'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'email','value':'Correo electrónico'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'fridge.serial','value':'Serial'});
+			tableController.tableHeaders.push({'identifier': 'fridge.status','value':'Estado'});
+			tableController.tableHeaders.push({'identifier': 'address','value':'Dirección'});
+			tableController.tableHeaders.push({'identifier': 'address.district','value':'Colonia'});
+			tableController.tableHeaders.push({'identifier': 'representative.name','value':'Representante'});
+			tableController.tableHeaders.push({'identifier': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'email','value':'Correo electrónico'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('pos-table');
 			loadTableView();
 		};
@@ -108,12 +110,13 @@ function MainController () {
 			self.page = "Seller";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'phone','value':'Teléfono'},
-											{'identifier': 'email','value':'Correo electrónico'},
-											{'identifier': 'stock.name','value':'Bodega'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name','value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'email','value':'Correo electrónico'});
+			tableController.tableHeaders.push({'identifier': 'stock.name','value':'Bodega'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('sellers-table');
 			loadTableView();
 		};
@@ -133,13 +136,14 @@ function MainController () {
 			self.page = "Sale";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			tableController.view.setClass('sales-table');
-			tableController.tableHeaders = [{'identifier': 'date','value':'Fecha'},
-											{'identifier': 'time','value':'Hora'},
-											{'identifier': 'salepoint.fridge.serial','value':'Punto de venta'},
-											{'identifier': 'salepoint.fridge.status','value':'Estado'},
-											{'identifier': 'products.count','value':'Cantidad'},
-											{'identifier': 'products.amount','value':'Monto'},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'date','value':'Fecha'});
+			tableController.tableHeaders.push({'identifier': 'time','value':'Hora'});
+			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.serial','value':'Punto de venta'});
+			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.status','value':'Estado'});
+			tableController.tableHeaders.push({'identifier': 'products.count','value':'Cantidad'});
+			tableController.tableHeaders.push({'identifier': 'products.amount','value':'Monto'});
+			tableController.tableHeaders.push({'identifier': 'detail','value':'', 'itemPrototype': detailBtn});
 			tableController.view.setClass('sale-table');
 			loadTableView();
 		};
@@ -158,15 +162,18 @@ function MainController () {
 		if(self.page != "Product"){
 			self.page = "Product";
 			var batchBtn = $('<button class="batch-button">Lotes</button>');
-			var detailBtn = $('<button class="detail-button">Ver mas</button>');
+			var editBtn = $('<button class="edit-button">Editar</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'name','value':'Nombre'},
-											{'identifier': 'salePrice','value':'Precio'},
-											{'identifier': 'count','value':'Cantidad'},
-											{'identifier': 'batch','value':'', 'itemPrototype': batchBtn},
-											{'identifier': 'detail','value':'', 'itemPrototype': detailBtn}];
-			if(typeof self.additionalData == "undefined")					
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name','value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'salePrice','value':'Precio'});
+			tableController.tableHeaders.push({'identifier': 'registationDate', 'value':'Fecha de registro'});
+			tableController.tableHeaders.push({'identifier': 'count','value':'Cantidad'});
+			tableController.tableHeaders.push({'identifier': 'batch','value':'', 'itemPrototype': batchBtn});
+			if(typeof self.additionalData == "undefined"){
+				tableController.tableHeaders.push({'identifier': 'edit','value':'', 'itemPrototype': editBtn});
 				tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
+			};
 			tableController.view.setClass('products-table');
 			loadTableView();
 		};
@@ -185,9 +192,10 @@ function MainController () {
 		if(self.page != "Batch"){
 			self.page = "Batch";
 			var deleteBtn = $('<button class="delete-button">-</button>');
-			tableController.tableHeaders = [{'identifier': 'batch.expiration','value':'Lote'},
-											{'identifier': 'batch.count','value':'Cantidad'},
-											{'identifier': 'delete','value':'', 'itemPrototype': deleteBtn}];
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'batch.expiration','value':'Lote'});
+			tableController.tableHeaders.push({'identifier': 'batch.count','value':'Cantidad'});
+			tableController.tableHeaders.push({'identifier': 'delete','value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('batches-table');
 			self.createDetailMenu();
 			loadTableView();

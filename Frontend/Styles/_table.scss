@@ -1,0 +1,45 @@
+.stock-table{
+}
+thead tr td{
+	display:inline-block;
+	width: 120px;
+	position: relative;
+	height: 35px;
+	line-height: 1rem;
+	padding: 20px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	background: -webkit-linear-gradient(bottom, rgb(190, 190, 195) 50%, rgb(220, 220, 225) 100%);
+	background: -moz-linear-gradient(bottom, rgb(190, 190, 195) 50%, rgb(220, 220, 225) 100%);
+	background: -o-linear-gradient(bottom, rgb(190, 190, 195) 50%, rgb(220, 220, 225) 100%);
+	background: -ms-linear-gradient(bottom, rgb(190, 190, 195) 50%, rgb(220, 220, 225) 100%);
+	background: linear-gradient(bottom, rgb(190, 190, 195) 50%, rgb(220, 220, 225) 100%);
+	-webkit-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+	border-right: 1px solid rgba(0, 0, 0, 0.4);
+	text-align: center;
+	cursor: default;
+	@include box-size;
+}
+
+tbody tr{
+	display: block;
+	height: 40px;
+	line-height: 3rem;
+}
+
+tbody tr td{
+	display: inline-block;
+	width:120px;
+	color: rgb(132, 122, 122);
+	padding: 5px;
+	@include box-size;
+}
+
+tbody tr:nth-child(2n+2){
+	background:rgba(0,0,0,0.1);
+}

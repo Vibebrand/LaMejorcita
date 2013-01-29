@@ -1,0 +1,41 @@
+$BlackBackground: rgb(62,59,56);
+
+.menu-list{
+	@include box-size;	
+
+	width: 200px;
+	height: 100%;
+	float: left;
+	position: relative;
+	background: $BlackBackground;
+}
+.option-item{
+	@include box-size;
+
+	position: relative;
+	display: block;
+	height: 50px;
+	padding: 10px 15px 5px;
+	font-family: 'TitilliumText25L400wt';
+	line-height: 3rem;
+	cursor: pointer;
+	margin-bottom: 5px;
+	color: rgb(250,250,250);
+}
+
+.option-item.selected{
+	@include inset-shadow;
+
+	border: 1px solid rgba(0,0,0,0.4);
+	background: rgba(80,75,70,.95);
+
+}
+
+.option-item.selected:after{
+	content:'';
+	border-right: transparent;
+	border-bottom: 10px;
+	border-top:10px;
+	border-left:10px;
+	position: absolute;
+}

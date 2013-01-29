@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+//Font Importer
+@import  'fonts';
+
+//Style Reset
+@import  'reset';
+
+//Header Styles
+@import 'header';
+
+//Aside Styles
+@import  'aside';
+
+//Table Styles
+@import 'table';
+
+@mixin full-screen{
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+html{
+	@include full-screen; 
+	font-family: 'TitilliumText25L400wt';
+	font-size: 0.9rem;
+	overflow: hidden;
+}
+
+body, .app-container{
+	@include full-screen; 
+}
+
+.main-container{
+	height:100%;
+	background:rgb(240,240,240);
+	overflow: auto;
+}
+
+.visualButtons-container{
+	width: 100px;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+}

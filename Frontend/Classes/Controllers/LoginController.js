@@ -1,5 +1,4 @@
 
-Importer.importfile('Classes/Services/TextValidationService.js');
 LoginController.prototype = new ViewController();
 LoginController.prototype._init_= function(){
 	ViewController.prototype._init_.call(this);

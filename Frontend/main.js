@@ -25,24 +25,24 @@ function main(){
 	var userService       = new UserService();
 	var stockService      = new StockService();
 	var mainController    = new MainController();
-	var posService     = new POSService();
+	var posService        = new POSService();
 	var salesService      = new SalesService();
 
 	loginController.delegate  = masterControl;
 	headerController.delegate = masterControl;
 	mainController.delegate   = masterControl;
 	
-	userService.delegate      = masterControl;
-	stockService.delegate     = masterControl;
+	userService.delegate  = masterControl;
+	stockService.delegate = masterControl;
 	salesService.delegate = masterControl;
-	posService.delegate = masterControl;
+	posService.delegate   = masterControl;
 
-	loginController.messageController = messageController;
+	masterControl.loginController    = loginController;
+	masterControl.mainController     = mainController;
+	masterControl.headerController   = headerController;
+	masterControl.messageController  = messageController;
 
-	masterControl.loginController   = loginController;
-	masterControl.mainController    = mainController;
-	masterControl.headerController  = headerController;
-	masterControl.messageController = messageController;
+	loginController.messageController = masterControl.messageController;
 
 	masterControl.userService   = userService;
 	masterControl.stockService  = stockService;

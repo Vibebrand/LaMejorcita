@@ -1,23 +1,6 @@
 function StockService(){
 	var self = this;
 	this.searchStocks = function(searchData){
-		/*$.ajax({
-		  url: 'Mocks/Stocks.json',
-		  type: 'GET',
-		  dataType: 'json',
-		  data: searchData,
-		  timeout: self.timelimit,
-		  complete: function(xhr, textStatus) {
-		    //called when complete
-		  },
-		  success: function(data, textStatus, xhr) {
-		    self.delegate.setStocks(data);
-		  },
-		  error: function(xhr, textStatus, errorThrown) {
-		    //called when there is an error
-		  }
-		});*/
-		console.log(searchData);
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {
 
@@ -50,6 +33,22 @@ function StockService(){
 		console.log(stocks);
 		self.delegate.setStocks(stocks);
 	};
+	this.searchProducts = function(searchData){
+		console.log(searchData);
+		var products = [];
+		for (var i = 0; i < 5; i++) {
+			var product = {
+				_id 			: "sadfdsadfprod"+i,
+				name 			: "Producto"+i,
+				salePrice 		: 15.0,
+				count			: 3900,
+				registationDate :"2013/01/13"
+			};
+			products.push(product);
+		};
+		console.log(products);
+		self.delegate.setProducts(products);
+	};
 	this.getStockDetail = function(stockId){
 		var date = new Date();
 		var stock = {
@@ -79,21 +78,72 @@ function StockService(){
 		console.log(stock);
 		self.delegate.setDetail(stock);
 	};
-	this.searchProducts = function(searchData){
+	this.getProductDetail = function(productId){
+		console.log(productId);
+		var date = new Date();
+		var product = {
+			_id 			: "sadfdsadfprod0",
+			name 			: "Producto prueba "+date.getHours() +":"+date.getMinutes()+":"+date.getSeconds(),
+			salePrice 		: 15.0,
+			count			: 3900,
+			registationDate :"2013/01/13"
+		};
+		console.log(product);
+		self.delegate.setDetail(product);
+	};
+	this.searchBatches = function(searchData){
 		console.log(searchData);
+		var date = new Date();
+		var product = {
+			_id 			: "sadfdsadfprod0",
+			name 			: "Producto prueba "+date.getHours() +":"+date.getMinutes()+":"+date.getSeconds(),
+			salePrice 		: 15.0,
+			batches:{
+				"2013/05/01": 1500,
+				"2013/05/02": 1200,
+				"2013/05/03": 1200,
+				"2013/05/04": 1200
+			}
+		};
+		self.delegate.setBatches(product.batches);
+		self.delegate.setProductDetail(product);
+	};
+	//Edition Insertion
+	this.addBatch = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
+	};
+	this.addProduct = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulProductAddition();
+	};
+	//Deletion
+	this.deleteBatch = function(deleteData){
+		console.log(deleteData);
+		self.delegate.createGlobalMessage({
+			message: 'Se borro exitosamente el lote.',
+			delay: 1500,
+			classname: 'success-modalbox'
+		});
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
+	//Additional data
+	this.getStocksforAddition= function(){
+		var stocks = [];
+		for (var i = 0; i < 15; i++) {
+			var stock = {_id: "safdsafdsa0fd"+i, name:"Bodega "+i, businessName:"Negocio "+i};
+			stocks.push(stock)
+		};
+		self.delegate.setStocksforAddition(stocks);
+	};
+	this.getProductsforAddition= function(){
 		var products = [];
 		for (var i = 0; i < 5; i++) {
-			var product = {
-				_id 			: "sadfdsadfprod"+i,
-				name 			: "Producto"+i,
-				salePrice 		: (8/(i+1))*10,
-				count			: 15,
-				registationDate :"2013/13/01"
-			};
+			var product = {_id: "sadfdsadfprod"+i, name: "Producto"+i};
 			products.push(product);
 		};
-		console.log(products);
-		self.delegate.setProducts(products);
+		self.delegate.setProductsforAddition(products);
 	};
 };
 StockService.prototype = new Service();

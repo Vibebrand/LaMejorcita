@@ -30,6 +30,7 @@ function TableController (argument) {
 	function createHeaders(){
 		var rowheader     = $('<tr></tr>');
 		self.header.empty();
+		self.colgroup.empty();
 		self.header.append(rowheader);
 		for (var i = 0; i < self.tableHeaders.length; i++){
 			if(self.tableHeaders[i].constructor === Object &&typeof self.tableHeaders[i].identifier != "undefined"){

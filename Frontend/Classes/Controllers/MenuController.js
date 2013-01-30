@@ -26,10 +26,12 @@ function MenuController (argument) {
 	};
 	//Events
 	function onClickOption(){
+		if(!$(this).hasClass('selected')){
+			self.delegate.disableEvents();
+			self.delegate.deleteSearch();
+		};
 		self.changeOption($(this).data('id'));
 		self.delegate.changePage($(this).data('href'));
-		if(!$(this).hasClass('selected'))
-			self.delegate.disableEvents();
 	};
 	//Enable Disable
 	this.enableEvents = function(){

@@ -38,7 +38,7 @@ function DetailController(){
 	//Stock Detail
 	this.loadStockDetail = function(){
 		createStockView();
-		self.delegate.getDetail(self.page, self.currentId);
+		self.delegate.getDetail(self.page, self.currentId, createCallbacks());
 	};
 	this.setStockDetail = function(stock){
 		this.currentData = stock;
@@ -113,7 +113,7 @@ function DetailController(){
 	//POS detail
 	this.loadPosDetail = function(){
 		createPOSView();
-		self.delegate.getDetail(self.page, self.currentId);
+		self.delegate.getDetail(self.page, self.currentId, createCallbacks());
 	};
 	this.setPosDetail = function(pos){
 		self.currentData  = pos;
@@ -208,7 +208,7 @@ function DetailController(){
 	//Seller detail
 	this.loadSellerDetail = function(){
 		createSellerView();
-		self.delegate.getDetail(self.page, self.currentId);
+		self.delegate.getDetail(self.page, self.currentId, createCallbacks());
 	};
 	this.setSellerDetail = function(seller){
 		self.currentData = seller;
@@ -267,7 +267,7 @@ function DetailController(){
 	//Sale detail
 	this.loadSaleDetail = function(){
 		createSaleView();
-		self.delegate.getDetail(self.page, self.currentId);
+		self.delegate.getDetail(self.page, self.currentId, createCallbacks());
 	};
 	this.setSaleDetail = function(sale){
 		self.currentData = sale;
@@ -397,6 +397,24 @@ function DetailController(){
 				linkBtn.data('href', options.href);
 			options.container.append(linkBtn);
 		};
+	};
+	function createCallbacks(){
+		var callbacks = {};
+		var failCalls = [];
+		var successCalls = [];
+
+		successCalls.push({call: 'setDetail'});
+		failCalls.push({
+			call: 'createGlobalMessage', 
+			params: {
+				message:'No se pudo obtener la información.',
+				className: 'error-message',
+				delay: 2500
+			}
+		});
+		callbacks.successCall = successCalls;
+		callbacks.failCall = failCalls;
+		return callbacks;
 	};
 	//Events
 	function onClickLinkBtn(){

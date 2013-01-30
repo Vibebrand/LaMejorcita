@@ -127,6 +127,13 @@ function StockService(){
 	};
 	//Deletion
 	this.deleteBatch = function(deleteData){
+		console.log('Batch');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
+	this.deleteProduct = function(deleteData){
+		console.log('Product');
 		console.log(deleteData);
 		self.delegate.successfulRemoval();
 		self.delegate.enableEvents();

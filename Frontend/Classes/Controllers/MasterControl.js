@@ -218,6 +218,9 @@ function MasterControl(){
 	this.deleteBatch = function(deleteData){
 		self.stockService.deleteBatch(deleteData);
 	};
+	this.deleteProduct = function(deleteData){
+		self.stockService.deleteProduct(deleteData);
+	};
 	this.successfulRemoval = function(){
 		self.mainController.successfulRemoval();
 	};

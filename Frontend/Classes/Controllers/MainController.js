@@ -426,7 +426,7 @@ function MainController () {
 			animation	: 'fadeIn',
 			speed		: 'fast'
 		});
-		message.text('¿Esta seguro de querer borrar este dato.?');
+		message.text('¿Esta seguro de querer borrar este dato?');
 		acceptBtn.text('Aceptar');
 		cancelBtn.text('Cancelar');
 		cancelBtn.bind('click', onClickCancel);

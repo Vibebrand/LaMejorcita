@@ -57,8 +57,10 @@ function SearchController () {
 		var oldkeywords = $.cookie('lamejorcita.keywords')? $.cookie('lamejorcita.keywords') :'';
 		if(keywords != oldkeywords){
 			$.cookie('lamejorcita.keywords', keywords);
-			self.delegate.makeSearch({'keywords': keywords});
+			self.delegate.makeSearch();
 		};
+		if(keywords == "")
+			$.cookie('lamejorcita.keywords',null);
 	};
 	//Enable Disable
 	this.enableEvents = function() {

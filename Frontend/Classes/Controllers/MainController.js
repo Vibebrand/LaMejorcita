@@ -349,6 +349,8 @@ function MainController () {
 		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
+		if($.cookie('lamejorcita.keywords'))
+			searchData.keywords = $.cookie('lamejorcita.keywords');
 		if(typeof self.additionalData == "object"){
 			if(typeof self.additionalData.id != "undefined")
 				searchData[self.additionalData.kind+'Id'] = self.additionalData.id;

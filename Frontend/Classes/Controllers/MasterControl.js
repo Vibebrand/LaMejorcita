@@ -204,6 +204,9 @@ function MasterControl(){
 	this.addBatch = function(dataToSend){
 		self.stockService.addBatch(dataToSend);
 	};
+	this.addUser = function(dataToSend){
+		self.userService.addUser(dataToSend);
+	};
 	//Addition Product
 	this.addProduct = function(data){
 		self.stockService.addProduct(data);

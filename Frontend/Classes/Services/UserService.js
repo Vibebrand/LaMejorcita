@@ -6,6 +6,10 @@ function UserService(){
 		$.cookie('lamejorcita.login' , true);
 		window.location.reload();
 	};
+	this.addUser = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
+	};
 	//Lists
 	this.searchUsers = function(data){
 		console.log(data);

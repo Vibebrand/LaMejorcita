@@ -47,6 +47,10 @@ function MainController () {
 	this.updateMenu = function(index){
 		self.delegate.updateMenu(index);
 	};
+	this.updateMenuWithString = function(string){
+		var index = pages.indexOf(string);
+		self.delegate.updateMenu(index);
+	};
 	//Stocks
 	this.loadStockPage = function(){
 		searchController.showSearch();

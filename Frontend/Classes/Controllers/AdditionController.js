@@ -19,9 +19,11 @@ function  AdditionController(){
 		var methodCall = self['prepare'+self.data.kind.toCapitalize()+self.data.method.toCapitalize()+'ion'];
 		if(typeof viewCall == "function") viewCall.call(self);
 		if(typeof methodCall == "function")setTimeout(methodCall, 0);
+
+		self.delegate.updateMenuWithString(self.data.kind);
 	};
 	//User
-	this.loadUserView = function(){
+	function loadUserView(){
 		var container = self.view.container();
 		var submitBtn = $('<button class="send-button">Enviar</button>');
 		container.empty();
@@ -284,7 +286,7 @@ function  AdditionController(){
 			});
 		};
 	};
-	this.createBatchJson = function(){
+	function createBatchJson(){
 		var container    = self.view.container();
 		var batchItems = container.find('.batch-list .batch-item');
 		var batchData ={
@@ -312,6 +314,17 @@ function  AdditionController(){
 			salePrice: salePrice
 		};
 		return JSON.stringify(productData);
+	};
+	function createUserJson(){
+		var container    = self.view.container();
+		var userData ={
+			name 		: $.trim(container.find('.name-input .value').val())+' '+$.trim(container.find('.surname-input .value').val()),
+			curp 		: $.trim(container.find('.curp-input .value').val()),
+			email 		: $.trim(container.find('.email-input .value').val()),
+			phone 		: $.trim(container.find('.phone-input .value').val()),
+			password 	: $.trim(container.find('.password-input .value').val())
+		};
+		return JSON.stringify(userData);
 	};
 	function createEditionCalls(){
 		var callbacks = {};
@@ -521,10 +534,16 @@ function  AdditionController(){
 		submitBtn.unbind('click');
 		inputs.unbind('focusin.lamejorcita');
 	};
+	//Creation
+	this.createBatchJson   = createBatchJson;
+	this.createProductJson = createProductJson;
+	this.createUserJson    = createUserJson;
+	//Data
 	this.setProductData    = setProductData;
 	this.editProduct       = editProduct;
-	this.createProductJson = createProductJson;
+	//Page
 	this.loadProductView   = loadProductView;
+	this.loadUserView      = loadUserView;
 	//Validations
 	this.validateProduct   = validateProduct;
 	this.validateBatch     = validateBatch;

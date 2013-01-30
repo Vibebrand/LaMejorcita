@@ -32,8 +32,8 @@ function TextValidationService(){
 		return true;
 	};
 	function validateCurp(textValue, allowEmpty){
-		var pattern =  /^[A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[0-9]{2}$/;
-		validateWithPattern(textValue, pattern, allowEmpty);
+		var pattern = /^[A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{1}[A-Z0-9]{1}$/;
+		return validateWithPattern(textValue, pattern, allowEmpty);
 	};
 	function validateRfc(textValue, allowEmpty){
 		var pattern =  /^([A-Z]{4}||[A-Z]{3})[0-9]{6}[A-Z0-9]{3}$/;;

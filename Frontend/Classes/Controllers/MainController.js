@@ -143,10 +143,10 @@ function MainController () {
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			tableController.view.setClass('sales-table');
 			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.status', 'className': 'status', 'value':'Estado'});
 			tableController.tableHeaders.push({'identifier': 'date', 					'className': 'date', 'value':'Fecha'});
 			tableController.tableHeaders.push({'identifier': 'time', 					'className': 'time', 'value':'Hora'});
 			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.serial', 'className': 'serial', 'value':'Punto de venta'});
-			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.status', 'className': 'status', 'value':'Estado'});
 			tableController.tableHeaders.push({'identifier': 'products.count', 			'className': 'count', 'value':'Cantidad'});
 			tableController.tableHeaders.push({'identifier': 'products.amount', 		'className': 'amount', 'value':'Monto'});
 			tableController.tableHeaders.push({'identifier': 'detail', 					'className': 'detail', 'value':'', 'itemPrototype': detailBtn});

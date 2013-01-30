@@ -110,6 +110,48 @@ function DetailController(){
 			container: infoContainer
 		});
 	};
+	//User detail
+	this.loadUserDetail = function(){
+		createUserView();
+		self.delegate.getDetail(self.page, self.currentId, createCallbacks());
+	};
+	this.setUserDetail = function(user){
+		self.currentData = user;
+		var container     = self.view.container();
+		var uname = container.find('.name .value');
+		var ucurp = container.find('.curp .value');
+		var uemail = container.find('.email .value');
+		var uphone = container.find('.phone .value');
+
+		uname.text(user.name);
+		ucurp.text(user.curp);
+		uemail.text(user.email);
+		uphone.text(user.phone);
+	};
+	function createUserView(){
+		infoContainer.empty(); linksContainer.empty();
+		self.detailTitle.text('Usuario');
+		self.createField({
+			field: 'name',
+			title:{classname:'title', value: 'Nombre'},
+			container: infoContainer
+		});
+		self.createField({
+			field: 'curp',
+			title:{classname:'title', value: 'CURP'},
+			container: infoContainer
+		});
+		self.createField({
+			field: 'email',
+			title:{classname:'title', value: 'Correo electrónico'},
+			container: infoContainer
+		});
+		self.createField({
+			field: 'phone',
+			title:{classname:'title', value: 'Teléfono'},
+			container: infoContainer
+		});
+	};
 	//POS detail
 	this.loadPosDetail = function(){
 		createPOSView();
@@ -305,6 +347,7 @@ function DetailController(){
 		var count = $('<span class="count"></span>');
 		var price = $('<span class="price"></span>');
 		var pname = $('<span class="name"></span>');
+
 		this.append(productItem);
 		productItem.append(pname);
 		productItem.append(price);
@@ -316,9 +359,11 @@ function DetailController(){
 	};
 	function createSaleView(){
 		infoContainer.empty(); linksContainer.empty();
-		self.detailTitle.text('Información');
+		self.detailTitle.text('Venta');
 		var productslist = $('<ul class="products-list"></ul>');
 		var saleinfo = $('<div class="saleinfo-container"></div>');
+		
+
 		infoContainer.append(saleinfo);
 		infoContainer.append(productslist);
 		self.createField({
@@ -347,13 +392,6 @@ function DetailController(){
 			title:{classname:'title', value: 'Observaciones'},
 			container: saleinfo
 		});
-	};
-	//Product
-	this.loadProductDetail = function(){
-
-	};
-	this.setProductDetail = function(){
-
 	};
 	//General
 	this.setDetail = function(data){

@@ -177,16 +177,17 @@ function MainController () {
 		searchController.showAddButton();
 		if(self.page != "User"){
 			self.page = "User";
-			var batchBtn = $('<button class="batch-button">Lotes</button>');
+			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			var editBtn = $('<button class="edit-button">Editar</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
 			tableController.tableHeaders = [];
 			tableController.tableHeaders.push({'identifier': 'name', 		'className': 'name', 'value':'Nombre'});
 			tableController.tableHeaders.push({'identifier': 'curp', 		'className': 'curp', 'value':'CURP'});
 			tableController.tableHeaders.push({'identifier': 'email', 		'className': 'email','value':'Correo electrónico'});
+			tableController.tableHeaders.push({'identifier': 'phone', 		'className': 'phone','value':'Teléfono'});
+			tableController.tableHeaders.push({'identifier': 'detail', 		'className': 'detail', 'value':'', 'itemPrototype': detailBtn});
 			tableController.tableHeaders.push({'identifier': 'edit', 		'className': 'edit', 'value':'', 'itemPrototype': editBtn});
 			tableController.tableHeaders.push({'identifier': 'delete', 		'className': 'delete', 'value':'', 'itemPrototype': deleteBtn});
-			
 			tableController.view.setClass('users-table');
 			loadTableView();
 		};
@@ -389,7 +390,7 @@ function MainController () {
 		if(self.page != "Batch")
 			self.updateMenu(pages.indexOf(self.page.toLowerCase()));
 		else
-			self.updateMenu(pages.length-1);
+			self.updateMenu(pages.indexOf('product'));
 	};
 	this.reloadTable = function(){
 		currentDataKeys = [];
@@ -490,10 +491,12 @@ function MainController () {
 	};
 	//Events
 	function onClickDetail(){
-		var detailId = $(this).parents('tr').data('id');
-		self.delegate.disableEvents();
-		self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
-		return;
+		var detailCall = detailController['load'+self.page.toCapitalize()+'Detail'];
+		if(typeof detailCall == "function"){
+			var detailId = $(this).parents('tr').data('id');
+			self.delegate.disableEvents();
+			self.changePage('/Detail/'+self.page.toLowerCase()+'/'+detailId);
+		};
 	};
 	function onClickBatch(){
 		var detailId = $(this).parents('tr').data('id');

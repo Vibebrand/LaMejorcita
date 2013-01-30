@@ -1,3 +1,10 @@
+MenuController.prototype = new ViewController();
+MenuController.prototype._init_= function(){
+	ViewController.prototype._init_.call(this);
+	var list = $('<nav></nav>');
+	this.view.replaceContainerWith(list);
+	this.view.setClass('menu-list');
+};
 function MenuController (argument) {
 	var self = this;
 	var pageHashs = ['/Stocks', '/POS' , '/Sellers', '/Sales', '/Products', '/Users'];
@@ -44,11 +51,4 @@ function MenuController (argument) {
 		options.unbind('click');
 	};
 	MenuController.prototype._init_.call(this);
-};
-MenuController.prototype = new ViewController();
-MenuController.prototype._init_= function(){
-	ViewController.prototype._init_.call(this);
-	var list = $('<nav></nav>');
-	this.view.replaceContainerWith(list);
-	this.view.setClass('menu-list');
 };

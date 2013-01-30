@@ -6,16 +6,16 @@ function UserService(){
 		$.cookie('lamejorcita.login' , true);
 		window.location.reload();
 	};
+	//Lists
 	this.searchUsers = function(data){
 		console.log(data);
 		var users = [];
 		for (var i = 0; i < 5; i++) {
 			var user = {
 				_id:"asfdo90qwqewr"+i,
-				name: "User Guy",
-				curp: 'PIIG720116BV1',
-				email: "sales.guy@mail.com",
-				device: 'safdsafdevicesdf'+i+'20',
+				name: "User"+(i+1)+" Guy",
+				curp: 'PIIG720116BV'+(i+1),
+				email: "user"+(i+1)+".guy@mail.com",
 				phone:"977733"+i,
 				type: 'manager'
 			};
@@ -30,8 +30,8 @@ function UserService(){
 		for (var i = 0; i < 15; i++) {
 			var seller = {
 				_id:"asfdo90qwqewr"+i,
-				name: "Sales Guy",
-				curp: 'PIIG720116BV1',
+				name: "Sales"+i+" Guy",
+				curp: 'PIIG720116BV'+i,
 				email: "sales.guy@mail.com",
 				device: 'safdsafdevicesdf'+i+'20',
 				phone:"123456"+i,
@@ -59,6 +59,7 @@ function UserService(){
 		console.log(sellers);
 		self.delegate.setTableData(sellers);
 	};
+	//Details
 	this.getSellerDetail = function(sellerId, callbacks){
 		var seller = {
 			_id:"asfdo90qwqewr0",
@@ -74,6 +75,21 @@ function UserService(){
 			}
 		};
 		self.delegate.setDetail(seller);
+	};
+	this.getUserDetail = function(userId, callbacks){
+		console.log(userId);
+		var date = new Date();
+		var user = {
+			_id:"asfdo90qwqewr0",
+			name: "User"+date.getSeconds()+" Guy",
+			curp: 'PIIG720116BV'+date.getSeconds(),
+			email: "user"+date.getSeconds()+".guy@mail.com",
+			phone:"9777330",
+			type: 'manager'
+		};
+			
+		console.log(user);
+		self.delegate.setDetail(user);
 	};
 };
 UserService.prototype = new Service();

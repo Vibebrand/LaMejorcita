@@ -178,6 +178,9 @@ function MasterControl(){
 	this.getProductDetail = function(productId, callbacks){
 		self.stockService.getProductDetail(productId, callbacks);
 	};
+	this.getUserDetail = function(userId, callbacks){
+		self.userService.getUserDetail(userId, callbacks);
+	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
 	};

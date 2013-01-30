@@ -1,45 +1,41 @@
-from Backend.Data.InterfazDB.DBmodule import DBModule
-from txmongo._pymongo.objectid import ObjectId
+from Data.Servicios import BodegasService
+from Data.Servicios import PuntosService
+from Data.Servicios import VendedoresService
+from Data.Servicios import VentasService
+from Data.Servicios import ProductosService
+
+
+
 
 def obtenerbodegas(accion,param={},skip=0,limit=0):
-	db=DBModule("bodegasinfo")
-	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+	BodegasService.obtenerbodegas(param=param,skip=skip,limit=limit,accion=accion)
 
-def obtenerpuntos(accion,param={},skip=0,limit=0):
-	db=DBModule("puntosinfo")
-	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+def obtenerpuntos(accion,stock=None,param={},skip=0,limit=0):
+	PuntosService.obtenerpuntos(stock=stock,accion=accion,param=param,skip=skip,limit=limit)
 
-def obtenervendedores(accion,param={},skip=0,limit=0):
-	db=DBModule("vendedoresinfo")
-	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+def obtenervendedores(accion,stock=None,point=None,param={},skip=0,limit=0):
+	VendedoresService.obtenervendedores(stock=stock,point=point,accion=accion,param=param,skip=skip,limit=limit)
 
-def obtenerventas(accion,param={},skip=0,limit=0):
-	db=DBModule("ventasinfo")
-	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
-
-def obtenerproductos(accion,param={},skip=0,limit=0):
-	db=DBModule("productosinfo")
-	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
+def obtenerventas(accion,stock=None,point=None,seller=None,param={},skip=0,limit=0):
+	VentasService.obtenerventas(stock=stock,point=point,seller=seller,accion=accion,param=param,skip=skip,limit=limit)
+	
+def obtenerproductos(accion,stock=None,param={},skip=0,limit=0):
+	ProductosService.obtenerproductos(stock=stock,accion=accion,param=param,skip=skip,limit=limit)
 
 def eliminarbodegas(accion,entityId, valuesToUpdate):
-	db=DBModule("bodegasinfo")
-	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
-
+	BodegasService.eliminarbodegas(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
+	
 def eliminarpuntos(accion,entityId, valuesToUpdate):
-	db=DBModule("puntosinfo")
-	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
+	PuntosService.eliminarpuntos(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def eliminarvendedores(accion,entityId, valuesToUpdate):
-	db=DBModule("vendedoresinfo")
-	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
+	PuntosService.eliminarvendedores(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def eliminarventas(accion,entityId, valuesToUpdate):
-	db=DBModule("ventasinfo")
-	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
+	VentasService.eliminarventas(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def eliminarproductos(accion,entityId, valuesToUpdate):
-	db=DBModule("productosinfo")
-	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
+	ProductosService.eliminarproductos(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def llena(bodega,accion):
 	def x1():

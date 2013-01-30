@@ -29,8 +29,9 @@ class GetPuntosHandler(cyclone.web.RequestHandler):
         self.object=int(self.get_argument("objects",None))
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
+        self.idbodega=self.get_argument("stockid",None)
 
-        MasterController.obtenerpuntos(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerpuntos(stock=self.idbodega,param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"name":"Punto"+str(1+1) ,"status":"Valido","phone":str(9789560+i),"email":"punto"+str(i+1)+"@gmail.com","joinDate":"15enero2010","fridge":{"serial":"4747464"+str(i),"temperature":"-5","status":"Valido"},"representative":{"name":"representante"+str(i+1),"phone":str(9789560+i),"email":"representante"+str(i+1)+"@gmail.com"},"stock":{"name":"Bodega"+str(i+1)}}
 
@@ -44,8 +45,10 @@ class GetVendedorHandler(cyclone.web.RequestHandler):
         self.object=int(self.get_argument("objects",None))
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
+        self.idbodega=self.get_argument("stockid",None)
+        self.idpunto=self.get_argument("posid",None)
 
-        MasterController.obtenervendedores(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenervendedores(stock=self.idbodega,point=self.idpunto,param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"status":"Valido","name":"Vendedor"+str(i+1),"curp":"89687800"+str(i),"email":"vendedor"+str(i+1)+"@gmail.com","device":"74748848"+str(i),"phone":str(9789560+i),"stock":{"name":"Bodega"+str(i+1)}}
 
@@ -59,8 +62,11 @@ class GetVentasHandler(cyclone.web.RequestHandler):
         self.object=int(self.get_argument("objects",None))
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
+        self.idbodega=self.get_argument("stockid",None)
+        self.idpunto=self.get_argument("posid",None)
+        self.idvendedor=self.get_argument("sellerid",None)
 
-        MasterController.obtenerventas(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerventas(stock=self.idbodega,point=self.idpunto,seller=self.idvendedor,param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"date":"15enero2011","time":"11:59pm","observations":"observacion","amount":"4","products":"1500","geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"seller":{"name":"Vendedor"+str(i+1)},"salepoint":{"fridge":{"serial":"4747464"+str(i),"temperature":"-5","status":"Valido"}}}
 
@@ -74,8 +80,9 @@ class GetProductosHandler(cyclone.web.RequestHandler):
         self.object=int(self.get_argument("objects",None))
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
+        self.idbodega=self.get_argument("stockid",None)
 
-        MasterController.obtenerproductos(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerproductos(stock=self.idbodega,param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"status":"Valido","name":"carne1","salePrice":"150","registrationDate":"15enero2011","count":"1500"}
 
@@ -89,8 +96,9 @@ class GetLotesHandler(cyclone.web.RequestHandler):
         self.object=int(self.get_argument("objects",None))
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",None))-1)*self.object
+        self.idbodega=self.get_argument("stockid",None)
 
-        MasterController.obtenerlotes(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+        MasterController.obtenerlotes(stock=self.idbodega,param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
 
     #x={"_id":str(ObjectId()),"status":"Valido","name":"carne1","salePrice":"150","registrationDate":"15enero2011","count":"1500"}
 

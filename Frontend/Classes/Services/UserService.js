@@ -6,7 +6,24 @@ function UserService(){
 		$.cookie('lamejorcita.login' , true);
 		window.location.reload();
 	};
-
+	this.searchUsers = function(data){
+		console.log(data);
+		var users = [];
+		for (var i = 0; i < 5; i++) {
+			var user = {
+				_id:"asfdo90qwqewr"+i,
+				name: "User Guy",
+				curp: 'PIIG720116BV1',
+				email: "sales.guy@mail.com",
+				device: 'safdsafdevicesdf'+i+'20',
+				phone:"977733"+i,
+				type: 'manager'
+			};
+			users.push(user);
+		};
+		console.log(users);
+		self.delegate.setTableData(users);
+	};
 	this.searchSellers = function(searchData){
 		console.log(searchData);
 		var sellers = [];
@@ -40,7 +57,7 @@ function UserService(){
 			sellers.push(seller);
 		};
 		console.log(sellers);
-		self.delegate.setSellers(sellers);
+		self.delegate.setTableData(sellers);
 	};
 	this.getSellerDetail = function(sellerId, callbacks){
 		var seller = {

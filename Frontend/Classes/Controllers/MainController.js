@@ -19,7 +19,7 @@ function MainController () {
 	var detailController   = null;
 	var searchController   = null;
 	var additionController = null;
-	var pages              = ["stock","pos","seller","sale","product"];
+	var pages              = ["stock","pos","seller","sale","product",'user'];
 	var currentDataKeys    = [];
 	this.currentData       = [];
 	this.messageController = null;
@@ -72,10 +72,6 @@ function MainController () {
 		createVisualizationButtons();
 		prepareTableView();
 	};
-	this.setStocks = function(stocks){
-		self.currentData = stocks;
-		tableController.loadTable(true);
-	};
 	//Sale points
 	this.loadPOSPage = function() {
 		searchController.showSearch();
@@ -102,10 +98,6 @@ function MainController () {
 		createVisualizationButtons
 		prepareTableView();
 	};
-	this.setPOSData = function(posdata){
-		self.currentData = posdata;
-		tableController.loadTable(true);
-	};
 	//Sellers
 	this.loadSellersPage = function() {
 		removeVisualizationButtons();
@@ -130,10 +122,6 @@ function MainController () {
 		searchController.showAddButton();
 		prepareTableView();
 	};
-	this.setSellers = function(sellers) {
-		self.currentData = sellers;
-		tableController.loadTable(true);
-	};
 	//Sales
 	this.loadSalesPage = function() {
 		searchController.showSearch();
@@ -156,10 +144,6 @@ function MainController () {
 		removeBatchView();
 		createVisualizationButtons();
 		prepareTableView();
-	};
-	this.setSales = function(sales){
-		self.currentData = sales;
-		tableController.loadTable(true);
 	};
 	//Products
 	this.loadProductsPage = function() {
@@ -187,9 +171,28 @@ function MainController () {
 		removeVisualizationButtons();
 		prepareTableView();
 	};
-	this.setProducts = function(products){
-		self.currentData = products;
-		tableController.loadTable(true);
+	//Users
+	this.loadUsersPage = function(){
+		searchController.showSearch();
+		searchController.showAddButton();
+		if(self.page != "User"){
+			self.page = "User";
+			var batchBtn = $('<button class="batch-button">Lotes</button>');
+			var editBtn = $('<button class="edit-button">Editar</button>');
+			var deleteBtn = $('<button class="delete-button">-</button>');
+			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'name', 		'className': 'name', 'value':'Nombre'});
+			tableController.tableHeaders.push({'identifier': 'curp', 		'className': 'curp', 'value':'CURP'});
+			tableController.tableHeaders.push({'identifier': 'email', 		'className': 'email','value':'Correo electrónico'});
+			tableController.tableHeaders.push({'identifier': 'edit', 		'className': 'edit', 'value':'', 'itemPrototype': editBtn});
+			tableController.tableHeaders.push({'identifier': 'delete', 		'className': 'delete', 'value':'', 'itemPrototype': deleteBtn});
+			
+			tableController.view.setClass('users-table');
+			loadTableView();
+		};
+		removeBatchView();
+		removeVisualizationButtons();
+		prepareTableView();
 	};
 	//Batches
 	this.loadBatchesPage = function(){
@@ -345,9 +348,14 @@ function MainController () {
 	this.tableLoaded = function() {
 		self.enableAllEvents();
 	};
+	this.setTableData = function(tableData) {
+		self.currentData = tableData;
+		tableController.loadTable(true);
+	};
 	this.makeSearch = function(additional){
 		self.delegate.disableEvents();
 		var searchData  = $.extend({},{}, additional);
+		var searchCall;
 		searchData.objects = objects;
 		searchData.page = pagecount;
 		if($.cookie('lamejorcita.keywords'))
@@ -359,9 +367,12 @@ function MainController () {
 				searchData['productId']= self.additionalData.productId;
 		};
 		if(self.page != "Batch")
-			self.delegate['search'+self.page+'s'].call(self.delegate, searchData);
+			searchCall = self.delegate['search'+self.page+'s'];
 		else
-			self.delegate['search'+self.page+'es'].call(self.delegate, searchData);
+			searchCall = self.delegate['search'+self.page+'es'];
+
+		if(typeof searchCall == "function")
+			searchCall.call(self.delegate, searchData);
 	};
 	function loadTableView(){
 		currentDataKeys = [];

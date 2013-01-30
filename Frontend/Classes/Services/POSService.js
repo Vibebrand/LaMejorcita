@@ -39,7 +39,7 @@ function POSService (argument) {
 			posData.push(pos);
 		};
 		console.log(posData);
-		self.delegate.setPOSData(posData);
+		self.delegate.setTableData(posData);
 	};
 	this.getPosDetail = function(posId){
 		var date = new Date();

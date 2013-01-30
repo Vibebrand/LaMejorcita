@@ -35,7 +35,7 @@ function SalesService (argument) {
 			sales.push(sale);
 		};
 		console.log(sales);
-		self.delegate.setSales(sales);
+		self.delegate.setTableData(sales);
 	};
 	this.getSaleDetail = function(saleId){
 		var date = new Date();

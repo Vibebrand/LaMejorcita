@@ -32,7 +32,7 @@ function StockService(){
 			stocks.push(stock)
 		};
 		console.log(stocks);
-		self.delegate.setStocks(stocks);
+		self.delegate.setTableData(stocks);
 	};
 	this.searchProducts = function(searchData){
 		console.log(searchData);
@@ -48,7 +48,7 @@ function StockService(){
 			products.push(product);
 		};
 		console.log(products);
-		self.delegate.setProducts(products);
+		self.delegate.setTableData(products);
 	};
 	this.getStockDetail = function(stockId, callbacks){
 		var date = new Date();

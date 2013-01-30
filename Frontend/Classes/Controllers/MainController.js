@@ -515,7 +515,14 @@ function MainController () {
 			self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	function onClickEdit(){
-		console.log($(this));
+		var editionId = $(this).parents('tr').data('id');
+		var page = (typeof self.page == "undefined")? detailController.page: self.page;
+		editionId = (typeof editionId == "undefined")? detailController.currentId : editionId;
+		if(self.page == "Product"){
+			additionController.data = {id: editionId, kind: page.toLowerCase()};
+			additionController.loadProductsView();
+		}else
+			self.changePage('/Edit/'+page.toLowerCase()+'/'+editionId);
 	};
 	function onClickCancel(){
 		var element = $(this).parents('.delete-modalbox')
@@ -547,16 +554,19 @@ function MainController () {
 		var deleteBtn = tableController.view.container().find('.delete-button');
 		var backBtn   = self.view.container().find('.detailButton-container .back-button');
 		var batchBtn  = tableController.view.container().find('.batch-button');
+		var editBtn   = self.view.container().find('.edit-button');
 
 		detailBtn.unbind('click');
 		deleteBtn.unbind('click');
 		backBtn.unbind('click');
 		batchBtn.unbind('click');
+		editBtn.unbind('click');
 
 		detailBtn.bind('click',onClickDetail);
 		deleteBtn.bind('click',onClickDelete);
 		backBtn.bind('click', onClickBack);
 		batchBtn.bind('click', onClickBatch);
+		editBtn.bind('click', onClickEdit);
 		
 		searchController.enableEvents();
 		detailController.enableEvents();

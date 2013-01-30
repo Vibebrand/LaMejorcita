@@ -54,6 +54,7 @@ function MainController () {
 		if(this.page != "Stock"){
 			this.page     = "Stock";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
+			var editBtn = $('<button class="edit-button">Editar</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
 			tableController.tableHeaders = [];
 			tableController.tableHeaders.push({'identifier': 'name', 			 'className': 'name', 'value':'Nombre'});
@@ -62,6 +63,7 @@ function MainController () {
 			tableController.tableHeaders.push({'identifier': 'manager.name', 	 'className': 'manager', 'value':'Responsable'});
 			tableController.tableHeaders.push({'identifier': 'phone', 			 'className': 'phone', 'value':'Teléfono'});
 			tableController.tableHeaders.push({'identifier': 'detail', 			 'className': 'detail', 'value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'edit', 			 'className': 'edit', 'value':'', 'itemPrototype': editBtn});
 			tableController.tableHeaders.push({'identifier': 'delete', 			 'className': 'delete', 'value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('stock-table');
 			loadTableView();
@@ -81,16 +83,17 @@ function MainController () {
 		if(self.page != "POS"){
 			self.page = "POS";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
+			var editBtn = $('<button class="edit-button">Editar</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
 			tableController.tableHeaders = [];
-			tableController.tableHeaders.push({'identifier': 'fridge.serial', 		'className': 'serial', 'value':'Serial'});
 			tableController.tableHeaders.push({'identifier': 'fridge.status', 		'className': 'status', 'value':'Estado'});
+			tableController.tableHeaders.push({'identifier': 'fridge.serial', 		'className': 'serial', 'value':'Serial'});
 			tableController.tableHeaders.push({'identifier': 'address', 			'className': 'address', 'value':'Dirección'});
 			tableController.tableHeaders.push({'identifier': 'address.district', 	'className': 'district', 'value':'Colonia'});
 			tableController.tableHeaders.push({'identifier': 'representative.name', 'className': 'representative', 'value':'Representante'});
 			tableController.tableHeaders.push({'identifier': 'phone', 				'className': 'phone', 'value':'Teléfono'});
-			tableController.tableHeaders.push({'identifier': 'email', 				'className': 'email', 'value':'Correo electrónico'});
 			tableController.tableHeaders.push({'identifier': 'detail', 				'className': 'detail', 'value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'edit', 				'className': 'edit', 'value':'', 'itemPrototype': editBtn});
 			tableController.tableHeaders.push({'identifier': 'delete', 				'className': 'delete', 'value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('pos-table');
 			loadTableView();
@@ -110,6 +113,7 @@ function MainController () {
 		if(self.page != "Seller"){
 			self.page = "Seller";
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
+			var editBtn = $('<button class="edit-button">Editar</button>');
 			var deleteBtn = $('<button class="delete-button">-</button>');
 			tableController.tableHeaders = [];
 			tableController.tableHeaders.push({'identifier': 'name', 	   'className': 'name', 'value':'Nombre'});
@@ -117,6 +121,7 @@ function MainController () {
 			tableController.tableHeaders.push({'identifier': 'email', 	   'className': 'email', 'value':'Correo electrónico'});
 			tableController.tableHeaders.push({'identifier': 'stock.name', 'className': 'stock', 'value':'Bodega'});
 			tableController.tableHeaders.push({'identifier': 'detail', 	   'className': 'detail', 'value':'', 'itemPrototype': detailBtn});
+			tableController.tableHeaders.push({'identifier': 'edit', 	   'className': 'edit', 'value':'', 'itemPrototype': editBtn});
 			tableController.tableHeaders.push({'identifier': 'delete', 	   'className': 'delete', 'value':'', 'itemPrototype': deleteBtn});
 			tableController.view.setClass('sellers-table');
 			loadTableView();
@@ -158,7 +163,7 @@ function MainController () {
 	};
 	//Products
 	this.loadProductsPage = function() {
-		searchController.hideSearch();
+		searchController.showSearch();
 		searchController.showAddButton();
 		if(self.page != "Product"){
 			self.page = "Product";
@@ -440,10 +445,7 @@ function MainController () {
 		return addressText;
 	};
 	function getFridgeStatus(fridgeStatus){
-		if(fridgeStatus)
-			return "Bien";
-		else
-			return "Mal";
+		return  fridgeStatus ? "✔" : "✘";
 	};
 	function getPrice(stringValue){
 		return "$ "+Number(stringValue).toFixed(2);

@@ -162,21 +162,24 @@ function MasterControl(){
 	this.createGlobalMessage = function(options){
 		self.messageController.createMessage.call($('body'), options);
 	};
+	this.deleteSearch = function(){
+		self.mainController.deleteSearch();
+	};
 	//Detail
-	this.getStockDetail = function(stockId){
-		self.stockService.getStockDetail(stockId);
+	this.getStockDetail = function(stockId, callbacks){
+		self.stockService.getStockDetail(stockId, callbacks);
 	};
-	this.getPosDetail = function(posId){
-		self.posService.getPosDetail(posId);
+	this.getPosDetail = function(posId, callbacks){
+		self.posService.getPosDetail(posId, callbacks);
 	};
-	this.getSellerDetail = function(sellerId){
-		self.userService.getSellerDetail(sellerId);
+	this.getSellerDetail = function(sellerId, callbacks){
+		self.userService.getSellerDetail(sellerId, callbacks);
 	};
-	this.getSaleDetail = function(saleId){
-		self.salesService.getSaleDetail(saleId);
+	this.getSaleDetail = function(saleId, callbacks){
+		self.salesService.getSaleDetail(saleId, callbacks);
 	};
-	this.getProductDetail = function(productId){
-		self.stockService.getProductDetail(productId);
+	this.getProductDetail = function(productId, callbacks){
+		self.stockService.getProductDetail(productId, callbacks);
 	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
@@ -211,9 +214,15 @@ function MasterControl(){
 	this.failedProductAddition = function(){
 		self.mainController.failedProductAddition();
 	};
+	this.setEditionData = function(editData){
+		self.mainController.setEditionData(editData);
+	};
 	//Deletion
 	this.deleteBatch = function(deleteData){
 		self.stockService.deleteBatch(deleteData);
+	};
+	this.deleteProduct = function(deleteData){
+		self.stockService.deleteProduct(deleteData);
 	};
 	this.successfulRemoval = function(){
 		self.mainController.successfulRemoval();

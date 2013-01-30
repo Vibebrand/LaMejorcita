@@ -267,6 +267,7 @@ function MainController () {
 		tableController.view.removeView();
 		additionController.view.removeView();
 
+		self.deleteSearch();
 		self.updateMenu($.cookie('lamejorcita.option'));
 		detailController.createDetailMenu();
 		detailController.view.appendToView(self.view);
@@ -292,7 +293,7 @@ function MainController () {
 		detailController.view.removeView();
 		tableController.view.removeView();
 		
-
+		self.deleteSearch();
 		self.updateMenu($.cookie('lamejorcita.option'));
 		additionController.view.appendToView(self.view);
 	};

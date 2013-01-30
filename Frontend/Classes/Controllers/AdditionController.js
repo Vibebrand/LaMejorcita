@@ -60,6 +60,22 @@ function  AdditionController(){
 			container: container,
 			tagname: 'input'
 		});
+		createField({
+			field: 'password-input',
+			title: {classname: 'title', value: 'Ingrese una contraseña'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input',
+			tagtype: 'password'
+		});
+		createField({
+			field: 'repassword-input',
+			title: {classname: 'title', value: 'Repita la contraseña'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input',
+			tagtype: 'password'
+		});
 		container.append(submitBtn);
 	};
 	this.prepareUserInsertion = function(){
@@ -188,6 +204,8 @@ function  AdditionController(){
 		title.text(options.title.value);
 		for (var i = 0; i < options.value.length; i++) {
 			var value =  $('<'+options.tagname+'></'+options.tagname+'>');
+			if(typeof options.tagtype == "string")
+				value.attr('type', options.tagtype);
 			field.append(value);
 			value.attr('class', options.value[i].classname);
 			value.text(options.value[i].value);
@@ -347,35 +365,72 @@ function  AdditionController(){
 		var ucurp     = container.find('.curp-input .value');
 		var uemail    = container.find('.email-input .value');
 		var uphone    = container.find('.phone-input .value');
+		var password    = container.find('.password-input .value');
+		var repassword    = container.find('.repassword-input .value');
 		if(!validations.validateWithPattern(uname.val(), null, false)){
 			self.messages.createMessage.call(uname.parents('.name-input'), {
 				message:'Nombre no válido.',
 				className: 'error-message'
 			});
+			count++;
 		};
 		if(!validations.validateWithPattern(usurname.val(), null, false)){
 			self.messages.createMessage.call(usurname.parents('.surname-input'), {
 				message:'Apellido no válido.',
 				className: 'error-message'
 			});
+			count++;
 		};
 		if(!validations.validateCurp(ucurp.val(), false)){
 			self.messages.createMessage.call(ucurp.parents('.curp-input'), {
 				message:'CURP no válida.',
 				className: 'error-message'
 			});
+			count++;
 		};
 		if(!validations.validateEmail(uemail.val(), false)){
 			self.messages.createMessage.call(uemail.parents('.email-input'), {
 				message:'Correo electrónico no válido.',
 				className: 'error-message'
 			});
+			count++;
 		};
 		if(!validations.validatePhone(uphone.val(), false)){
 			self.messages.createMessage.call(uphone.parents('.phone-input'), {
 				message:'Teléfono no válido.',
 				className: 'error-message'
 			});
+			count++;
+		};
+		if(!validations.validateWithPattern(password.val(), null, false)){
+			self.messages.createMessage.call(password.parents('.password-input'), {
+				message:'Por favor ingrese una contraseña.',
+				className: 'error-message'
+			});
+			password.val('');
+			repassword.val('');
+			count++;
+		};
+		if(!validations.validateWithPattern(repassword.val(), null, false)){
+			self.messages.createMessage.call(repassword.parents('.repassword-input'), {
+				message:'Por favor ingrese la contraseña nevamente.',
+				className: 'error-message'
+			});
+			password.val('');
+			repassword.val('');
+		};
+		if ($.trim(password.val()) != $.trim(repassword.val())) {
+			self.messages.createMessage.call(password.parents('.password-input'), {
+				message:'Por favor ingrese una contraseña.',
+				className: 'error-message'
+			});
+			self.messages.createMessage.call(repassword.parents('.repassword-input'), {
+				message:'Por favor ingrese la misma contraseña nevamente.',
+				className: 'error-message'
+			});
+			password.val('');
+			repassword.val('');
+			count++;
 		};
 		return count < 1;
 	};

@@ -143,10 +143,10 @@ function MainController () {
 			var detailBtn = $('<button class="detail-button">Ver mas</button>');
 			tableController.view.setClass('sales-table');
 			tableController.tableHeaders = [];
+			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.status', 'className': 'status', 'value':'Estado'});
 			tableController.tableHeaders.push({'identifier': 'date', 					'className': 'date', 'value':'Fecha'});
 			tableController.tableHeaders.push({'identifier': 'time', 					'className': 'time', 'value':'Hora'});
 			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.serial', 'className': 'serial', 'value':'Punto de venta'});
-			tableController.tableHeaders.push({'identifier': 'salepoint.fridge.status', 'className': 'status', 'value':'Estado'});
 			tableController.tableHeaders.push({'identifier': 'products.count', 			'className': 'count', 'value':'Cantidad'});
 			tableController.tableHeaders.push({'identifier': 'products.amount', 		'className': 'amount', 'value':'Monto'});
 			tableController.tableHeaders.push({'identifier': 'detail', 					'className': 'detail', 'value':'', 'itemPrototype': detailBtn});
@@ -267,6 +267,7 @@ function MainController () {
 		tableController.view.removeView();
 		additionController.view.removeView();
 
+		self.deleteSearch();
 		self.updateMenu($.cookie('lamejorcita.option'));
 		detailController.createDetailMenu();
 		detailController.view.appendToView(self.view);
@@ -292,7 +293,7 @@ function MainController () {
 		detailController.view.removeView();
 		tableController.view.removeView();
 		
-
+		self.deleteSearch();
 		self.updateMenu($.cookie('lamejorcita.option'));
 		additionController.view.appendToView(self.view);
 	};
@@ -349,6 +350,8 @@ function MainController () {
 		var searchData  = $.extend({},{}, additional);
 		searchData.objects = objects;
 		searchData.page = pagecount;
+		if($.cookie('lamejorcita.keywords'))
+			searchData.keywords = $.cookie('lamejorcita.keywords');
 		if(typeof self.additionalData == "object"){
 			if(typeof self.additionalData.id != "undefined")
 				searchData[self.additionalData.kind+'Id'] = self.additionalData.id;
@@ -593,6 +596,9 @@ function MainController () {
 	};
 	this.enableAllEvents = function(){
 		self.delegate.enableEvents();
+	};
+	this.deleteSearch = function(){
+		searchController.deleteSearch();
 	};
 	//options
 	this.triggerOption = function(index){

@@ -17,7 +17,7 @@ TableController.prototype._init_= function(){
 	this.header    = header;
 	this.footer    = footer;
 };
-function TableController (argument) {
+function TableController() {
 	var self = this;
 	this.tableHeaders = [];
 	this.viewDidLoad = function(){

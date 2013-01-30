@@ -1,6 +1,7 @@
 function StockService(){
 	var self = this;
 	this.searchStocks = function(searchData){
+		console.log(searchData);
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {
 

@@ -62,7 +62,7 @@ function  AdditionController(){
 		var nameInput = productForm.find('.name-input .value');
 		var salePriceInput = productForm.find('.salePrice-input .value');
 		nameInput.val(product.name);
-		salePriceInput.val(product.salePrice);
+		salePriceInput.val(product.salePrice.toFixed(2));
 	};
 	this.successfulProductAddition = function(){
 		var data = typeof self.data == "undefined"? '': self.data;
@@ -243,7 +243,7 @@ function  AdditionController(){
 	function createProductJson(){
 		var form      = $('.product-form');
 		var pname     = $.trim(form.find('.name-input .value').val());
-		var salePrice = $.trim(form.find('.salePrice-input .value').val());
+		var salePrice = $.trim(form.find('.salePrice-input .value').val()).replace('$','');
 		var productData = {
 			name 	 : pname,
 			salePrice: salePrice

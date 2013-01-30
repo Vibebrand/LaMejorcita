@@ -515,6 +515,7 @@ function MainController () {
 			self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	function onClickEdit(){
+		self.delegate.disableEvents();
 		var editionId = $(this).parents('tr').data('id');
 		var page = (typeof self.page == "undefined")? detailController.page: self.page;
 		editionId = (typeof editionId == "undefined")? detailController.currentId : editionId;

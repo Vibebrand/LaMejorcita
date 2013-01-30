@@ -234,7 +234,7 @@ function  AdditionController(){
 	//Events
 	function onClickSend(){
 		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
-		var validationCall = self['validate'+self.data.kind.toCapitalize()]
+		var validationCall = self['validate'+self.data.kind.toCapitalize()];
 		if(typeof validationCall != "undefined" && validationCall.call(self)){
 			var jsonData ="";
 			if(typeof jsonCall == "function")

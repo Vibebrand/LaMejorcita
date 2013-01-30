@@ -16,9 +16,54 @@ function  AdditionController(){
 	
 	this.viewDidLoad = function(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
-		var methodCall = self['prepare'+self.data.method.toCapitalize()+self.data.kind.toCapitalize()];
+		var methodCall = self['prepare'+self.data.kind.toCapitalize()+self.data.method.toCapitalize()+'ion'];
 		if(typeof viewCall == "function") viewCall.call(self);
 		if(typeof methodCall == "function")setTimeout(methodCall, 0);
+	};
+	//User
+	this.loadUserView = function(){
+		var container = self.view.container();
+		var submitBtn = $('<button class="send-button">Enviar</button>');
+		container.empty();
+		createField({
+			field: 'name-input',
+			title: {classname: 'title', value: 'Nombre'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'surname-input',
+			title: {classname: 'title', value: 'Apellido'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'curp-input',
+			title: {classname: 'title', value: 'CURP'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'email-input',
+			title: {classname: 'title', value: 'Correo electrónico'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'phone-input',
+			title: {classname: 'title', value: 'Teléfono'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		container.append(submitBtn);
+	};
+	this.prepareUserInsertion = function(){
+		self.delegate.enableAllEvents();
 	};
 	//Products
 	function editProduct(){
@@ -89,7 +134,7 @@ function  AdditionController(){
 		acceptBtn.bind('click', onClickSend);
 	};
 	//Batch
-	this.prepareInsertBatch = function(){
+	this.prepareBatchInsertion = function(){
 		if(typeof stocksData  != "undefined" && typeof productsData != "undefined" ){
 			createBatchItem();
 			self.delegate.enableAllEvents();
@@ -294,6 +339,46 @@ function  AdditionController(){
 		self.delegate.enableAllEvents();
 	};
 	//Validation
+	function validateUser(){
+		var count     = 0;
+		var container = self.view.container();
+		var uname     = container.find('.name-input .value');
+		var usurname  = container.find('.surname-input .value');
+		var ucurp     = container.find('.curp-input .value');
+		var uemail    = container.find('.email-input .value');
+		var uphone    = container.find('.phone-input .value');
+		if(!validations.validateWithPattern(uname.val(), null, false)){
+			self.messages.createMessage.call(uname.parents('.name-input'), {
+				message:'Nombre no válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(usurname.val(), null, false)){
+			self.messages.createMessage.call(usurname.parents('.surname-input'), {
+				message:'Apellido no válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateCurp(ucurp.val(), false)){
+			self.messages.createMessage.call(ucurp.parents('.curp-input'), {
+				message:'CURP no válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateEmail(uemail.val(), false)){
+			self.messages.createMessage.call(uemail.parents('.email-input'), {
+				message:'Correo electrónico no válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validatePhone(uphone.val(), false)){
+			self.messages.createMessage.call(uphone.parents('.phone-input'), {
+				message:'Teléfono no válido.',
+				className: 'error-message'
+			});
+		};
+		return count < 1;
+	};
 	function validateProduct(){
 		var count = 0;
 		var form  = $('.product-form');
@@ -384,8 +469,10 @@ function  AdditionController(){
 	this.setProductData    = setProductData;
 	this.editProduct       = editProduct;
 	this.createProductJson = createProductJson;
+	this.loadProductView   = loadProductView;
+	//Validations
 	this.validateProduct   = validateProduct;
 	this.validateBatch     = validateBatch;
-	this.loadProductView   = loadProductView;
+	this.validateUser      = validateUser;
 	AdditionController.prototype._init_.call(this);
 };

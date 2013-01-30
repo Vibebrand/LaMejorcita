@@ -267,7 +267,7 @@ function MainController () {
 		detailController.view.appendToView(self.view);
 	};
 	this.getDetail = function(page, id, callbacks){
-		var getCall = self.delegate["get"+page+"Detail"];
+		var getCall = self.delegate["get"+page.toCapitalize()+"Detail"];
 		if(typeof getCall == "function") getCall.call(self.delegate, id, callbacks);
 	};
 	this.setDetail = function(data){
@@ -302,6 +302,9 @@ function MainController () {
 	};
 	this.setProductsforAddition = function(data){
 		additionController.setProductsforAddition(data);
+	};
+	this.setEditionData = function(editData){
+		additionController.setEditionData(editData);
 	};
 	//table methods
 	this.rowsNumber = function(){
@@ -423,7 +426,6 @@ function MainController () {
 			animation	: 'fadeIn',
 			speed		: 'fast'
 		});
-
 		message.text('¿Esta seguro de querer borrar este dato.?');
 		acceptBtn.text('Aceptar');
 		cancelBtn.text('Cancelar');
@@ -509,13 +511,21 @@ function MainController () {
 	this.onClickAdd = function(){
 		self.delegate.disableEvents();
 		if(self.page == "Product"){
-			additionController.data = {kind: 'product'}
-			additionController.loadProductsView();
+			additionController.data = {kind: 'product', method: 'insert'}
+			additionController.loadProductView();
 		}else
 			self.changePage('/Insert/'+self.page.toLowerCase());
 	};
 	function onClickEdit(){
-		console.log($(this));
+		self.delegate.disableEvents();
+		var editionId = $(this).parents('tr').data('id');
+		var page = (typeof self.page == "undefined")? detailController.page: self.page;
+		editionId = (typeof editionId == "undefined")? detailController.currentId : editionId;
+		if(self.page == "Product"){
+			additionController.data = {id: editionId, kind: page.toLowerCase(), method: 'edit'};
+			additionController.editProduct();
+		}else
+			self.changePage('/Edit/'+page.toLowerCase()+'/'+editionId);
 	};
 	function onClickCancel(){
 		var element = $(this).parents('.delete-modalbox')
@@ -547,16 +557,19 @@ function MainController () {
 		var deleteBtn = tableController.view.container().find('.delete-button');
 		var backBtn   = self.view.container().find('.detailButton-container .back-button');
 		var batchBtn  = tableController.view.container().find('.batch-button');
+		var editBtn   = self.view.container().find('.edit-button');
 
 		detailBtn.unbind('click');
 		deleteBtn.unbind('click');
 		backBtn.unbind('click');
 		batchBtn.unbind('click');
+		editBtn.unbind('click');
 
 		detailBtn.bind('click',onClickDetail);
 		deleteBtn.bind('click',onClickDelete);
 		backBtn.bind('click', onClickBack);
 		batchBtn.bind('click', onClickBatch);
+		editBtn.bind('click', onClickEdit);
 		
 		searchController.enableEvents();
 		detailController.enableEvents();

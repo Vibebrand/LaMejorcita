@@ -211,6 +211,9 @@ function MasterControl(){
 	this.failedProductAddition = function(){
 		self.mainController.failedProductAddition();
 	};
+	this.setEditionData = function(editData){
+		self.mainController.setEditionData(editData);
+	};
 	//Deletion
 	this.deleteBatch = function(deleteData){
 		self.stockService.deleteBatch(deleteData);

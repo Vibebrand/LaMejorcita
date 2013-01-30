@@ -405,9 +405,12 @@ function DetailController(){
 
 		successCalls.push({call: 'setDetail'});
 		failCalls.push({
-			message:'No se pudo obtener la información.',
-			className: 'error-message',
-			delay: 2500
+			call: 'createGlobalMessage', 
+			params: {
+				message:'No se pudo obtener la información.',
+				className: 'error-message',
+				delay: 2500
+			}
 		});
 		callbacks.successCall = successCalls;
 		callbacks.failCall = failCalls;

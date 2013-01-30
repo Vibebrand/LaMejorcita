@@ -21,7 +21,11 @@ function  AdditionController(){
 		if(typeof methodCall == "function")setTimeout(methodCall, 0);
 	};
 	//Products
-	function loadProductsView(){
+	function editProduct(){
+		var callbacks = createEditionCalls();
+		self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
+	};
+	function loadProductView(){
 		var productForm = $('<div class="product-form"></div>');
 		var acceptBtn 	= $('<button class="accept">Aceptar</button>');
 		var cancelBtn 	= $('<button class="cancel">Cancelar</button>');
@@ -53,11 +57,20 @@ function  AdditionController(){
 		cancelBtn.bind('click', onClickCancel);
 		productForm.find('input').bind('focusin', onFocusIn);
 	};
+	function setProductData(product){
+		var productForm = $('.product-modalbox .product-form');
+		var nameInput = productForm.find('.name-input .value');
+		var salePriceInput = productForm.find('.salePrice-input .value');
+		nameInput.val(product.name);
+		salePriceInput.val(product.salePrice);
+	};
 	this.successfulProductAddition = function(){
+		var data = typeof self.data == "undefined"? '': self.data;
 		var form  = $('.product-form');
 		var cancelBtn = form.find('button.cancel');
+		var message = data.method == "insert"? 'La información se guardo correctamente.': 'La información se edito correctamente.';
 		self.messages.createMessage.call(form, {
-			message:'El producto se guardo correctamente.',
+			message  : message,
 			className: 'success-message'
 		});
 		setTimeout(function(){
@@ -174,6 +187,12 @@ function  AdditionController(){
 		batchItem.remove();
 	};
 	//Data
+	this.setEditionData = function(editData){
+		var loadCall = self['load'+self.data.kind.toCapitalize()+'View'];
+		var setCall = self['set'+self.data.kind.toCapitalize()+'Data']
+		if(typeof loadCall == "function") loadCall.call(self);
+		if(typeof setCall  == "function") setCall.call(self, editData);
+	};
 	this.setStocksforAddition = function(stocks){
 		stocksData      = [];
 		var container = self.view.container();
@@ -231,15 +250,36 @@ function  AdditionController(){
 		};
 		return JSON.stringify(productData);
 	};
+	function createEditionCalls(){
+		var callbacks = {};
+		var failCalls = [];
+		var successCalls = [];
+		successCalls.push({call: 'setEditionData'});
+		failCalls.push({
+			call: 'createGlobalMessage',
+			params: {
+				message:'No se pudieron obtener la información para editar.',
+				className: 'error-message',
+				delay: 2500
+			}
+		});
+		callbacks.successCall = successCalls;
+		callbacks.failCall = failCalls;
+		return callbacks;
+	};
 	//Events
 	function onClickSend(){
 		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
-		var validationCall = self['validate'+self.data.kind.toCapitalize()]
+		var validationCall = self['validate'+self.data.kind.toCapitalize()];
 		if(typeof validationCall != "undefined" && validationCall.call(self)){
 			var jsonData ="";
+			var dataToSend = {};
 			if(typeof jsonCall == "function")
 				jsonData = jsonCall.call(self);
-			self.delegate.addData(self.data.kind.toCapitalize(), {data: jsonData});
+			if(typeof self.data != "undefined" && typeof self.data.id == "string")
+				dataToSend.id = self.data.id;
+			dataToSend.data = jsonData;
+			self.delegate.addData(self.data.kind.toCapitalize(), dataToSend);
 		};
 	};
 	function onFocusIn(){
@@ -341,9 +381,11 @@ function  AdditionController(){
 		submitBtn.unbind('click');
 		inputs.unbind('focusin.lamejorcita');
 	};
+	this.setProductData    = setProductData;
+	this.editProduct       = editProduct;
 	this.createProductJson = createProductJson;
 	this.validateProduct   = validateProduct;
 	this.validateBatch     = validateBatch;
-	this.loadProductsView  = loadProductsView;
+	this.loadProductView   = loadProductView;
 	AdditionController.prototype._init_.call(this);
 };

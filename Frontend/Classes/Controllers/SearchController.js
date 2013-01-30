@@ -49,6 +49,11 @@ function SearchController () {
 		searchBtn.data('click', true);
 		searchWrap.show();
 	};
+	this.deleteSearch = function(){
+		var container = self.view.container();
+		container.find('.search-wrapper input').val('');
+		$.cookie('lamejorcita.keywords',null);
+	};
 	//Events
 	function onClickSearch(){
 		var container = self.view.container();

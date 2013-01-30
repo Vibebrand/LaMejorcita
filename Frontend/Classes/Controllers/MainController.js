@@ -596,6 +596,9 @@ function MainController () {
 	this.enableAllEvents = function(){
 		self.delegate.enableEvents();
 	};
+	this.deleteSearch = function(){
+		searchController.deleteSearch();
+	};
 	//options
 	this.triggerOption = function(index){
 		self.delegate.triggerOption(index);

@@ -162,6 +162,9 @@ function MasterControl(){
 	this.createGlobalMessage = function(options){
 		self.messageController.createMessage.call($('body'), options);
 	};
+	this.deleteSearch = function(){
+		self.mainController.deleteSearch();
+	};
 	//Detail
 	this.getStockDetail = function(stockId, callbacks){
 		self.stockService.getStockDetail(stockId, callbacks);

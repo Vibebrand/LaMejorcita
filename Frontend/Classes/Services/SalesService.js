@@ -38,6 +38,7 @@ function SalesService (argument) {
 		self.delegate.setTableData(sales);
 	};
 	this.getSaleDetail = function(saleId){
+		console.log(saleId);
 		var date = new Date();
 		var sale = {
 			_id: "_sdafsadfdsa00",

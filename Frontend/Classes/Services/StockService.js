@@ -4,7 +4,6 @@ function StockService(){
 		console.log(searchData);
 		var stocks = [];
 		for (var i = 0; i < 15; i++) {
-
 			var stock = {
 				_id			: "safdsafdsa0fd"+i,
 				name        :"Bodega "+i,
@@ -51,6 +50,7 @@ function StockService(){
 		self.delegate.setTableData(products);
 	};
 	this.getStockDetail = function(stockId, callbacks){
+		console.log(stockId);
 		var date = new Date();
 		var stock = {
 			_id			: "safdsafdsa0fd",
@@ -146,6 +146,7 @@ function StockService(){
 			var stock = {_id: "safdsafdsa0fd"+i, name:"Bodega "+i, businessName:"Negocio "+i};
 			stocks.push(stock)
 		};
+		console.log(stock);
 		self.delegate.setStocksforAddition(stocks);
 	};
 	this.getProductsforAddition= function(){
@@ -154,6 +155,7 @@ function StockService(){
 			var product = {_id: "sadfdsadfprod"+i, name: "Producto"+i};
 			products.push(product);
 		};
+		console.log(product);
 		self.delegate.setProductsforAddition(products);
 	};
 };

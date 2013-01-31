@@ -42,6 +42,7 @@ function POSService (argument) {
 		self.delegate.setTableData(posData);
 	};
 	this.getPosDetail = function(posId){
+		console.log(posId);
 		var date = new Date();
 		var pos = {
 			_id: "sdfadsasalepoint0",
@@ -75,6 +76,7 @@ function POSService (argument) {
 				businessName:"Negocio 0"
 			}
 		};
+		console.log(pos);
 		self.delegate.setDetail(pos);
 	};
 };

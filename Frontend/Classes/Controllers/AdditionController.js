@@ -10,6 +10,7 @@ function  AdditionController(){
 	var editionData;
 	this.data;
 	this.messages = null;
+	this.currentData = null:
 
 	var self        = this;
 	var validations = new TextValidationService();
@@ -82,6 +83,13 @@ function  AdditionController(){
 	};
 	this.prepareUserInsertion = function(){
 		self.delegate.enableAllEvents();
+	};
+	this.prepareUserEdition = function(){
+		var callbacks = createEditionCalls();
+		self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
+	};
+	this.setUserData = function(user){
+
 	};
 	//Products
 	function editProduct(){
@@ -255,7 +263,8 @@ function  AdditionController(){
 	this.setEditionData = function(editData){
 		var loadCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		var setCall = self['set'+self.data.kind.toCapitalize()+'Data']
-		if(typeof loadCall == "function") loadCall.call(self);
+		if(self.data.kind.toLowerCase() == "product")
+			if(typeof loadCall == "function") loadCall.call(self);
 		if(typeof setCall  == "function") setCall.call(self, editData);
 	};
 	this.setStocksforAddition = function(stocks){

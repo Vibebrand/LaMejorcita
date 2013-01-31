@@ -93,7 +93,11 @@ function UserService(){
 		};
 			
 		console.log(user);
-		self.delegate.setDetail(user);
+		self.callsHandler.makeCallbacks({
+			calls: callbacks.successCall, 
+			params: user , 
+			handlers: [self, self.delegate]
+		});
 	};
 };
 UserService.prototype = new Service();

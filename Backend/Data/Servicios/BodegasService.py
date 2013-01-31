@@ -9,3 +9,11 @@ def obtenerbodegas(param,skip,limit,accion):
 def eliminarbodegas(accion,entityId, valuesToUpdate):
 	db=DBModule("bodegasinfo")
 	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
+
+def guardabodega(atributos,accion):
+	db=DBModule("bodegasinfo")
+	db.saveEntity(atributos).addCallback(lambda ign: accion(db.getResult()))
+
+def eliminabodega(idvalor,atributos,accion):
+	db=DBModule("bodegasinfo")
+	db.updateEntity(entityId=idvalor,valuesToUpdate=atributos).addCallback(lambda ign: accion(db.getResult()))

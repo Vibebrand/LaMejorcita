@@ -4,9 +4,6 @@ from Data.Servicios import VendedoresService
 from Data.Servicios import VentasService
 from Data.Servicios import ProductosService
 
-
-
-
 def obtenerbodegas(accion,param={},skip=0,limit=0):
 	BodegasService.obtenerbodegas(param=param,skip=skip,limit=limit,accion=accion)
 
@@ -29,13 +26,43 @@ def eliminarpuntos(accion,entityId, valuesToUpdate):
 	PuntosService.eliminarpuntos(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def eliminarvendedores(accion,entityId, valuesToUpdate):
-	PuntosService.eliminarvendedores(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
+	VendedoresService.eliminarvendedores(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def eliminarventas(accion,entityId, valuesToUpdate):
 	VentasService.eliminarventas(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def eliminarproductos(accion,entityId, valuesToUpdate):
 	ProductosService.eliminarproductos(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
+
+def guardabodega(atributos,accion):
+	BodegasService.guardabodega(atributos=atributos,accion=accion)
+
+def editabodega(idvalor,atributos,accion):
+	BodegasService.editabodega(idvalor=idvalor,atributos=atributos,accion=muestra)
+
+def guardapunto(atributos,accion):
+	PuntosService.guardapunto(atributos=atributos,accion=accion)
+
+def editapunto(idvalor,atributos,accion):
+	PuntosService.editapunto(idvalor=idvalor,atributos=atributos,accion=muestra)
+
+def guardavendedor(atributos,accion):
+	VendedoresService.guardavendedor(atributos=atributos,accion=accion)
+
+def editavendedor(idvalor,atributos,accion):
+	VendedoresService.editavendedor(idvalor=idvalor,atributos=atributos,accion=muestra)
+
+def guardaventa(atributos,accion):
+	VentasService.guardaventa(atributos=atributos,accion=accion)
+
+def editaventa(idvalor,atributos,accion):
+	VentasService.editaventa(idvalor=idvalor,atributos=atributos,accion=muestra)
+
+def guardaproducto(atributos,accion):
+	ProductosService.guardaproducto(atributos=atributos,accion=accion)
+
+def editaproducto(idvalor,atributos,accion):
+	ProductosService.editaproducto(idvalor=idvalor,atributos=atributos,accion=muestra)
 
 def llena(bodega,accion):
 	def x1():

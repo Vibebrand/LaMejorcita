@@ -5,16 +5,14 @@ AdditionController.prototype._init_= function(){
 	this.view.setClass('addition-container');
 };
 function  AdditionController(){
+	this.data;
 	var stocksData;
 	var products;
 	var editionData;
-	this.data;
-	this.messages = null;
+	var self         = this;
+	var validations  = new TextValidationService();
+	this.messages    = null;
 	this.currentData = null;
-
-	var self        = this;
-	var validations = new TextValidationService();
-	
 	this.viewDidLoad = function(){
 		var viewCall = self['load'+self.data.kind.toCapitalize()+'View'];
 		var methodCall = self['prepare'+self.data.kind.toCapitalize()+self.data.method.toCapitalize()+'ion'];

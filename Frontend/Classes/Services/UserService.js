@@ -18,7 +18,7 @@ function UserService(){
 			var user = {
 				_id:"asfdo90qwqewr"+i,
 				name: "User"+(i+1)+" Guy",
-				curp: 'PIIG720116BV'+(i+1),
+				curp: 'QWER123456HQWERT12',
 				email: "user"+(i+1)+".guy@mail.com",
 				phone:"977733"+i,
 				type: 'manager'
@@ -35,7 +35,7 @@ function UserService(){
 			var seller = {
 				_id:"asfdo90qwqewr"+i,
 				name: "Sales"+i+" Guy",
-				curp: 'PIIG720116BV'+i,
+				curp: 'QWER123456HQWERT12',
 				email: "sales.guy@mail.com",
 				device: 'safdsafdevicesdf'+i+'20',
 				phone:"123456"+i,
@@ -52,7 +52,7 @@ function UserService(){
 					manager     :{
 						_id	 : "asfdo90qwqewr"+i,
 						name : "Guy Fawkes",
-						curp : 'PIIG720116BV'+i,
+						curp : 'QWER123456HQWERT12',
 						email: "sales.guy@mail.com"
 					},
 					phone      	:"123456"+i
@@ -68,7 +68,7 @@ function UserService(){
 		var seller = {
 			_id:"asfdo90qwqewr0",
 			name: "Sales Guy",
-			curp: 'PIIG720116BV1',
+			curp: 'QWER123456HQWERT12',
 			email: "sales.guy@mail.com",
 			device: 'safdsafdevicesdf020',
 			phone:"9787621",
@@ -86,9 +86,10 @@ function UserService(){
 		var user = {
 			_id:"asfdo90qwqewr0",
 			name: "User"+date.getSeconds()+" Guy",
-			curp: 'PIIG720116BV'+date.getSeconds(),
+			curp: 'QWER123456HQWERT12',
 			email: "user"+date.getSeconds()+".guy@mail.com",
 			phone:"9777330",
+			password:"sadfdsafdsadsafsafd",
 			type: 'manager'
 		};
 			

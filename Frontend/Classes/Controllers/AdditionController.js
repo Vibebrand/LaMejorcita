@@ -10,7 +10,7 @@ function  AdditionController(){
 	var editionData;
 	this.data;
 	this.messages = null;
-	this.currentData = null:
+	this.currentData = null;
 
 	var self        = this;
 	var validations = new TextValidationService();
@@ -89,7 +89,25 @@ function  AdditionController(){
 		self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
 	};
 	this.setUserData = function(user){
+		self.currentData = user;
+		var container  = self.view.container();
+		var uname      = container.find('.name-input .value');
+		var usurname   = container.find('.surname-input .value');
+		var ucurp      = container.find('.curp-input .value');
+		var uemail     = container.find('.email-input .value');
+		var uphone     = container.find('.phone-input .value');
+		var password   = container.find('.password-input .value');
+		var repassword = container.find('.repassword-input .value');
 
+		usurname.parents('.surname-input').hide();
+		uname.val(user.name);
+		ucurp.val(user.curp);
+		uemail.val(user.email);
+		uphone.val(user.phone);
+		password.val(user.password);
+		repassword.val(user.password);
+		
+		self.delegate.enableAllEvents();
 	};
 	//Products
 	function editProduct(){
@@ -380,15 +398,15 @@ function  AdditionController(){
 	};
 	//Validation
 	function validateUser(){
-		var count     = 0;
-		var container = self.view.container();
-		var uname     = container.find('.name-input .value');
-		var usurname  = container.find('.surname-input .value');
-		var ucurp     = container.find('.curp-input .value');
-		var uemail    = container.find('.email-input .value');
-		var uphone    = container.find('.phone-input .value');
-		var password    = container.find('.password-input .value');
-		var repassword    = container.find('.repassword-input .value');
+		var count      = 0;
+		var container  = self.view.container();
+		var uname      = container.find('.name-input .value');
+		var usurname   = container.find('.surname-input .value');
+		var ucurp      = container.find('.curp-input .value');
+		var uemail     = container.find('.email-input .value');
+		var uphone     = container.find('.phone-input .value');
+		var password   = container.find('.password-input .value');
+		var repassword = container.find('.repassword-input .value');
 		if(!validations.validateWithPattern(uname.val(), null, false)){
 			self.messages.createMessage.call(uname.parents('.name-input'), {
 				message:'Nombre no válido.',
@@ -396,7 +414,7 @@ function  AdditionController(){
 			});
 			count++;
 		};
-		if(!validations.validateWithPattern(usurname.val(), null, false)){
+		if(!validations.validateWithPattern(usurname.val(), null, true)){
 			self.messages.createMessage.call(usurname.parents('.surname-input'), {
 				message:'Apellido no válido.',
 				className: 'error-message'

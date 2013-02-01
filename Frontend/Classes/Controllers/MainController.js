@@ -99,7 +99,7 @@ function MainController () {
 			loadTableView();
 		};
 		removeBatchView();
-		createVisualizationButtons
+		createVisualizationButtons();
 		prepareTableView();
 	};
 	//Sellers

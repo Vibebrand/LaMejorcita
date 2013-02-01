@@ -68,7 +68,7 @@ function StockService(){
 			manager     :{
 				_id	 : "asfdo90qwqewr1",
 				name : "Guy Fawkes",
-				curp : 'PIIG720116BV0',
+				curp : 'QWER123456HQWERT12',
 				email: "faukes@mail.com"
 			},
 			geoposition: {

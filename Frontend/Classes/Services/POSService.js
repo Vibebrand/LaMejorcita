@@ -21,7 +21,7 @@ function POSService (argument) {
 				},
 				representative:{
 					name: "Rep Guy",
-					curp: 'PIIG720116BV1',
+					curp: 'QWER123456HQWERT12',
 					email: "rep.guy@mail.com"
 				},
 				address: {
@@ -61,7 +61,7 @@ function POSService (argument) {
 			},
 			representative:{
 				name: "Rep Guy",
-				curp: 'PIIG720116BV1',
+				curp: 'QWER123456HQWERT12',
 				email: "rep.guy@mail.com"
 			},
 			address: {

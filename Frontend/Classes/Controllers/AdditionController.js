@@ -18,8 +18,64 @@ function  AdditionController(){
 		var methodCall = self['prepare'+self.data.kind.toCapitalize()+self.data.method.toCapitalize()+'ion'];
 		if(typeof viewCall == "function") viewCall.call(self);
 		if(typeof methodCall == "function")setTimeout(methodCall, 0);
-
 		self.delegate.updateMenuWithString(self.data.kind);
+	};
+	//Stock
+	function loadStockView(){
+		var container = self.view.container();
+		var submitBtn = $('<button class="send-button">Enviar</button>');
+		createField({
+			field: 'name-input',
+			title: {classname: 'title', value: 'Nombre'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'street-input',
+			title: {classname: 'title', value: 'Calle'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'extNum-input',
+			title: {classname: 'title', value: 'Número exterior'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'intNum-input',
+			title: {classname: 'title', value: 'Número interior'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'district-input',
+			title: {classname: 'title', value: 'Colonia'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'manager-input',
+			title: {classname: 'title', value: 'Responsable'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'div'
+		});
+		container.append(submitBtn);
+	};
+	function prepareStockInsertion(){
+
+	};
+	function prepareStockEdition(){
+
+	};
+	function setStockData(){
+		
 	};
 	//User
 	function loadUserView(){
@@ -566,9 +622,14 @@ function  AdditionController(){
 	//Data
 	this.setProductData    = setProductData;
 	this.editProduct       = editProduct;
+	this.setStockData          = setStockData;
 	//Page
-	this.loadProductView   = loadProductView;
-	this.loadUserView      = loadUserView;
+	this.loadProductView       = loadProductView;
+	this.loadUserView          = loadUserView;
+	this.loadStockView         = loadStockView;
+	//Prepare
+	this.prepareStockInsertion = prepareStockInsertion;
+	this.prepareStockEdition   = prepareStockEdition;
 	//Validations
 	this.validateProduct   = validateProduct;
 	this.validateBatch     = validateBatch;

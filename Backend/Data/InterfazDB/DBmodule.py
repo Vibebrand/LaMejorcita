@@ -21,7 +21,7 @@ class DBModule:
         #if hasattr(entity, "type"):
             #Delete type attribute as it's useless to save it to the database
             #delattr(entity, "type")
-        self.result = yield entityCollection.save(entity, safe=True)
+        self.result= yield entityCollection.save(entity, safe=True)
         mongo.disconnect()
 
     @defer.inlineCallbacks

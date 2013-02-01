@@ -9,3 +9,18 @@ def obtenerventas(stock,point,seller,accion,param,skip,limit):
 def eliminarventas(accion,entityId, valuesToUpdate):
 	db=DBModule("ventasinfo")
 	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
+
+def guardaventa(atributos,accion):
+	atributos["status"]="1"
+	if not atributos["date"]:
+		atributos["date"]=str(sdatetime.datetime.date())
+
+	if not atributos["time"]:
+		atributos["time"]=str(sdatetime.datetime.time())
+
+	db=DBModule("ventasinfo")
+	db.saveEntity(atributos).addCallback(lambda ign: accion(db.getResult()))
+
+def editaventa(idvalor,atributos,accion):
+	db=DBModule("ventasinfo")
+	db.updateEntity(entityId=idvalor,valuesToUpdate=atributos).addCallback(lambda ign: accion(db.getResult()))

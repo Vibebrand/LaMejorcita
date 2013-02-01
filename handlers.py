@@ -193,7 +193,7 @@ class GetProductosDetailHandler(cyclone.web.RequestHandler):
         parametro=self.get_argument("_id",None)
         MasterController.eliminarproductos(entityId=parametro,valuesToUpdate={"status":"0"},accion=muestra)
 
-class GuardaBodegasHandler(cyclone.web.RequestHandler):
+class GuardaBodegaHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
     def post(self):
         def muestra(result):
@@ -202,10 +202,11 @@ class GuardaBodegasHandler(cyclone.web.RequestHandler):
 
         self.atributos=json.loads(self.get_argument("data",None))
 
-        if self.get_argument("_id",None) as idvalor:
-            Mastercontroller.editabodega(idvalor=idvalor,atributos=self.atributos,accion=muestra)
+        if not self.get_argument("_id",None):
+            MasterController.guardabodega(atributos=self.atributos,accion=muestra)
         else:
-            Mastercontroller.guardabodega(atributos=self.atributos,accion=muestra)
+            idvalor=self.get_argument("_id",None)
+            MasterController.editabodega(idvalor=idvalor,atributos=self.atributos,accion=muestra)
 
 class GuardaPuntoHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous
@@ -216,38 +217,56 @@ class GuardaPuntoHandler(cyclone.web.RequestHandler):
 
         self.atributos=json.loads(self.get_argument("data",None))
 
-        if self.get_argument("_id",None) as idvalor:
-            Mastercontroller.editapunto(idvalor=idvalor,atributos=self.atributos,accion=muestra)
+        if not self.get_argument("_id",None):
+            MasterController.guardapunto(atributos=self.atributos,accion=muestra)  
         else:
-            Mastercontroller.guardapunto(atributos=self.atributos,accion=muestra)
+            idvalor=self.get_argument("_id",None)
+            MasterController.editapunto(idvalor=idvalor,atributos=self.atributos,accion=muestra)
 
-        """data: “{
-        “stock”: “sdafsdafdsafd01”
-        “phone”: “9778726”,
-        “email”:”sale.point1@email.com”,
-        “address”:”{
-            “district”: “Colonia”
-            “street”:”Calle”,
-            “extNum:”13”,
-            “intNum”: “”
-        }”,
-        “fridge”: “{
-            “serial”: “AFSDLL0132FRIDGE0”
-        }”,
-        “representative”: “{
-            “name”: “Representative Guy”
-            “curp”: “PIIG720116BV1”
-            “email”: “rep.guy@email.com”
-        }”
+class GuardaVendedorHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def post(self):
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
 
-        name(string)
-        phone(string)
-        email(string)
-        address(string)
-        joinDate(string)
-        fridge(Fridge)
-        representative(Representative)
-        stock(Stock) //name en la tabla"""
+        self.atributos=json.loads(self.get_argument("data",None))
+
+        if not self.get_argument("_id",None):
+            MasterController.guardavendedor(atributos=self.atributos,accion=muestra)  
+        else:
+            idvalor=self.get_argument("_id",None)
+            MasterController.editavendedor(idvalor=idvalor,atributos=self.atributos,accion=muestra)
+
+class GuardaVentaHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def post(self):
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        self.atributos=json.loads(self.get_argument("data",None))
+
+        if not self.get_argument("_id",None):
+            MasterController.guardaventa(atributos=self.atributos,accion=muestra)  
+        else:
+            idvalor=self.get_argument("_id",None)
+            MasterController.editaventa(idvalor=idvalor,atributos=self.atributos,accion=muestra)
+
+class GuardaProductoHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def post(self):
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        self.atributos=json.loads(self.get_argument("data",None))
+
+        if not self.get_argument("_id",None):
+            MasterController.guardaproducto(atributos=self.atributos,accion=muestra)  
+        else:
+            idvalor=self.get_argument("_id",None)
+            MasterController.editaproducto(idvalor=idvalor,atributos=self.atributos,accion=muestra)
 
 class LogoutHandler(cyclone.web.RequestHandler):
     @cyclone.web.asynchronous

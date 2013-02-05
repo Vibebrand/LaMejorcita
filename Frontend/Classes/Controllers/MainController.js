@@ -311,6 +311,12 @@ function MainController () {
 	this.getProductsforAddition= function(){
 		self.delegate.getProductsforAddition();
 	};
+	this.getUsersForAddition = function(){
+		self.delegate.getUsersForAddition();
+	};
+	this.setUsersForAddition = function(users){
+		additionController.setUsersForAddition(users);
+	};
 	this.setStocksforAddition = function(data){
 		additionController.setStocksforAddition(data);
 	};

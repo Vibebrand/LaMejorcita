@@ -197,17 +197,25 @@ function MasterControl(){
 	this.setProductsforAddition = function(data){
 		self.mainController.setProductsforAddition(data);
 	};
+	this.getUsersForAddition = function(){
+		self.userService.getUsersForAddition();
+	};
+	this.setUsersForAddition = function(users){
+		self.mainController.setUsersForAddition(users);
+	};
 	this.successfulAddition = function(){
 		self.mainController.successfulAddition();
 	};
-	//Addition Batch
+	//Addition
+	this.addStock = function(dataToSend){
+		self.stockService.addStock(dataToSend);
+	};
 	this.addBatch = function(dataToSend){
 		self.stockService.addBatch(dataToSend);
 	};
 	this.addUser = function(dataToSend){
 		self.userService.addUser(dataToSend);
 	};
-	//Addition Product
 	this.addProduct = function(data){
 		self.stockService.addProduct(data);
 	};

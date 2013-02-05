@@ -7,6 +7,7 @@ AdditionController.prototype._init_= function(){
 function  AdditionController(){
 	this.data;
 	var stocksData;
+	var usersData;
 	var products;
 	var editionData;
 	var self         = this;
@@ -24,6 +25,7 @@ function  AdditionController(){
 	function loadStockView(){
 		var container = self.view.container();
 		var submitBtn = $('<button class="send-button">Enviar</button>');
+		container.empty();
 		createField({
 			field: 'name-input',
 			title: {classname: 'title', value: 'Nombre'}, 
@@ -60,22 +62,79 @@ function  AdditionController(){
 			tagname: 'input'
 		});
 		createField({
+			field: 'minSale-input',
+			title: {classname: 'title', value: 'Mínimo número de ventas'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
+			field: 'maxSale-input',
+			title: {classname: 'title', value: 'Máximo número de ventas'}, 
+			value: [{classname: 'value', value:''}],
+			container: container,
+			tagname: 'input'
+		});
+		createField({
 			field: 'manager-input',
 			title: {classname: 'title', value: 'Responsable'}, 
-			value: [{classname: 'value', value:''}],
+			value: [{classname: 'selector', value:''}],
 			container: container,
 			tagname: 'div'
 		});
 		container.append(submitBtn);
+		self.delegate.getUsersForAddition();
 	};
 	function prepareStockInsertion(){
-
+		if(typeof usersData  != "undefined")
+			self.delegate.enableAllEvents();
+		else
+			setTimeout(arguments.callee, 50);
 	};
 	function prepareStockEdition(){
-
+		if(typeof usersData  != "undefined"){
+			var callbacks = createEditionCalls();
+			self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
+		}else
+			setTimeout(arguments.callee, 50);
 	};
-	function setStockData(){
-		
+	function setStockData(stock){
+		var container  = self.view.container();
+		var sname     = container.find('.name-input .value');
+		var sstreet   = container.find('.street-input .value');
+		var sextNum   = container.find('.extNum-input .value');
+		var sintNum   = container.find('.intNum-input .value');
+		var sdistrict = container.find('.district-input .value');
+		var minSale   = container.find('.minSale-input .value');
+		var maxSale   = container.find('.maxSale-input .value');
+		var smanager  = container.find('.manager-input');
+		sname.val(stock.name);
+		sstreet.val(stock.address.street);
+		sextNum.val(stock.address.extNum);
+		sintNum.val(stock.address.intNum);
+		sdistrict.val(stock.address.district);
+		minSale.val(stock.minSale);
+		maxSale.val(stock.maxSale);
+		smanager.find('#'+stock.manager._id).trigger('click');
+		self.delegate.enableAllEvents();
+	};
+	this.setUsersForAddition = function(users){
+		usersData      = [];
+		var container = self.view.container();
+		var selector  = container.find('.manager-input .selector');
+		for (var i = 0; i < users.length; i++) {
+			usersData.push({
+				id		: users[i]._id,
+				value 	: users[i].name,
+				data	: users[i]._id
+			});
+		};
+		selector.customDropdown({
+			placeholder : 'Elegir usuario',
+			options 	: usersData,
+			optionList	: 'selector-options',
+			optionItem	: 'selector-option',
+		});
 	};
 	//User
 	function loadUserView(){
@@ -424,6 +483,21 @@ function  AdditionController(){
 		callbacks.failCall = failCalls;
 		return callbacks;
 	};
+	function createStockJson(){
+		var container  = self.view.container();
+		var newStock =
+		{
+			name     : container.find('.name-input .value').val(),
+			manager  : container.find('.manager-input .selected-item').data('customdropdown.data'),
+			address: {
+				street   : container.find('.street-input .value').val(),
+				extNum   : container.find('.extNum-input .value').val(),
+				intNum   : container.find('.intNum-input .value').val(),
+				district : container.find('.district-input .value').val()
+			}
+		};
+		return JSON.stringify(newStock);
+	};
 	//Events
 	function onClickSend(){
 		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
@@ -451,6 +525,76 @@ function  AdditionController(){
 		self.delegate.enableAllEvents();
 	};
 	//Validation
+	function validateStock(){
+		var count      = 0;
+		var container  = self.view.container();
+		var sname     = container.find('.name-input .value');
+		var sstreet   = container.find('.street-input .value');
+		var sextNum   = container.find('.extNum-input .value');
+		var sintNum   = container.find('.intNum-input .value');
+		var sdistrict = container.find('.district-input .value');
+		var minSale   = container.find('.minSale-input .value');
+		var maxSale   = container.find('.maxSale-input .value');
+		var smanager  = container.find('.manager-input');
+
+		if(typeof smanager.find('.selected-item').data('customdropdown.data') == "undefined"){
+			count++;
+			self.messages.createMessage.call(smanager , {
+				message:'Por favor seleccione un representante de bodega.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(sextNum.val(), new RegExp("^[0-9]+$"), false)){
+			count++;
+			self.messages.createMessage.call(sextNum.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un número exterior válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(sintNum.val(), new RegExp("^[0-9]+$"), true)){
+			count++;
+			self.messages.createMessage.call(sintNum.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un número interior válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(sstreet.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(sstreet.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un calle válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(sname.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(sname.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un nombre de bodega válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(sdistrict.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(sdistrict.parents('*[class$="input"]') , {
+				message:'Por favor ingrese una colonia válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(maxSale.val(), new RegExp("^[0-9]+$"), false)){
+			count++;
+			self.messages.createMessage.call(maxSale.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un número de ventas máximo válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(minSale.val(), new RegExp("^[0-9]+$"), false)){
+			count++;
+			self.messages.createMessage.call(minSale.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un número de ventas mínimo válido.',
+				className: 'error-message'
+			});
+		};
+		return count < 1;
+	};
 	function validateUser(){
 		var count      = 0;
 		var container  = self.view.container();
@@ -616,12 +760,13 @@ function  AdditionController(){
 		inputs.unbind('focusin.lamejorcita');
 	};
 	//Creation
-	this.createBatchJson   = createBatchJson;
-	this.createProductJson = createProductJson;
-	this.createUserJson    = createUserJson;
+	this.createBatchJson       = createBatchJson;
+	this.createProductJson     = createProductJson;
+	this.createUserJson        = createUserJson;
+	this.createStockJson       = createStockJson;
 	//Data
-	this.setProductData    = setProductData;
-	this.editProduct       = editProduct;
+	this.setProductData        = setProductData;
+	this.editProduct           = editProduct;
 	this.setStockData          = setStockData;
 	//Page
 	this.loadProductView       = loadProductView;
@@ -631,8 +776,9 @@ function  AdditionController(){
 	this.prepareStockInsertion = prepareStockInsertion;
 	this.prepareStockEdition   = prepareStockEdition;
 	//Validations
-	this.validateProduct   = validateProduct;
-	this.validateBatch     = validateBatch;
-	this.validateUser      = validateUser;
+	this.validateProduct       = validateProduct;
+	this.validateBatch         = validateBatch;
+	this.validateUser          = validateUser;
+	this.validateStock         = validateStock;
 	AdditionController.prototype._init_.call(this);
 };

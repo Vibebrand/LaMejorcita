@@ -100,5 +100,22 @@ function UserService(){
 			handlers: [self, self.delegate]
 		});
 	};
+	//Addition
+	this.getUsersForAddition = function(){
+		var users = [];
+		for (var i = 0; i < 5; i++) {
+			var user = {
+				_id:"asfdo90qwqewr"+i,
+				name: "User"+(i+1)+" Guy",
+				curp: 'QWER123456HQWERT12',
+				email: "user"+(i+1)+".guy@mail.com",
+				phone:"977733"+i,
+				type: 'manager'
+			};
+			users.push(user);
+		};
+		console.log(users);
+		self.delegate.setUsersForAddition(users);
+	};
 };
 UserService.prototype = new Service();

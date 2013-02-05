@@ -219,6 +219,10 @@ function MasterControl(){
 	this.addProduct = function(data){
 		self.stockService.addProduct(data);
 	};
+	this.addPos = function(dataToSend){
+		self.posService.addPos(dataToSend);
+	};
+
 	this.successfulProductAddition = function(){
 		self.mainController.successfulProductAddition();
 	};

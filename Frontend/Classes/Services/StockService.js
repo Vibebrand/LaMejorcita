@@ -150,7 +150,7 @@ function StockService(){
 			var stock = {_id: "safdsafdsa0fd"+i, name:"Bodega "+i, businessName:"Negocio "+i};
 			stocks.push(stock)
 		};
-		console.log(stock);
+		console.log(stocks);
 		self.delegate.setStocksforAddition(stocks);
 	};
 	this.getProductsforAddition= function(){

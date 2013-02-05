@@ -66,7 +66,7 @@ function StockService(){
 				extNum: 10
 			},
 			manager     :{
-				_id	 : "asfdo90qwqewr1",
+				_id	 : "asfdo90qwqewr0",
 				name : "Guy Fawkes",
 				curp : 'QWER123456HQWERT12',
 				email: "faukes@mail.com"
@@ -125,6 +125,10 @@ function StockService(){
 	this.addProduct = function(dataToSend){
 		console.log(dataToSend);
 		self.delegate.successfulProductAddition();
+	};
+	this.addStock = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
 	};
 	//Deletion
 	this.deleteBatch = function(deleteData){

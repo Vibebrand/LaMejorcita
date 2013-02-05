@@ -222,6 +222,9 @@ function MasterControl(){
 	this.addPos = function(dataToSend){
 		self.posService.addPos(dataToSend);
 	};
+	this.addSeller = function(dataToSend){
+		self.userService.addSeller(dataToSend);
+	};
 
 	this.successfulProductAddition = function(){
 		self.mainController.successfulProductAddition();

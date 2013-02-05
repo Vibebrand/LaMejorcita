@@ -203,6 +203,62 @@ function  AdditionController(){
 		sdropdown.find('#'+pos.stock._id).trigger('click');
 		self.delegate.enableAllEvents();
 	};
+	//Seller
+	function loadSellerView(){
+		var container = self.view.container();
+		var submitBtn = $('<button class="send-button">Enviar</button>');
+		container.empty();
+		var sellerDiv = createField({
+			field: 'seller-inputs',
+			title: {classname: 'title', value: 'Vendedor'}, 
+			value: [{classname: 'inputs', tag:'div'}],
+			container: container
+		});
+		createField({
+			field: 'stock-input',
+			title: {classname: 'title', value: 'Bodega'}, 
+			value: [{classname: 'selector', value:'', tag:'div'}],
+			container: container
+		});
+		createField({title: null ,field: 'name-input', 	container: sellerDiv, value:[{placeholder:'Nombre'}]});
+		createField({title: null ,field: 'curp-input', 	container: sellerDiv, value:[{placeholder:'CURP'}]});
+		createField({title: null ,field: 'email-input', container: sellerDiv, value:[{placeholder:'Correo electrónico'}]});
+		createField({title: null ,field: 'phone-input', container: sellerDiv, value:[{placeholder:'Teléfono'}]});
+		createField({title: null ,field: 'device-input', container: sellerDiv, value:[{placeholder:'Código de dispositivo'}]});
+		container.append(submitBtn);
+		self.delegate.getStocksforAddition();
+	};
+	function prepareSellerInsertion(){
+		if(typeof stocksData  != "undefined"){
+			self.delegate.enableAllEvents();
+		}else
+			setTimeout(arguments.callee, 50);
+	};
+	function prepareSellerEdition(){
+		if(typeof stocksData  != "undefined"){
+			var callbacks = createEditionCalls();
+			self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
+		}else
+			setTimeout(arguments.callee, 50);
+	};
+	function setSellerData(seller){
+		var container = self.view.container();
+		var sname     = container.find('.name-input .value');
+		var curp      = container.find('.curp-input .value');
+		var email     = container.find('.email-input .value');
+		var phone     = container.find('.phone-input .value');
+		var device    = container.find('.device-input .value');
+		var sdropdown = container.find('.stock-input');
+
+		sname.val(seller.name);
+		curp.val(seller.curp);
+		email.val(seller.email);
+		phone.val(seller.phone);
+		device.val(seller.device);
+		
+		sdropdown.find('#'+seller.stock._id).trigger('click');
+		self.delegate.enableAllEvents();
+	};
 	//User
 	function loadUserView(){
 		var container = self.view.container();
@@ -553,9 +609,21 @@ function  AdditionController(){
 				extNum   : $.trim(container.find('.extNum-input .value').val()),
 				intNum   : $.trim(container.find('.intNum-input .value').val()),
 				district : $.trim(container.find('.district-input .value').val())
-			}
+			},
+			stock: container.find('.stock-input .selected-item').data('customdropdown.data')
 		};
 		return JSON.stringify(newPos);
+	};
+	function createSellerJson(){
+		var container  = self.view.container();
+		var newSeller = {
+			name	: $.trim(container.find('.name-input .value').val()),
+			email	: $.trim(container.find('.email-input .value').val()),
+			phone	: $.trim(container.find('.phone-input .value').val()),
+			curp	: $.trim(container.find('.curp-input .value').val()),
+			stock: container.find('.stock-input .selected-item').data('customdropdown.data')
+		};
+		return JSON.stringify(newSeller);
 	};
 	//Events
 	function onClickSend(){
@@ -817,6 +885,7 @@ function  AdditionController(){
 				className: 'error-message'
 			});
 		};
+		
 		if(!validations.validateEmail(remail.val(), false)){
 			count++;
 			self.messages.createMessage.call(remail.parents('*[class$="input"]') , {
@@ -840,6 +909,60 @@ function  AdditionController(){
 		};
 		if(!validateAddress())
 			count++;
+		return count < 1;
+	};
+	function validateSeller(){
+		var count     = 0;
+		var container = self.view.container();
+		var stockItem = container.find('.stock-input .selected-item');
+		var sname     = container.find('.name-input .value');
+		var curp      = container.find('.curp-input .value');
+		var email     = container.find('.email-input .value');
+		var phone     = container.find('.phone-input .value');
+		var device    = container.find('.device-input .value');
+
+		if(typeof stockItem.data('customdropdown.data') == "undefined"){
+			self.messages.createMessage.call(container.find('.stock-input'), {
+				message:'Por favor seleccione una bodega.',
+				className: 'error-message'
+			});
+			count++;
+		};
+		if(!validations.validateWithPattern(sname.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(sname.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un nombre válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(device.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(device.parents('*[class$="input"]') , {
+				message:'Código de dispositivo no valido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateEmail(email.val(), false)){
+			count++;
+			self.messages.createMessage.call(email.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un correo electrónico válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateCurp(curp.val(), false)){
+			count++;
+			self.messages.createMessage.call(curp.parents('*[class$="input"]') , {
+				message:'Por favor ingrese una CURP válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validatePhone(phone.val(), false)){
+			count++;
+			self.messages.createMessage.call(phone.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un teléfono válido.',
+				className: 'error-message'
+			});
+		};
 		return count < 1;
 	};
 	function validateAddress(){
@@ -897,31 +1020,38 @@ function  AdditionController(){
 		inputs.unbind('focusin.lamejorcita');
 	};	
 	//Creation
-	this.createBatchJson       = createBatchJson;
-	this.createProductJson     = createProductJson;
-	this.createUserJson        = createUserJson;
-	this.createStockJson       = createStockJson;
-	this.createPosJson = createPosJson;
+	this.createBatchJson        = createBatchJson;
+	this.createProductJson      = createProductJson;
+	this.createUserJson         = createUserJson;
+	this.createStockJson        = createStockJson;
+	this.createPosJson          = createPosJson;
+	this.createSellerJson       = createSellerJson;
 	//Data
-	this.setProductData        = setProductData;
-	this.editProduct           = editProduct;
-	this.setStockData          = setStockData;
-	this.setPosData            = setPosData;
+	this.setProductData         = setProductData;
+	this.editProduct            = editProduct;
+	this.setStockData           = setStockData;
+	this.setPosData             = setPosData;
+	this.setSellerData          = setSellerData;
 	//Page
-	this.loadProductView       = loadProductView;
-	this.loadUserView          = loadUserView;
-	this.loadStockView         = loadStockView;
-	this.loadPosView      = loadPosView;
+	this.loadProductView        = loadProductView;
+	this.loadUserView           = loadUserView;
+	this.loadStockView          = loadStockView;
+	this.loadPosView            = loadPosView;
+	this.loadSellerView         = loadSellerView;
 	//Prepare
-	this.prepareStockInsertion = prepareStockInsertion;
-	this.prepareStockEdition   = prepareStockEdition;
-	this.preparePosInsertion   = preparePosInsertion;
-	this.preparePosEdition     = preparePosEdition;
+	this.prepareStockInsertion  = prepareStockInsertion;
+	this.prepareSellerInsertion = prepareSellerInsertion;
+	this.prepareSellerEdition = prepareSellerEdition;
+	this.prepareStockEdition    = prepareStockEdition;
+	this.preparePosInsertion    = preparePosInsertion;
+	this.preparePosEdition      = preparePosEdition;
 	//Validations
-	this.validateProduct       = validateProduct;
-	this.validateBatch         = validateBatch;
-	this.validateUser          = validateUser;
-	this.validateStock         = validateStock;
-	this.validatePos = validatePos;
+	this.validateProduct        = validateProduct;
+	this.validateBatch          = validateBatch;
+	this.validateUser           = validateUser;
+	this.validateStock          = validateStock;
+	this.validatePos            = validatePos;
+	this.validateSeller = validateSeller
+	this.validateAddress        = validateAddress;
 	AdditionController.prototype._init_.call(this);
 };

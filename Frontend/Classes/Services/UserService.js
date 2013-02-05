@@ -78,7 +78,12 @@ function UserService(){
 				businessName:"Negocio "
 			}
 		};
-		self.delegate.setDetail(seller);
+		console.log(seller);
+		self.callsHandler.makeCallbacks({
+			calls: callbacks.successCall, 
+			params: seller , 
+			handlers: [self, self.delegate]
+		});
 	};
 	this.getUserDetail = function(userId, callbacks){
 		console.log(userId);
@@ -116,6 +121,10 @@ function UserService(){
 		};
 		console.log(users);
 		self.delegate.setUsersForAddition(users);
+	};
+	this.addSeller = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
 	};
 };
 UserService.prototype = new Service();

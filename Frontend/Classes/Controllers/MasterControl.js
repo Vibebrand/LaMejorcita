@@ -34,6 +34,7 @@ function MasterControl(){
 		self.navigationController.addLoggedUrl('/Sellers', 	loadSellersPage);
 		self.navigationController.addLoggedUrl('/Sales', 	loadSalesPage);
 		self.navigationController.addLoggedUrl('/Products', loadProductsPage);
+		self.navigationController.addLoggedUrl('/Users', loadUsersPage);
 		self.navigationController.addLoggedUrl('/Batches/:productId', loadBatchesPage);
 
 		self.navigationController.addLoggedUrl('/Detail/:kind/:id', loadDetailPage);
@@ -91,6 +92,10 @@ function MasterControl(){
 		self.mainController.additionalData =  data;
 		self.mainController.loadProductsPage();
 	};
+	function loadUsersPage(){
+		loadMainView();
+		self.mainController.loadUsersPage();
+	};
 	function loadBatchesPage(data){
 		loadMainView();
 		self.mainController.additionalData =  typeof data =="object" ? data: {productId: data};
@@ -117,39 +122,28 @@ function MasterControl(){
 	this.searchStocks = function(searchData){
 		self.stockService.searchStocks(searchData);
 	};
-	this.setStocks = function(stocks){
-		self.mainController.setStocks(stocks);
-	};
 	//POS
 	this.searchPOSs = function(searchData){
 		self.posService.searchPOS(searchData);
-	};
-	this.setPOSData = function(posdata){
-		self.mainController.setPOSData(posdata);
 	};
 	//Sellers
 	this.searchSellers = function(searchData){
 		self.userService.searchSellers(searchData);
 	};
-	this.setSellers = function(sellers) {
-		self.mainController.setSellers(sellers);
-	};
 	//Sales
 	this.searchSales = function(searchData){
 		self.salesService.searchSales(searchData);
-	};
-	this.setSales = function(sales){
-		self.mainController.setSales(sales);
 	};
 	//Products
 	this.searchProducts = function(searchData){
 		self.stockService.searchProducts(searchData);
 	};
-	this.setProducts = function(products){
-		self.mainController.setProducts(products);
-	};
 	this.setProductDetail = function(data){
 		self.mainController.setProductDetail(data);
+	};
+	//Users
+	this.searchUsers = function(data){
+		self.userService.searchUsers(data);
 	};
 	//Batches
 	this.searchBatches = function(searchData){
@@ -164,6 +158,9 @@ function MasterControl(){
 	};
 	this.deleteSearch = function(){
 		self.mainController.deleteSearch();
+	};
+	this.setTableData = function(tableData){
+		self.mainController.setTableData(tableData);
 	};
 	//Detail
 	this.getStockDetail = function(stockId, callbacks){
@@ -180,6 +177,9 @@ function MasterControl(){
 	};
 	this.getProductDetail = function(productId, callbacks){
 		self.stockService.getProductDetail(productId, callbacks);
+	};
+	this.getUserDetail = function(userId, callbacks){
+		self.userService.getUserDetail(userId, callbacks);
 	};
 	this.setDetail = function(data){
 		self.mainController.setDetail(data);
@@ -203,6 +203,9 @@ function MasterControl(){
 	//Addition Batch
 	this.addBatch = function(dataToSend){
 		self.stockService.addBatch(dataToSend);
+	};
+	this.addUser = function(dataToSend){
+		self.userService.addUser(dataToSend);
 	};
 	//Addition Product
 	this.addProduct = function(data){

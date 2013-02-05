@@ -21,7 +21,7 @@ function POSService (argument) {
 				},
 				representative:{
 					name: "Rep Guy",
-					curp: 'PIIG720116BV1',
+					curp: 'QWER123456HQWERT12',
 					email: "rep.guy@mail.com"
 				},
 				address: {
@@ -39,9 +39,10 @@ function POSService (argument) {
 			posData.push(pos);
 		};
 		console.log(posData);
-		self.delegate.setPOSData(posData);
+		self.delegate.setTableData(posData);
 	};
 	this.getPosDetail = function(posId){
+		console.log(posId);
 		var date = new Date();
 		var pos = {
 			_id: "sdfadsasalepoint0",
@@ -60,7 +61,7 @@ function POSService (argument) {
 			},
 			representative:{
 				name: "Rep Guy",
-				curp: 'PIIG720116BV1',
+				curp: 'QWER123456HQWERT12',
 				email: "rep.guy@mail.com"
 			},
 			address: {
@@ -75,6 +76,7 @@ function POSService (argument) {
 				businessName:"Negocio 0"
 			}
 		};
+		console.log(pos);
 		self.delegate.setDetail(pos);
 	};
 };

@@ -149,6 +149,9 @@ navigationController.setOptions({
 		window.location.hash = hashurl;
 	};
 };
+/**
+	@private
+*/
 Array.prototype.clean = function(deleteValue) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] == deleteValue) {         

@@ -242,6 +242,18 @@ function MasterControl(){
 	this.deleteProduct = function(deleteData){
 		self.stockService.deleteProduct(deleteData);
 	};
+	this.deleteStock = function(deleteData){
+		self.stockService.deleteStock(deleteData);
+	};
+	this.deletePOS = function(deleteData){
+		self.posService.deletePOS(deleteData);
+	};
+	this.deleteSeller = function(deleteData){
+		self.userService.deleteSeller(deleteData);
+	};
+	this.deleteUser = function(deleteData){
+		self.userService.deleteUser(deleteData);
+	};
 	this.successfulRemoval = function(){
 		self.mainController.successfulRemoval();
 	};

@@ -143,6 +143,12 @@ function StockService(){
 		self.delegate.successfulRemoval();
 		self.delegate.enableEvents();
 	};
+	this.deleteStock = function(deleteData){
+		console.log('Stock');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
 	//Additional data
 	this.getStocksforAddition= function(){
 		var stocks = [];

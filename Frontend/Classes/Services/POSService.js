@@ -87,5 +87,11 @@ function POSService (argument) {
 		console.log(dataToSend);
 		self.delegate.successfulAddition();
 	};
+	this.deletePOS = function(deleteData){
+		console.log('POS');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
 };
 POSService.prototype = new Service();

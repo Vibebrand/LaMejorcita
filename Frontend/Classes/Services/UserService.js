@@ -126,5 +126,17 @@ function UserService(){
 		console.log(dataToSend);
 		self.delegate.successfulAddition();
 	};
+	this.deleteSeller = function(deleteData){
+		console.log('Seller');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
+	this.deleteUser = function(deleteData){
+		console.log('User');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
 };
 UserService.prototype = new Service();

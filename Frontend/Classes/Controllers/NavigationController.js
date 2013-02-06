@@ -84,6 +84,7 @@ navigationController.setOptions({
 			if(pattern.test(page)){
 				var params = getParameters(page , map.url, map.param);
 				map.callback.call(null, params);
+				$.cookie(options.cookiePrefix+'prevPage', $.cookie(options.cookiePrefix+'page'));
 				$.cookie(options.cookiePrefix+'page', ($.trim(page) === "" ? null: page));
 				return;
 			};
@@ -101,6 +102,7 @@ navigationController.setOptions({
 		};
 		if($.trim(page) != ""){
 			defaultCall.callback.call(null,defaultCall.param);
+			$.cookie(options.cookiePrefix+'prevPage', $.cookie(options.cookiePrefix+'page'));
 			$.cookie(options.cookiePrefix+'page', null);
 			return;
 		};
@@ -147,6 +149,9 @@ navigationController.setOptions({
 		window.location.hash = hashurl;
 	};
 };
+/**
+	@private
+*/
 Array.prototype.clean = function(deleteValue) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] == deleteValue) {         

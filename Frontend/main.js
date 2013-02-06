@@ -13,6 +13,8 @@ Importer.importfile('Classes/Controllers/MessageController.js');
 
 Importer.importfile('Classes/Services/UserService.js');
 Importer.importfile('Classes/Services/StockService.js');
+Importer.importfile('Classes/Services/POSService.js');
+Importer.importfile('Classes/Services/SalesService.js');
 
 $(document).ready(function(){Importer.loadImports(main);});
 function main(){
@@ -23,22 +25,33 @@ function main(){
 	var userService       = new UserService();
 	var stockService      = new StockService();
 	var mainController    = new MainController();
+	var posService        = new POSService();
+	var salesService      = new SalesService();
 
 	loginController.delegate  = masterControl;
 	headerController.delegate = masterControl;
 	mainController.delegate   = masterControl;
 	
-	userService.delegate      = masterControl;
-	stockService.delegate     = masterControl;
+	userService.delegate  = masterControl;
+	stockService.delegate = masterControl;
+	salesService.delegate = masterControl;
+	posService.delegate   = masterControl;
 
-	loginController.messageController = messageController;
+	masterControl.loginController    = loginController;
+	masterControl.mainController     = mainController;
+	masterControl.headerController   = headerController;
+	masterControl.messageController  = messageController;
 
-	masterControl.loginController   = loginController;
-	masterControl.headerController  = headerController;
-	masterControl.messageController = messageController;
-	masterControl.userService       = userService;
-	masterControl.stockService      = stockService;
-	masterControl.mainController    = mainController;
+	loginController.messageController = masterControl.messageController;
+	mainController.messageController = masterControl.messageController;
+
+	masterControl.userService   = userService;
+	masterControl.stockService  = stockService;
+	masterControl.salesService  = salesService;
+	masterControl.posService = posService;
 
 	masterControl.navigationController.load();
+};
+String.prototype.toCapitalize = function(){ 
+   return this.toLowerCase().replace(/^.|\s\S/g, function(a) { return a.toUpperCase(); });
 };

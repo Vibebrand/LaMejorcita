@@ -13,8 +13,13 @@ def eliminarpuntos(accion,entityId, valuesToUpdate):
 
 def guardapunto(atributos,accion):
 	atributos["status"]="1"
+<<<<<<< HEAD
 	if not "joinDate" in atributos:
 		atributos["joinDate"]=str(datetime.datetime.now())
+=======
+	if not self.atributos["joinDate"]:
+		self.atributos["joinDate"]=str(datetime.datetime.now())
+>>>>>>> 91a729bf48dc762ef2025b52aa6b45c59fee2b71
 
 	db=DBModule("puntosinfo")
 	db.saveEntity(atributos).addCallback(lambda ign: accion(db.getResult()))

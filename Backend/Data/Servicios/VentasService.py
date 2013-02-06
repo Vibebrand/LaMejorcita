@@ -12,10 +12,17 @@ def eliminarventas(accion,entityId, valuesToUpdate):
 
 def guardaventa(atributos,accion):
 	atributos["status"]="1"
+<<<<<<< HEAD
 	if not "date" in atributos:
 		atributos["date"]=str(sdatetime.datetime.date())
 
 	if not "time" in atributos:
+=======
+	if not atributos["date"]:
+		atributos["date"]=str(sdatetime.datetime.date())
+
+	if not atributos["time"]:
+>>>>>>> 91a729bf48dc762ef2025b52aa6b45c59fee2b71
 		atributos["time"]=str(sdatetime.datetime.time())
 
 	db=DBModule("ventasinfo")

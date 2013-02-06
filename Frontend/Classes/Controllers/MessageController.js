@@ -19,8 +19,8 @@ function MessageController () {
 			speed		: 'fast'
 		},options);
 
-		container.find('*[class$="-message"]').remove();
-		var messageContainer = $('<div class="'+options.className+'"></div>');
+		container.find('*[class$="message"]').remove();
+		var messageContainer = $('<div class="'+options.className+' message"></div>');
 		var messageSpan = $('<span class="text"></span>');
 		messageContainer.hide();
 		container.find('*:first').before(messageContainer);
@@ -47,14 +47,29 @@ function MessageController () {
 			animation	: 'slideUp',
 			speed		: 'fast'
 		},options);
-		var messages = container.find('*[class$="-message"]');
+		var messages = container.find('*[class$="message"]');
 		if(typeof messages[options.animation] === "function")
-			messages[options.animation].call(messages, options.speed, function(){
-				messages.remove();
-			});
+			messages[options.animation].call(messages, options.speed, function(){messages.remove();});
 		else
-			messages.show(50, function(){
-				messages.remove();
-			});
+			messages.show(50, function(){messages.remove();});
+	};
+	this.addViewAsMessage = function(options){
+		var container = this;
+		var options = $.extend({},{
+			view 		: '',
+			animation	: 'slideDown',
+			className	: 'warning',
+			speed		: 'fast'
+		},options);
+		if(options.view.constructor === $){
+			var messageContainer = $('<div class="'+options.className+' message"></div>');
+			container.find('*:first').before(messageContainer);
+			messageContainer.append(options.view);
+			messageContainer.hide();
+			if(typeof messageContainer[options.animation] === "function")
+				messageContainer[options.animation].call(messageContainer, options.speed);
+			else
+				messageContainer.show();
+		};
 	};
 }

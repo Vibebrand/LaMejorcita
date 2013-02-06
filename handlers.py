@@ -4,6 +4,7 @@ import os
 from urllib2 import HTTPError
 from Backend import MasterController
 import json
+<<<<<<< HEAD
 import datetime
 import mimetypes
 import ast
@@ -20,6 +21,19 @@ class GetBodegasHandler(cyclone.web.RequestHandler):
         self.object=int(self.get_argument(name="objects",default=0))
         self.keywords=self.get_argument("keywords",None)
         self.inicio=(int(self.get_argument("page",1))-1)*self.object
+
+        MasterController.obtenerbodegas(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
+
+class GetBodegasHandler(cyclone.web.RequestHandler):
+    @cyclone.web.asynchronous
+    def get(self):
+        def muestra(result):
+            self.write({"result": result})
+            self.finish()
+
+        self.object=int(self.get_argument("objects",None))
+        self.keywords=self.get_argument("keywords",None)
+        self.inicio=(int(self.get_argument("page",None))-1)*self.object
 
         MasterController.obtenerbodegas(param={"status":"1"},skip=self.inicio,limit=self.object,accion=muestra)
     #x={"_id":str(ObjectId()),"name":"Bodega"+str(i+1),"status":"Valido","address": {"district":"Colonia","street":"Calle","intNum": None, "extNum": 100} ,"phone":str(9789560+i),"businessName":"Negocio"+str(i+1),"manager":{"_id":str(ObjectId()),"status":"Valido","username":"Manager"+str(i+1),"password":"pass","curp":"89687800"+str(i),"phone":"9781200","email":"manager"+str(i+1)+"@gmail.com","type":"mamanger"},"geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"maxSale":"1500","minSale":"0","products":{"_id":str(ObjectId()),"2013/01/01": "1500","2013/01/02": "1200"}}
@@ -315,29 +329,40 @@ class RenderHandler(cyclone.web.StaticFileHandler):
         if not os.path.isfile(abspath):
             raise HTTPError(403, "%s is not a file", path)
 
+
         stat_result = os.stat(abspath)
-        modified = datetime.datetime.fromtimestamp(stat_result.st_mtime)
+        modified = datetime.datetime.fromtimestamp(stat_result[stat.ST_MTIME])
 
         self.set_header("Last-Modified", modified)
-        if "v" in self.request.arguments:
-            self.set_header("Expires", datetime.datetime.utcnow() + \
-                                        datetime.timedelta(days=365 * 10))
-            self.set_header("Cache-Control", "max-age=" + str(86400 * 365 * 10))
-        else:
-            self.set_header("Cache-Control", "public")
+
         mime_type, encoding = mimetypes.guess_type(abspath)
         if mime_type:
             self.set_header("Content-Type", mime_type)
+
+        cache_time = self.get_cache_time(path, modified, mime_type)
+
+        if cache_time > 0:
+            self.set_header("Expires", "%s%s" % (datetime.datetime.utcnow(),
+                                       datetime.timedelta(seconds=cache_time)))
+            self.set_header("Cache-Control", "max-age=%s" % str(cache_time))
 
         self.set_extra_headers(path)
 
         # Check the If-Modified-Since, and don't send the result if the
         # content has not been modified
+        ims_value = self.request.headers.get("If-Modified-Since")
+        if ims_value is not None:
+            date_tuple = email.utils.parsedate(ims_value)
+            if_since = datetime.datetime.fromtimestamp(time.mktime(date_tuple))
+            if if_since >= modified:
+                self.set_status(304)
+                return
 
         with open(abspath, "rb") as file:
             data = file.read()
-        if include_body:
-            self.write(data)
-        else:
-            assert self.request.method == "HEAD"
-            self.set_header("Content-Length", len(data))
+            if include_body:
+                self.write(data)
+            else:
+                assert self.request.method == "HEAD"
+                self.set_header("Content-Length", len(data))
+

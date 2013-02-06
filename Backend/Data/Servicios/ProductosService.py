@@ -1,6 +1,7 @@
 from ..InterfazDB.DBmodule import DBModule
 from txmongo._pymongo.objectid import ObjectId
 import datetime
+<<<<<<< HEAD
 from BodegasService import obtenerbodegas
 from BodegasService import editabodega
 

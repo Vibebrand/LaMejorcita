@@ -1,8 +1,13 @@
+HeaderController.prototype = new ViewController();
+HeaderController.prototype._init_ = function(){
+	ViewController.prototype._init_.call(this);
+	this.view.setClass('header-container');
+};
 function HeaderController(){
 	var self      = this;
 	this.delegate = null;
 	this.viewDidLoad = function(){
-		var logo = $('<div class="logo"></div>');
+		var logo = $('<img class="logo" src="Styles/Images/logo.svg" alt="La Mejorcita" />');
 		var username = $('<span class="username-text"></span>');
 		var logoutBrn  = $('<button class="logout"></button>');
 		logo.text('Logo');
@@ -14,9 +19,4 @@ function HeaderController(){
 		this.view.addSubview(logoutBrn);
 	};
 	HeaderController.prototype._init_ .call(this);
-};
-HeaderController.prototype = new ViewController();
-HeaderController.prototype._init_ = function(){
-	ViewController.prototype._init_.call(this);
-	this.view.setClass('header-container');
 };

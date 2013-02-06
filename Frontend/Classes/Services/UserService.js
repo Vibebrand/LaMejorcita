@@ -78,7 +78,12 @@ function UserService(){
 				businessName:"Negocio "
 			}
 		};
-		self.delegate.setDetail(seller);
+		console.log(seller);
+		self.callsHandler.makeCallbacks({
+			calls: callbacks.successCall, 
+			params: seller , 
+			handlers: [self, self.delegate]
+		});
 	};
 	this.getUserDetail = function(userId, callbacks){
 		console.log(userId);
@@ -116,6 +121,22 @@ function UserService(){
 		};
 		console.log(users);
 		self.delegate.setUsersForAddition(users);
+	};
+	this.addSeller = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
+	};
+	this.deleteSeller = function(deleteData){
+		console.log('Seller');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
+	};
+	this.deleteUser = function(deleteData){
+		console.log('User');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
 	};
 };
 UserService.prototype = new Service();

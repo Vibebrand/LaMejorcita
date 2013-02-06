@@ -24,64 +24,36 @@ function  AdditionController(){
 	//Stock
 	function loadStockView(){
 		var container = self.view.container();
-		var submitBtn = $('<button class="send-button">Enviar</button>');
 		container.empty();
-		createField({
-			field: 'name-input',
-			title: {classname: 'title', value: 'Nombre'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
+		var submitBtn = $('<button class="send-button">Enviar</button>');
+		var stockDiv = createField({
+			field: 'stock-inputs',
+			title: {classname: 'title', value: 'Bodega'}, 
+			value: [{classname: 'inputs', tag:'div'}],
+			container: container
 		});
-		createField({
-			field: 'street-input',
-			title: {classname: 'title', value: 'Calle'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
+		var address = createField({
+			field: 'address-inputs',
+			title: {classname: 'title', value: 'Dirección'}, 
+			value: [{classname: 'inputs', tag:'div'}],
+			container: container
 		});
-		createField({
-			field: 'extNum-input',
-			title: {classname: 'title', value: 'Número exterior'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'intNum-input',
-			title: {classname: 'title', value: 'Número interior'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'district-input',
-			title: {classname: 'title', value: 'Colonia'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'minSale-input',
-			title: {classname: 'title', value: 'Mínimo número de ventas'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'maxSale-input',
-			title: {classname: 'title', value: 'Máximo número de ventas'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
+		createField({title: null ,field: 'name-input', container: stockDiv, value:[{placeholder:'Nombre del negocio'}]});
+		createField({title: null ,field: 'minSale-input', container: stockDiv, value:[{placeholder:'Mínimo número de ventas'}]});
+		createField({title: null ,field: 'maxSale-input', container: stockDiv, value:[{placeholder:'Máximo número de ventas'}]});
+
+		createField({title: null ,field: 'street-input', 	container: address, value:[{placeholder:'Calle'}]});
+		createField({title: null ,field: 'extNum-input', 	container: address, value:[{placeholder:'Número exterior'}]});
+		createField({title: null ,field: 'intNum-input', 	container: address, value:[{placeholder:'Número interior'}]});
+		createField({title: null ,field: 'district-input', container: address, value:[{placeholder:'Colonia'}]});
+
 		createField({
 			field: 'manager-input',
 			title: {classname: 'title', value: 'Responsable'}, 
-			value: [{classname: 'selector', value:''}],
+			value: [{tag: 'div', classname: 'selector', value:''}],
 			container: container,
-			tagname: 'div'
 		});
+
 		container.append(submitBtn);
 		self.delegate.getUsersForAddition();
 	};
@@ -136,62 +108,176 @@ function  AdditionController(){
 			optionItem	: 'selector-option',
 		});
 	};
+	//POS
+	function loadPosView(){
+		var container = self.view.container();
+		var submitBtn = $('<button class="send-button">Enviar</button>');
+		container.empty();
+		var pos = createField({
+			field: 'pos-inputs',
+			title: {classname: 'title', value: 'Punto de venta'}, 
+			value: [{classname: 'inputs', tag:'div', placeholder: ''}],
+			container: container
+		});
+		var representative = createField({
+			field: 'representative-inputs',
+			title: {classname: 'title', value: 'Representante'}, 
+			value: [{classname: 'inputs', tag:'div', placeholder: ''}],
+			container: container
+		});
+		createField({
+			field: 'stock-input',
+			title: {classname: 'title', value: 'Bodega'}, 
+			value: [{classname: 'selector', value:'', tag:'div'}],
+			container: container
+		});
+		var fridge = createField({
+			field: 'fridge-inputs',
+			title: {classname: 'title', value: 'Refrigerador'}, 
+			value: [{classname: 'inputs', tag:'div', placeholder: ''}],
+			container: container
+		});
+		var address = createField({
+			field: 'address-inputs',
+			title: {classname: 'title', value: 'Dirección'}, 
+			value: [{classname: 'inputs', tag:'div', placeholder: ''}],
+			container: container
+		});
+		createField({title: null ,field: 'name-input', 	container: representative, value:[{placeholder:'Nombre'}]});
+		createField({title: null ,field: 'email-input', container: representative, value:[{placeholder:'Correo electrónico'}]});
+		createField({title: null ,field: 'curp-input', container: representative, value:[{placeholder:'CURP'}]});
+
+		createField({title: null ,field: 'name-input', 	container: pos, value:[{placeholder:'Nombre de negocio'}]});
+		createField({title: null ,field: 'email-input', container: pos, value:[{placeholder:'Correo electrónico'}]});
+		createField({title: null ,field: 'phone-input', container: pos, value:[{placeholder:'Teléfono'}]});
+
+		createField({title: null ,field: 'serial-input', 	container: fridge, value:[{placeholder:'Serial'}]});
+
+		createField({title: null ,field: 'street-input', 	container: address, value:[{placeholder:'Calle'}]});
+		createField({title: null ,field: 'extNum-input', 	container: address, value:[{placeholder:'Número exterior'}]});
+		createField({title: null ,field: 'intNum-input', 	container: address, value:[{placeholder:'Número interior'}]});
+		createField({title: null ,field: 'district-input',  container: address, value:[{placeholder:'Colonia'}]});
+		container.append(submitBtn);
+		self.delegate.getStocksforAddition();
+	};
+	function preparePosInsertion(){
+		if(typeof stocksData  != "undefined"){
+			self.delegate.enableAllEvents();
+		}else
+			setTimeout(arguments.callee, 50);
+	};
+	function preparePosEdition(){
+		if(typeof stocksData  != "undefined"){
+			var callbacks = createEditionCalls();
+			self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
+		}else
+			setTimeout(arguments.callee, 50);
+	};
+	function setPosData(pos){
+		var container = self.view.container();
+		var pname     = container.find('.pos-inputs .name-input .value');
+		var pemail    = container.find('.pos-inputs .email-input .value');
+		var pphone    = container.find('.pos-inputs .phone-input .value');
+		var rname     = container.find('.representative-inputs .name-input .value');
+		var remail    = container.find('.representative-inputs .email-input .value');
+		var rcurp     = container.find('.representative-inputs .curp-input .value');
+		var serial    = container.find('.serial-input .value');
+		var sdropdown = container.find('.stock-input');
+		var street    = container.find('.street-input .value');
+		var extNum    = container.find('.extNum-input .value');
+		var intNum    = container.find('.intNum-input .value');
+		var district  = container.find('.district-input .value');
+
+		pname.val(pos.name);
+		pemail.val(pos.email);
+		pphone.val(pos.phone);
+		rname.val(pos.representative.name);
+		remail.val(pos.representative.email);
+		rcurp.val(pos.representative.curp);
+		serial.val(pos.fridge.serial);
+		street.val(pos.address.street);
+		extNum.val(pos.address.extNum);
+		intNum.val(pos.address.intNum);
+		district.val(pos.address.district);
+
+		sdropdown.find('#'+pos.stock._id).trigger('click');
+		self.delegate.enableAllEvents();
+	};
+	//Seller
+	function loadSellerView(){
+		var container = self.view.container();
+		var submitBtn = $('<button class="send-button">Enviar</button>');
+		container.empty();
+		var sellerDiv = createField({
+			field: 'seller-inputs',
+			title: {classname: 'title', value: 'Vendedor'}, 
+			value: [{classname: 'inputs', tag:'div'}],
+			container: container
+		});
+		createField({
+			field: 'stock-input',
+			title: {classname: 'title', value: 'Bodega'}, 
+			value: [{classname: 'selector', value:'', tag:'div'}],
+			container: container
+		});
+		createField({title: null ,field: 'name-input', 	container: sellerDiv, value:[{placeholder:'Nombre'}]});
+		createField({title: null ,field: 'curp-input', 	container: sellerDiv, value:[{placeholder:'CURP'}]});
+		createField({title: null ,field: 'email-input', container: sellerDiv, value:[{placeholder:'Correo electrónico'}]});
+		createField({title: null ,field: 'phone-input', container: sellerDiv, value:[{placeholder:'Teléfono'}]});
+		createField({title: null ,field: 'device-input', container: sellerDiv, value:[{placeholder:'Código de dispositivo'}]});
+		container.append(submitBtn);
+		self.delegate.getStocksforAddition();
+	};
+	function prepareSellerInsertion(){
+		if(typeof stocksData  != "undefined"){
+			self.delegate.enableAllEvents();
+		}else
+			setTimeout(arguments.callee, 50);
+	};
+	function prepareSellerEdition(){
+		if(typeof stocksData  != "undefined"){
+			var callbacks = createEditionCalls();
+			self.delegate.getDetail(self.data.kind, self.data.id, callbacks);
+		}else
+			setTimeout(arguments.callee, 50);
+	};
+	function setSellerData(seller){
+		var container = self.view.container();
+		var sname     = container.find('.name-input .value');
+		var curp      = container.find('.curp-input .value');
+		var email     = container.find('.email-input .value');
+		var phone     = container.find('.phone-input .value');
+		var device    = container.find('.device-input .value');
+		var sdropdown = container.find('.stock-input');
+
+		sname.val(seller.name);
+		curp.val(seller.curp);
+		email.val(seller.email);
+		phone.val(seller.phone);
+		device.val(seller.device);
+		
+		sdropdown.find('#'+seller.stock._id).trigger('click');
+		self.delegate.enableAllEvents();
+	};
 	//User
 	function loadUserView(){
 		var container = self.view.container();
 		var submitBtn = $('<button class="send-button">Enviar</button>');
 		container.empty();
-		createField({
-			field: 'name-input',
-			title: {classname: 'title', value: 'Nombre'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
+
+		var userInputs = createField({
+			field: 'user-inputs',
+			title: {classname: 'title', value: 'Datos de usuario'}, 
+			value: [{classname: 'inputs', tag:'div', placeholder: ''}],
+			container: container
 		});
-		createField({
-			field: 'surname-input',
-			title: {classname: 'title', value: 'Apellido'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'curp-input',
-			title: {classname: 'title', value: 'CURP'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'email-input',
-			title: {classname: 'title', value: 'Correo electrónico'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'phone-input',
-			title: {classname: 'title', value: 'Teléfono'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input'
-		});
-		createField({
-			field: 'password-input',
-			title: {classname: 'title', value: 'Ingrese una contraseña'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input',
-			tagtype: 'password'
-		});
-		createField({
-			field: 'repassword-input',
-			title: {classname: 'title', value: 'Repita la contraseña'}, 
-			value: [{classname: 'value', value:''}],
-			container: container,
-			tagname: 'input',
-			tagtype: 'password'
-		});
+		createField({title: null ,field: 'name-input', 	container: userInputs, value:[{placeholder:'Nombre(s)'}]});
+		createField({title: null ,field: 'surname-input', 	container: userInputs, value:[{placeholder:'Apellido(s)'}]});
+		createField({title: null ,field: 'curp-input', 	container: userInputs, value:[{placeholder:'CURP'}]});
+		createField({title: null ,field: 'email-input', container: userInputs, value:[{placeholder:'Correo electrónico'}]});
+		createField({title: null ,field: 'phone-input', container: userInputs, value:[{placeholder:'Teléfono'}]});
+		createField({title: null ,field: 'password-input', container: userInputs, value:[{placeholder:'Escriba la contraseña', type: 'password'}]});
+		createField({title: null ,field: 'repassword-input', container: userInputs, value:[{placeholder:'Repita la contraseña', type: 'password'}]});
 		container.append(submitBtn);
 	};
 	this.prepareUserInsertion = function(){
@@ -308,17 +394,15 @@ function  AdditionController(){
 		createField({
 			field: 'stock-input',
 			title: {classname: 'title', value: 'Bodega'}, 
-			value: [{classname: 'selector', value:''}],
-			container: batchContainer,
-			tagname: 'div'
+			value: [{classname: 'selector', value:'', tag:'div'}],
+			container: container
 		});
 		batchContainer.append(batchesInput);
 		createField({
 			field: 'notes-input',
-			title: {classname: 'title', value: 'Notas'}, 
+			title: {classname: 'title', value: 'Notas', tag: 'textarea'}, 
 			value: [{classname: 'value', value:''}],
-			container: batchContainer,
-			tagname: 'textarea'
+			container: batchContainer
 		});
 		batchesInput.append(batchlist);
 		batchesInput.append(addBatchBtn);
@@ -329,28 +413,36 @@ function  AdditionController(){
 	};
 	//Creation
 	function createField(options){
-		var options = $.extend({},{
+		var options = $.extend(true,{},{
 			field: 'field', 
-			title: {classname: 'title', value: ''}, 
-			value: [{classname: 'value', value: ''}], 
+			title: {classname: 'title', value: '', tag:'h3'}, 
+			value: [{classname: 'value', value: '', placeholder:'' ,tag:'input', type: 'text'}], 
 			container: $('<div></div>'),
-			tagname: 'span'
 		},options);
-		var field =  $('<div></div>');
-		var title = $('<h3></h3>');
-		options.container.append(field);
-		field.append(title);
-		field.attr('class', options.field);
-		title.attr('class', options.title.classname);
-		title.text(options.title.value);
-		for (var i = 0; i < options.value.length; i++) {
-			var value =  $('<'+options.tagname+'></'+options.tagname+'>');
-			if(typeof options.tagtype == "string")
-				value.attr('type', options.tagtype);
-			field.append(value);
-			value.attr('class', options.value[i].classname);
-			value.text(options.value[i].value);
+		var field  =  $('<div></div>');
+		var values = [];                                                
+		if (options.title != null){
+			var title = $('<'+options.title.tag+'></'+options.title.tag+'>');
+			title.attr('class', options.title.classname);
+			title.text(options.title.value);
+			field.append(title);
 		};
+		options.container.append(field);
+		field.attr('class', options.field);
+		for (var i = 0; i < options.value.length; i++) {
+			var valueData = options.value[i];
+			var type = valueData.tag == "input"? 'type="'+valueData.type+'"': '';
+			var value =  $('<'+valueData.tag+' '+type+'></'+valueData.tag+'>');
+			values.push(value);
+			field.append(value);
+			value.attr('class', valueData.classname);
+			if(valueData.tag == "input"){
+				value.val(valueData.value);
+				value.attr('placeholder', valueData.placeholder);
+			}else
+				value.text(valueData.value);
+		};
+		return values.length > 1? values: values[0];
 	};
 	function createBatchItem(){
 		var batchContainer = self.view.container();
@@ -498,6 +590,41 @@ function  AdditionController(){
 		};
 		return JSON.stringify(newStock);
 	};
+	function createPosJson(){
+		var container  = self.view.container();
+		var newPos ={
+			name	: $.trim(container.find('.pos-inputs .name-input .value').val()),
+			email	: $.trim(container.find('.pos-inputs .email-input .value').val()),
+			phone	: $.trim(container.find('.pos-inputs .phone-input .value').val()),
+			representative:{
+				name	: $.trim(container.find('.representative-inputs .name-input .value').val()),
+				email	: $.trim(container.find('.representative-inputs .email-input .value').val()),
+				curp	: $.trim(container.find('.representative-inputs .curp-input .value').val())
+			},
+			fridge:{
+				serial: $.trim(container.find('.serial-input .value').val())
+			},
+			address: {
+				street   : $.trim(container.find('.street-input .value').val()),
+				extNum   : $.trim(container.find('.extNum-input .value').val()),
+				intNum   : $.trim(container.find('.intNum-input .value').val()),
+				district : $.trim(container.find('.district-input .value').val())
+			},
+			stock: container.find('.stock-input .selected-item').data('customdropdown.data')
+		};
+		return JSON.stringify(newPos);
+	};
+	function createSellerJson(){
+		var container  = self.view.container();
+		var newSeller = {
+			name	: $.trim(container.find('.name-input .value').val()),
+			email	: $.trim(container.find('.email-input .value').val()),
+			phone	: $.trim(container.find('.phone-input .value').val()),
+			curp	: $.trim(container.find('.curp-input .value').val()),
+			stock: container.find('.stock-input .selected-item').data('customdropdown.data')
+		};
+		return JSON.stringify(newSeller);
+	};
 	//Events
 	function onClickSend(){
 		var jsonCall = self['create'+self.data.kind.toCapitalize()+'Json'];
@@ -529,10 +656,6 @@ function  AdditionController(){
 		var count      = 0;
 		var container  = self.view.container();
 		var sname     = container.find('.name-input .value');
-		var sstreet   = container.find('.street-input .value');
-		var sextNum   = container.find('.extNum-input .value');
-		var sintNum   = container.find('.intNum-input .value');
-		var sdistrict = container.find('.district-input .value');
 		var minSale   = container.find('.minSale-input .value');
 		var maxSale   = container.find('.maxSale-input .value');
 		var smanager  = container.find('.manager-input');
@@ -544,38 +667,10 @@ function  AdditionController(){
 				className: 'error-message'
 			});
 		};
-		if(!validations.validateWithPattern(sextNum.val(), new RegExp("^[0-9]+$"), false)){
-			count++;
-			self.messages.createMessage.call(sextNum.parents('*[class$="input"]') , {
-				message:'Por favor ingrese un número exterior válido.',
-				className: 'error-message'
-			});
-		};
-		if(!validations.validateWithPattern(sintNum.val(), new RegExp("^[0-9]+$"), true)){
-			count++;
-			self.messages.createMessage.call(sintNum.parents('*[class$="input"]') , {
-				message:'Por favor ingrese un número interior válido.',
-				className: 'error-message'
-			});
-		};
-		if(!validations.validateWithPattern(sstreet.val(), null, false)){
-			count++;
-			self.messages.createMessage.call(sstreet.parents('*[class$="input"]') , {
-				message:'Por favor ingrese un calle válida.',
-				className: 'error-message'
-			});
-		};
 		if(!validations.validateWithPattern(sname.val(), null, false)){
 			count++;
 			self.messages.createMessage.call(sname.parents('*[class$="input"]') , {
 				message:'Por favor ingrese un nombre de bodega válido.',
-				className: 'error-message'
-			});
-		};
-		if(!validations.validateWithPattern(sdistrict.val(), null, false)){
-			count++;
-			self.messages.createMessage.call(sdistrict.parents('*[class$="input"]') , {
-				message:'Por favor ingrese una colonia válida.',
 				className: 'error-message'
 			});
 		};
@@ -593,6 +688,8 @@ function  AdditionController(){
 				className: 'error-message'
 			});
 		};
+		if(!validateAddress())
+			count++;
 		return count < 1;
 	};
 	function validateUser(){
@@ -742,6 +839,169 @@ function  AdditionController(){
 		};
 		return valid;
 	};
+	function validatePos(){
+		var count     = 0;
+		var container = self.view.container();
+		var pname = container.find('.pos-inputs .name-input .value');
+		var pemail = container.find('.pos-inputs .email-input .value');
+		var pphone = container.find('.pos-inputs .phone-input .value');
+		var rname = container.find('.representative-inputs .name-input .value');
+		var remail = container.find('.representative-inputs .email-input .value');
+		var rcurp = container.find('.representative-inputs .curp-input .value');
+		var serial = container.find('.serial-input .value');
+		var stockItem = container.find('.stock-input .selected-item');
+		if(typeof stockItem.data('customdropdown.data') == "undefined"){
+			self.messages.createMessage.call(container.find('.stock-input'), {
+				message:'Por favor seleccione una bodega.',
+				className: 'error-message'
+			});
+			count++;
+		};
+		if(!validations.validateWithPattern(pname.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(pname.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un nombre de negocio válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateEmail(pemail.val(), false)){
+			count++;
+			self.messages.createMessage.call(pemail.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un correo electrónico válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validatePhone(pphone.val(), false)){
+			count++;
+			self.messages.createMessage.call(pphone.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un teléfono válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(rname.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(rname.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un nombre de negocio válido.',
+				className: 'error-message'
+			});
+		};
+		
+		if(!validations.validateEmail(remail.val(), false)){
+			count++;
+			self.messages.createMessage.call(remail.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un correo electrónico válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateCurp(rcurp.val(), false)){
+			count++;
+			self.messages.createMessage.call(rcurp.parents('*[class$="input"]') , {
+				message:'Por favor ingrese una CURP válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(serial.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(serial.parents('*[class$="input"]') , {
+				message:'Código de refrigerador no valido.',
+				className: 'error-message'
+			});
+		};
+		if(!validateAddress())
+			count++;
+		return count < 1;
+	};
+	function validateSeller(){
+		var count     = 0;
+		var container = self.view.container();
+		var stockItem = container.find('.stock-input .selected-item');
+		var sname     = container.find('.name-input .value');
+		var curp      = container.find('.curp-input .value');
+		var email     = container.find('.email-input .value');
+		var phone     = container.find('.phone-input .value');
+		var device    = container.find('.device-input .value');
+
+		if(typeof stockItem.data('customdropdown.data') == "undefined"){
+			self.messages.createMessage.call(container.find('.stock-input'), {
+				message:'Por favor seleccione una bodega.',
+				className: 'error-message'
+			});
+			count++;
+		};
+		if(!validations.validateWithPattern(sname.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(sname.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un nombre válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(device.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(device.parents('*[class$="input"]') , {
+				message:'Código de dispositivo no valido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateEmail(email.val(), false)){
+			count++;
+			self.messages.createMessage.call(email.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un correo electrónico válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateCurp(curp.val(), false)){
+			count++;
+			self.messages.createMessage.call(curp.parents('*[class$="input"]') , {
+				message:'Por favor ingrese una CURP válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validatePhone(phone.val(), false)){
+			count++;
+			self.messages.createMessage.call(phone.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un teléfono válido.',
+				className: 'error-message'
+			});
+		};
+		return count < 1;
+	};
+	function validateAddress(){
+		var count     = 0;
+		var container = self.view.container();
+		var street    = container.find('.street-input .value');
+		var extNum    = container.find('.extNum-input .value');
+		var intNum    = container.find('.intNum-input .value');
+		var district  = container.find('.district-input .value');
+		if(!validations.validateWithPattern(extNum.val(), new RegExp("^[0-9]+$"), false)){
+			count++;
+			self.messages.createMessage.call(extNum.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un número exterior válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(intNum.val(), new RegExp("^[0-9]+$"), true)){
+			count++;
+			self.messages.createMessage.call(intNum.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un número interior válido.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(street.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(street.parents('*[class$="input"]') , {
+				message:'Por favor ingrese un calle válida.',
+				className: 'error-message'
+			});
+		};
+		if(!validations.validateWithPattern(district.val(), null, false)){
+			count++;
+			self.messages.createMessage.call(district.parents('*[class$="input"]') , {
+				message:'Por favor ingrese una colonia válida.',
+				className: 'error-message'
+			});
+		};
+		return count < 1;
+	};
 	//Enable Disable
 	this.enableEvents = function(){
 		var container = self.view.container();
@@ -758,27 +1018,40 @@ function  AdditionController(){
 		var inputs = container.find('inpus, textarea');
 		submitBtn.unbind('click');
 		inputs.unbind('focusin.lamejorcita');
-	};
+	};	
 	//Creation
-	this.createBatchJson       = createBatchJson;
-	this.createProductJson     = createProductJson;
-	this.createUserJson        = createUserJson;
-	this.createStockJson       = createStockJson;
+	this.createBatchJson        = createBatchJson;
+	this.createProductJson      = createProductJson;
+	this.createUserJson         = createUserJson;
+	this.createStockJson        = createStockJson;
+	this.createPosJson          = createPosJson;
+	this.createSellerJson       = createSellerJson;
 	//Data
-	this.setProductData        = setProductData;
-	this.editProduct           = editProduct;
-	this.setStockData          = setStockData;
+	this.setProductData         = setProductData;
+	this.editProduct            = editProduct;
+	this.setStockData           = setStockData;
+	this.setPosData             = setPosData;
+	this.setSellerData          = setSellerData;
 	//Page
-	this.loadProductView       = loadProductView;
-	this.loadUserView          = loadUserView;
-	this.loadStockView         = loadStockView;
+	this.loadProductView        = loadProductView;
+	this.loadUserView           = loadUserView;
+	this.loadStockView          = loadStockView;
+	this.loadPosView            = loadPosView;
+	this.loadSellerView         = loadSellerView;
 	//Prepare
-	this.prepareStockInsertion = prepareStockInsertion;
-	this.prepareStockEdition   = prepareStockEdition;
+	this.prepareStockInsertion  = prepareStockInsertion;
+	this.prepareSellerInsertion = prepareSellerInsertion;
+	this.prepareSellerEdition = prepareSellerEdition;
+	this.prepareStockEdition    = prepareStockEdition;
+	this.preparePosInsertion    = preparePosInsertion;
+	this.preparePosEdition      = preparePosEdition;
 	//Validations
-	this.validateProduct       = validateProduct;
-	this.validateBatch         = validateBatch;
-	this.validateUser          = validateUser;
-	this.validateStock         = validateStock;
+	this.validateProduct        = validateProduct;
+	this.validateBatch          = validateBatch;
+	this.validateUser           = validateUser;
+	this.validateStock          = validateStock;
+	this.validatePos            = validatePos;
+	this.validateSeller = validateSeller
+	this.validateAddress        = validateAddress;
 	AdditionController.prototype._init_.call(this);
 };

@@ -41,7 +41,7 @@ function POSService (argument) {
 		console.log(posData);
 		self.delegate.setTableData(posData);
 	};
-	this.getPosDetail = function(posId){
+	this.getPosDetail = function(posId, callbacks){
 		console.log(posId);
 		var date = new Date();
 		var pos = {
@@ -77,7 +77,21 @@ function POSService (argument) {
 			}
 		};
 		console.log(pos);
-		self.delegate.setDetail(pos);
+		self.callsHandler.makeCallbacks({
+						calls: callbacks.successCall, 
+						params: pos , 
+						handlers: [self, self.delegate]
+					});
+	};
+	this.addPos = function(dataToSend){
+		console.log(dataToSend);
+		self.delegate.successfulAddition();
+	};
+	this.deletePOS = function(deleteData){
+		console.log('POS');
+		console.log(deleteData);
+		self.delegate.successfulRemoval();
+		self.delegate.enableEvents();
 	};
 };
 POSService.prototype = new Service();

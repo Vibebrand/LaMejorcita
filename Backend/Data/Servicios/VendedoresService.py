@@ -1,7 +1,6 @@
 from ..InterfazDB.DBmodule import DBModule
 from txmongo._pymongo.objectid import ObjectId
 
-
 def obtenervendedores(stock,point,accion,param,skip,limit):
 	db=DBModule("vendedoresinfo")
 	db.getEntities(param,skip=skip,limit=limit).addCallback(lambda ign: accion(db.getResult()))
@@ -11,7 +10,9 @@ def eliminarvendedores(accion,entityId, valuesToUpdate):
 	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
 
 def guardavendedor(atributos,accion):
-	atributos["status"]="1"
+	atributos["valor"]="1"
+	atributos["stock"]=ObjectId(atributos["stock"])
+
 
 	db=DBModule("venedoresinfo")
 	db.saveEntity(atributos).addCallback(lambda ign: accion(db.getResult()))

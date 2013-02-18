@@ -91,11 +91,13 @@ class DBModule:
             if isinstance(item, ObjectId):
                 return unicode(str(item))
             elif isinstance(item, dict):
-                for v in item.values():
-                    if "_id" in item and parseObjectId and not isinstance(v,dict):
-                        item["_id"] = unicode(str(item["_id"]))
-                    else:
+                for k,v in item.items():
+                    if isinstance(v,ObjectId):
+                        item[k]=unicode(str(item[k]))
+                    elif isinstance(v,dict):
                         changeId(v)
+                    else:
+                        pass
                 return item
             else:
                 return item

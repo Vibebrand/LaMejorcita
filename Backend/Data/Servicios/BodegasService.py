@@ -1,7 +1,4 @@
 from ..InterfazDB.DBmodule import DBModule
-from txmongo._pymongo.objectid import ObjectId
-import datetime
-
 
 def obtenerbodegas(param,skip,limit,accion):
 	db=DBModule("bodegasinfo")
@@ -12,7 +9,7 @@ def eliminarbodegas(accion,entityId, valuesToUpdate):
 	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
 
 def guardabodega(atributos,accion):
-	atributos["status"]="1" 
+	atributos["valor"]="1" 
 
 	db=DBModule("bodegasinfo")
 	db.saveEntity(atributos).addCallback(lambda ign: accion(db.getResult()))

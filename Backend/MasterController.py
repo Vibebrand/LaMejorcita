@@ -19,6 +19,9 @@ def obtenerventas(accion,stock=None,point=None,seller=None,param={},skip=0,limit
 def obtenerproductos(accion,stock=None,param={},skip=0,limit=0):
 	ProductosService.obtenerproductos(stock=stock,accion=accion,param=param,skip=skip,limit=limit)
 
+def obtenerlotes(accion,stock=None,product=None,param={},skip=0,limit=0):
+	LotesService.obtenerlotes(product=product,stock=stock,accion=accion,param=param,skip=skip,limit=limit)
+
 def eliminarbodegas(accion,entityId, valuesToUpdate):
 	BodegasService.eliminarbodegas(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 	
@@ -33,6 +36,9 @@ def eliminarventas(accion,entityId, valuesToUpdate):
 
 def eliminarproductos(accion,entityId, valuesToUpdate):
 	ProductosService.eliminarproductos(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
+
+def eliminarlotes(accion,entityId, valuesToUpdate):
+	LotesService.eliminarlotes(entityId=entityId,valuesToUpdate=valuesToUpdate,accion=accion)
 
 def guardabodega(atributos,accion):
 	BodegasService.guardabodega(atributos=atributos,accion=accion)
@@ -64,13 +70,8 @@ def guardaproducto(atributos,accion):
 def editaproducto(idvalor,atributos,accion):
 	ProductosService.editaproducto(idvalor=idvalor,atributos=atributos,accion=muestra)
 
-def llena(bodega,accion):
-	def x1():
-		pass
-	db=DBModule("bodegasinfo")
-	for i in range(24):
-		x={"_id":ObjectId(),"name":"Bodega"+str(i+1),"status":"1","address": {"district":"Colonia","street":"Calle","intNum": None, "extNum": 100} ,"phone":str(9789560+i),"businessName":"Negocio"+str(i+1),"manager":{"_id":ObjectId(),"status":"Valido","username":"Manager"+str(i+1),"password":"pass","curp":"89687800"+str(i),"phone":"9781200","email":"manager"+str(i+1)+"@gmail.com","type":"mamanger"},"geoposition":{"latitude":"22.8818","longitude":"-102.2913"},"maxSale":"1500","minSale":"0","products":{"_id":ObjectId(),"2013/01/01": "1500","2013/01/02": "1200"}}
-		db.saveEntity(x).addCallback(lambda ign: x1())
-	accion()
+def guardalote(atributos,accion):
+	LotesService.guardalote(atributos=atributos,accion=accion)
 
-
+def editalote(idvalor,atributos,accion):
+	LotesService.editalote(idvalor=idvalor,atributos=atributos,accion=muestra)

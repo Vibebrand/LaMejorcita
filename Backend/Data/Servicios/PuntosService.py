@@ -12,19 +12,28 @@ def eliminarpuntos(accion,entityId, valuesToUpdate):
 	db.updateEntity(entityId, valuesToUpdate).addCallback(lambda ign: accion(db.getResult()))
 
 def guardapunto(atributos,accion):
-	atributos["status"]="1"
-<<<<<<< HEAD
+	self.Diccionario={"valor":1}
 	if not "joinDate" in atributos:
-		atributos["joinDate"]=str(datetime.datetime.now())
-=======
-	if not self.atributos["joinDate"]:
-		self.atributos["joinDate"]=str(datetime.datetime.now())
->>>>>>> 91a729bf48dc762ef2025b52aa6b45c59fee2b71
+		self.Diccionario["joinDate"]=str(datetime.datetime.now())
+	self.Diccionario["serial"]=atributos["fridge"]["serial"]
+	self.Diccionario["status"]=""
+	self.Diccionario["stock"]=ObjectId(atributos["stock"])
+	self.Diccionario["puntos"]["name"]=atributos["name"]
+	self.Diccionario["puntos"]["phone"]=atributos["phone"]
+	self.Diccionario["puntos"]["email"]=atributos["email"]
+	self.Diccionario["puntos"]["adress"]=atributos["adress"]
+	self.Diccionario["puntos"]["representative"]=atributos["representative"]
 
 	db=DBModule("puntosinfo")
-	db.saveEntity(atributos).addCallback(lambda ign: accion(db.getResult()))
+	db.saveEntity(self.Diccionario).addCallback(lambda ign: accion(db.getResult()))
 
 def editapunto(idvalor,atributos,accion):
+	self.Diccionario["puntos.name"]=atributos["name"]
+	self.Diccionario["puntos.phone"]=atributos["phone"]
+	self.Diccionario["puntos.email"]=atributos["email"]
+	self.Diccionario["puntos.adress"]=atributos["adress"]
+	self.Diccionario["puntos.representative"]=atributos["representative"]
+
 	db=DBModule("puntosinfo")
-	db.updateEntity(entityId=idvalor,valuesToUpdate=atributos).addCallback(lambda ign: accion(db.getResult()))
+	db.updateEntity(entityId=idvalor,valuesToUpdate=self.Diccionario).addCallback(lambda ign: accion(db.getResult()))
 	
